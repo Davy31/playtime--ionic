@@ -1,0 +1,66 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>Famille</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content>
+
+  <ion-list>
+
+    <ion-item>
+      <ion-label fixed>Pseudo </ion-label>
+      <ion-input type="text" [value]="text_user_name"></ion-input>
+    </ion-item>
+
+    <ion-item>
+        <button ion-button full  (click)="onSigneOut()">Enregistrer mon pseudo</button>
+    </ion-item>
+  
+    <ion-item>
+      <button ion-button full (click)="onLienFormEnfant()">Ajouter un enfant</button>
+    </ion-item>
+
+    <ion-item>
+        <ion-card >
+            <img src="assets/imgs/Your_Photo.png" />
+        
+            <ion-card-content>
+              <ion-card-title>
+                Colin
+              </ion-card-title>            
+            </ion-card-content>  
+        
+          </ion-card>
+
+          <ion-card>
+              <img src="assets/imgs/Your_Photo.png" />
+          
+              <ion-card-content>
+                <ion-card-title>
+                  Melody
+                </ion-card-title>            
+              </ion-card-content>  
+          
+            </ion-card>
+
+      </ion-item>
+
+  </ion-list>
+
+
+
+  
+    
+</ion-content>  
+  
+  
+
+  
+
+
+
+

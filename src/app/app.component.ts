@@ -7,6 +7,7 @@ import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { RegisterPage } from '../pages/register/register';
 import { LoginPage } from '../pages/login/login';
+import { FamillePage } from '../pages/famille/famille';
 
 @Component({
   templateUrl: 'app.html'
@@ -15,7 +16,7 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   // page par défaut
-  rootPage: any = HomePage;
+  rootPage: any = FamillePage;
 
   pages: Array<{title: string, component: any}>;
 
@@ -29,7 +30,8 @@ export class MyApp {
       { title: 'Home', component: HomePage },
      // { title: 'List', component: ListPage },
       { title: 'Inscription', component: RegisterPage },
-      { title: 'Connexion', component: LoginPage }
+      { title: 'Connexion', component: LoginPage },
+      { title: 'Ma famille', component: FamillePage }
     ];
 
   }

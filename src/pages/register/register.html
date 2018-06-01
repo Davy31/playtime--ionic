@@ -26,8 +26,13 @@
       <ion-label stacked>Confirmation password</ion-label>
       <ion-input type="password" #password2></ion-input>
     </ion-item>
+
+    <ion-item>
+        <ion-label stacked>Pseudo</ion-label>
+        <ion-input type="text" #pseudo></ion-input>
+      </ion-item>
   
   </ion-list>
 
-  <button ion-button full (click)="onInscription(email,password,password2)">Inscription</button>
+  <button ion-button full (click)="onInscription(email,password,password2,pseudo)">Inscription</button>
 </ion-content>

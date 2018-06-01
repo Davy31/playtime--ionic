@@ -7,6 +7,8 @@ import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { RegisterPage } from '../pages/register/register';
 import { LoginPage } from '../pages/login/login';
+import { FamillePage } from '../pages/famille/famille';
+import { EnfantPage } from '../pages/enfant/enfant';
 import { LogoutComponent } from '../components/logout/logout';
 
 import { StatusBar } from '@ionic-native/status-bar';
@@ -33,7 +35,9 @@ export const firebaseConfig = {
     ListPage,
     RegisterPage,
     LoginPage,
-    LogoutComponent
+    LogoutComponent,
+    FamillePage,
+    EnfantPage
   ],
   imports: [
     BrowserModule,
@@ -49,7 +53,9 @@ export const firebaseConfig = {
     ListPage,
     RegisterPage,
     LoginPage,
-    LogoutComponent
+    LogoutComponent,
+    FamillePage,
+    EnfantPage
   ],
   providers: [
     StatusBar,
