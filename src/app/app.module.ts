@@ -18,6 +18,7 @@ import { ToastProvider } from '../providers/toast/toast';
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
+import { ApiBaseProvider } from '../providers/api-base/api-base';
 
 export const firebaseConfig = {
   apiKey: "AIzaSyC2FGz-B-J1IaLhbSqmbF59ET2Si2HJzuM",
@@ -62,7 +63,8 @@ export const firebaseConfig = {
     SplashScreen,
     AngularFireDatabase,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
-    ToastProvider
+    ToastProvider,
+    ApiBaseProvider
   ]
 })
 export class AppModule {}

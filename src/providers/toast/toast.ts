@@ -15,11 +15,12 @@ export class ToastProvider {
               ) {}
 
     presentToast(message) {
-      console.log('ngfng');
+      console.log(message);
       let toast = this.toastCtrl.create({
         message: message,
         duration: 3000,
-        position: 'top'
+        position: 'top',
+        cssClass : 'presentToast'
       });
     
       toast.onDidDismiss(() => {

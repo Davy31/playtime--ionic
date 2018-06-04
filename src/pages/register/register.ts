@@ -2,10 +2,8 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ToastProvider }  from '../../providers/toast/toast';
 import { HomePage } from '../home/home';
-
+import { NgForm } from '@angular/forms';
 import { AngularFireAuth } from 'angularfire2/auth';
-import { AngularFireDatabase } from 'angularfire2/database';
-import  firebase from 'firebase';
 
 @Component({
   selector: 'page-register',
@@ -18,64 +16,49 @@ export class RegisterPage {
   constructor( public navCtrl: NavController,
                public navParams: NavParams,
                private toastProvider: ToastProvider,
-               private afAuth: AngularFireAuth,
-               private db: AngularFireDatabase
+               private afAuth: AngularFireAuth
                ) {}
 
   ionViewDidLoad() {
     console.log('ionViewDidLoad RegisterPage');
   }
 
-  
-  effacePassword(password, password2){
-    password.value="";
-    password2.value="";
-  }
+  onSubmit = (form:NgForm) => {
 
-  onInscription = (email, password, password2, pseudo) => { 
+    // Teste le formulaire
+    console.log(form.value);
+    console.log('valide: '+ form.valid);
+
+    // si formulaire invalide affiche la première erreur
+    if(form.controls['email'].invalid){
+      this.toastProvider.presentToast('L\'email est invalide !!!');
+      return;
+    }
+
+    if(form.controls['password'].invalid){
+      this.toastProvider.presentToast('Le mot de passe doit comporter au moins 6 caractères !!!');
+      return;
+    }
+
+    if(form.controls['password'].value != form.controls['passwordCopie'].value ){
+      this.toastProvider.presentToast('Les mots de passe doivent être identiques !!!');
+      return;
+    }
+
+    if(form.controls['pseudo'].invalid){
+      this.toastProvider.presentToast('Le pseudo doit comporter au moins 3 caractères !!!');
+      return;
+    }      
     
-    if(email.value===""){
-      this.toastProvider.presentToast('L\'email doit être renseigné');
-      this.effacePassword(password, password2);
-      return;
-    }
-    if(password.value===""){
-      this.toastProvider.presentToast("Le mot de passe doit être renseigné!!!");
-      this.effacePassword(password, password2);
-      return;
-    }
-    if(password2.value===""){
-      this.toastProvider.presentToast("Le mot de passe de confirmation doit être renseigné!!!");
-      this.effacePassword(password, password2);
-      return;
-    }
-
-    if(password.value!==password2.value){
-      this.toastProvider.presentToast("Les mots de passe doivent être identiques!!!");
-      this.effacePassword(password, password2);
-      return;
-    }
-
-    // Connexion validée
-     this.afAuth.auth.createUserWithEmailAndPassword(email.value,password.value).then((data)=>{
-
-      console.log(data);
+    //************************** Connexion validée
+     this.afAuth.auth.createUserWithEmailAndPassword(form.controls['email'].value,form.controls['password'].value).then((data)=>{
 
       const user_id = data.user.uid;
 
-      // CREATION 'enregistrement' USER
-      firebase.database().ref('user').push({
-        user_id: user_id,
-        user_name: pseudo.value,
-        user_role: 0// pas de droit
-      });
+      this.toastProvider.presentToast("Bienvenue parmis nous " + form.controls['pseudo'].value + " !!!");
+      // *********création  l'utilisateur sur la base de données mySql**************
 
-     
-
-
-
-
-      this.toastProvider.presentToast("Bienvenue parmis nous " + pseudo.value + " !!!");
+      //----------- Retour Home
       setTimeout(() => {
         this.navCtrl.setRoot( HomePage);
      },4000);
@@ -83,13 +66,8 @@ export class RegisterPage {
      .catch((erreur) => {
        console.log(erreur);
       this.toastProvider.presentToast(erreur.message);
-      this.effacePassword(password, password2);
-     });
-
-    
-    
-
      
+     });
     
   }
 

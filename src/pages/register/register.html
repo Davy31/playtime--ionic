@@ -10,29 +10,34 @@
 
 
 <ion-content padding>
-  <ion-list>
+
+<form (ngSubmit)="onSubmit(form)" #form="ngForm">
+
+  <ion-list>    
 
     <ion-item>
       <ion-label stacked>E-mail</ion-label>
-      <ion-input type="text" #email></ion-input>
+      <ion-input type="email" required email=true ngModel name="email"></ion-input>
     </ion-item>
   
     <ion-item>
-      <ion-label stacked>Password</ion-label>
-      <ion-input type="password" #password></ion-input>
+      <ion-label stacked>Mot de passe</ion-label>
+      <ion-input type="password" required minlength="6" ngModel name="password"></ion-input>
     </ion-item>
 
     <ion-item>
-      <ion-label stacked>Confirmation password</ion-label>
-      <ion-input type="password" #password2></ion-input>
+      <ion-label stacked>Confirmation mot de passe</ion-label>
+      <ion-input type="password" ngModel name="passwordCopie" ></ion-input>
     </ion-item>
 
     <ion-item>
         <ion-label stacked>Pseudo</ion-label>
-        <ion-input type="text" #pseudo></ion-input>
+        <ion-input type="text" required minlength="3" maxlength="50" name="pseudo" ngModel></ion-input>
       </ion-item>
   
   </ion-list>
 
-  <button ion-button full (click)="onInscription(email,password,password2,pseudo)">Inscription</button>
+  <button ion-button full type="submit">Valider</button>
+
+</form>
 </ion-content>
