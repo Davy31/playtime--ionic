@@ -17,22 +17,22 @@
 
     <ion-item>
       <ion-label stacked>E-mail</ion-label>
-      <ion-input type="email" required email=true ngModel name="email"></ion-input>
+      <ion-input type="email" required email=true [(ngModel)]="email" name="email" ></ion-input>
     </ion-item>
   
     <ion-item>
       <ion-label stacked>Mot de passe</ion-label>
-      <ion-input type="password" required minlength="6" ngModel name="password"></ion-input>
+      <ion-input type="password" required minlength="6" [(ngModel)]="password" name="password" ></ion-input>
     </ion-item>
 
     <ion-item>
       <ion-label stacked>Confirmation mot de passe</ion-label>
-      <ion-input type="password" ngModel name="passwordCopie" ></ion-input>
+      <ion-input type="password"  name="passwordCopie" [(ngModel)]="password"  ></ion-input>
     </ion-item>
 
     <ion-item>
         <ion-label stacked>Pseudo</ion-label>
-        <ion-input type="text" required minlength="3" maxlength="50" name="pseudo" ngModel></ion-input>
+        <ion-input type="text" required minlength="3" maxlength="50" name="pseudo" [(ngModel)]="pseudo" ></ion-input>
       </ion-item>
   
   </ion-list>

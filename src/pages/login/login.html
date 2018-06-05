@@ -9,22 +9,24 @@
 
 
 <ion-content padding>
+
+  <form (ngSubmit)="onSubmit(form)" #form="ngForm">
+
   <ion-list>
-
-    <ion-item>
-      <ion-label stacked>E-mail</ion-label>
-      <ion-input type="text" #email></ion-input>
-    </ion-item>
-  
-    <ion-item>
-      <ion-label stacked>Password</ion-label>
-      <ion-input type="password" #password></ion-input>
-    </ion-item>
-
-   
+    
+      <ion-item>
+          <ion-label stacked>E-mail</ion-label>
+          <ion-input type="email" required email=true ngModel name="email" ></ion-input>
+        </ion-item>
+      
+        <ion-item>
+          <ion-label stacked>Mot de passe</ion-label>
+          <ion-input type="password" required minlength="6" ngModel name="password" ></ion-input>
+        </ion-item>   
   
   </ion-list>
 
-  <button ion-button full (click)="onConnexion(email,password)">Connexion</button>
+  <button ion-button full type="submit">Connexion</button>
   
+  </form>
 </ion-content>

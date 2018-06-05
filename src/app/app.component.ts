@@ -16,7 +16,7 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   // page par défaut
-  rootPage: any = RegisterPage;
+  rootPage: any = HomePage;
 
   pages: Array<{title: string, component: any}>;
 

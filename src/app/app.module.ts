@@ -10,15 +10,17 @@ import { LoginPage } from '../pages/login/login';
 import { FamillePage } from '../pages/famille/famille';
 import { EnfantPage } from '../pages/enfant/enfant';
 import { LogoutComponent } from '../components/logout/logout';
-
+import { HttpClientModule} from '@angular/common/http';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+
 import { ToastProvider } from '../providers/toast/toast';
+import { UserProvider} from '../providers/api-base/user';
 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/database';
 import { AngularFireAuthModule } from 'angularfire2/auth';
-import { ApiBaseProvider } from '../providers/api-base/api-base';
+
 
 export const firebaseConfig = {
   apiKey: "AIzaSyC2FGz-B-J1IaLhbSqmbF59ET2Si2HJzuM",
@@ -38,14 +40,15 @@ export const firebaseConfig = {
     LoginPage,
     LogoutComponent,
     FamillePage,
-    EnfantPage
+    EnfantPage,
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
-    AngularFireAuthModule
+    AngularFireAuthModule,
+    HttpClientModule
   ],
   bootstrap: [IonicApp],
   entryComponents: [
@@ -64,7 +67,7 @@ export const firebaseConfig = {
     AngularFireDatabase,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ToastProvider,
-    ApiBaseProvider
+    UserProvider
   ]
 })
 export class AppModule {}

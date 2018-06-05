@@ -1,7 +1,9 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { EnfantPage } from '../../pages/enfant/enfant';
-import { AngularFireDatabase } from 'angularfire2/database';
+import { AngularFireAuth } from 'angularfire2/auth';
+import { ToastProvider }  from '../../providers/toast/toast';
+import { UserProvider} from '../../providers/api-base/user';
 import  firebase from 'firebase';
 /**
  * Generated class for the FamillePage page.
@@ -17,34 +19,39 @@ import  firebase from 'firebase';
 })
 export class FamillePage {
 
-  user_id:string ;
+  isAuth: boolean;
+  userAuthId: string;
+  stateConnexion: string;
   text_user_name = 'pseudo';
   constructor(
               public navCtrl: NavController, 
-              public navParams: NavParams,
-              private db: AngularFireDatabase) {
+              public navParams: NavParams, 
+              public  afAuth: AngularFireAuth,
+              private toastProvider: ToastProvider,
+              private userProvider: UserProvider
+            ) {
   }
 
 
-  ionViewDidLoad() {
-    if(firebase.auth().currentUser) {
-      
-      const user_auth_id = firebase.auth().currentUser.uid;
-      firebase.database().ref('user').orderByChild('user_id').equalTo(user_auth_id).once('value').then((snap) => {
-        const user = snap.val()[Object.keys(snap.val())[0]];
-        console.log(snap);
-        this.text_user_name = user.user_name;
-        this.user_id = user.user_id;
-      });
+  ionViewDidLoad() {   
+    
+    this.afAuth.auth.onAuthStateChanged((user) => {
+      if(user) {      
+        this.isAuth = true;
+        this.userAuthId = this.afAuth.auth.currentUser.uid;
+      } else {
+    
+        this.isAuth = false;
+        this.userAuthId = "0";  
 
-    } else {
-      console.log('Non connecté');
-    }
+      }  
+    });
   }
+  onUpdatePseudo = () => {
 
-  
-  onLienFormEnfant(){
-    this.navCtrl.push(EnfantPage, {id: this.user_id});
+  }
+  onLienFormEnfant = () =>{
+    this.navCtrl.push(EnfantPage, {id: this.userAuthId});
   }
 
 }

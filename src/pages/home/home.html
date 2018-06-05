@@ -8,10 +8,19 @@
 </ion-header>
 
 <ion-content padding>
-  <h1>Bienvenue sur  PLAYTIME !!!!</h1>
-  <ion-content></ion-content>
 
-  <logout></logout> <!-- bouton déconnexion-->
+  <ion-title>PLAYTIME </ion-title>
 
-  <!--<button ion-button secondary menuToggle>Toggle Menu</button> -->
+<ion-list>
+      
+  <ion-item>Gérer le temps de loisir de vos enfants</ion-item>  
+  
+  <ion-item *ngIf="isAuth"><button ion-button full (click)="onLienFamille()">Ma famille</button></ion-item>
+
+  <ion-item *ngIf="!isAuth"><button ion-button full (click)="onLienConnexion()">Connexion</button></ion-item>
+ 
+  <ion-item *ngIf="!isAuth"><button ion-button full (click)="onLienInscription()">Inscription</button></ion-item>
+    <logout></logout> <!-- bouton déconnexion-->
+  </ion-list> 
+
 </ion-content>

@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ToastProvider } from '../../providers/toast/toast';
 import { HomePage } from '../home/home';
+import { NgForm } from '@angular/forms';
 
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
@@ -30,44 +31,47 @@ export class LoginPage {
   }
 
 
-  effacePassword(password){
-    password.value="";
-    
-  }
-  
+  onSubmit = (form:NgForm) => {
 
-  onConnexion = (email, password) => {    
-  
-   
+    // Teste le formulaire
+    console.log(form.value);
+    console.log('valide: '+ form.valid);
 
-    if(email.value===""){
-      this.toastProvider.presentToast('hgtrhtrh');
-      this.effacePassword(password);
+    // si formulaire invalide affiche la première erreur
+    if(form.controls['email'].invalid){
+      this.toastProvider.presentToast('L\'adresse email est invalide !!!');
       return;
     }
-    if(password.value===""){
-      this.toastProvider.presentToast("Le mot de passe doit être renseigné!!!");
-      this.effacePassword(password);
+
+    if(form.controls['password'].invalid){
+      this.toastProvider.presentToast('Le mot de passe doit comporter au moins 6 caractères !!!');
       return;
     }
-    
+
    
-    this.afAuth.auth.signInWithEmailAndPassword(email.value,password.value)
-    .then( (date) => {
-      this.toastProvider.presentToast("bienvenue parmis nous!!!");
-      setTimeout(() => {
-        this.navCtrl.setRoot( HomePage);
-     },4000);
-    })
-    .catch((erreur) => {
-      this.toastProvider.presentToast(erreur.message);
-      this.effacePassword(password);
+    //************************** Tentative inscription firebase
+      this.afAuth.auth.signInWithEmailAndPassword(form.controls['email'].value,form.controls['password'].value)
+      
+      .then((data)=>{
+      //************************** Connexion validée
+      const user_id = data.user.uid;
+      
+      
+      this.toastProvider.presentToast("Heureux de vous revoir");  
+     
+      //----------- Retour Home
+      this.navCtrl.setRoot( HomePage);
+    
+      })
+    //************************** Connexion refusée
+     .catch((erreur) => {  
+      this.toastProvider.presentToast(this.toastProvider.get_messagesErreurs(erreur.code));     
      });
-
-    
-
-    //this.navCtrl.setRoot( HomePage);
     
   }
+
+  
+    
+  
 
 }
