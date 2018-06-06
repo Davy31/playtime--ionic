@@ -6,13 +6,14 @@ import { AngularFireAuth } from 'angularfire2/auth';
 
 
 @Injectable()
-export class UserProvider {
+
+export class ChildProvider {
 
   public userPseudo:string;  
   
   constructor(public http: HttpClient, private afAuth: AngularFireAuth) {}
   
-  addUser(user_auth_id, user_pseudo){ 
+  addChild(user_auth_id: string, child_firstname: string, child_nickname: string, child_sexe){ 
    /*
       const api_key = 25;
       const uri_movie = 'https://api.themoviedb.org/3/movie/'+ user_id +'?api_key=' + api_key;
@@ -29,9 +30,17 @@ export class UserProvider {
 
   }
 
-  getUser(user_auth_Id:string){    
-    this.userPseudo = "MonPseudo";
+  getListChildByUser(user_auth_id: string){
+
+    let childs=[
+        {id: 1,firstname: "Pierre" ,nickname: null, sexe: 1},
+        {id: 2,firstname: "Cèline" ,nickname: "Line", sexe: 0}
+    ];
+    
+    return  childs;
   }
+
+  
 
 
 }

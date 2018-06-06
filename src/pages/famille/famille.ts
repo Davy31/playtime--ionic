@@ -1,10 +1,12 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import { EnfantPage } from '../../pages/enfant/enfant';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { ToastProvider }  from '../../providers/toast/toast';
 import { UserProvider} from '../../providers/api-base/user';
-import  firebase from 'firebase';
+import { ChildProvider} from '../../providers/api-base/child';
+import { NgForm } from '@angular/forms';
+
 /**
  * Generated class for the FamillePage page.
  *
@@ -22,19 +24,23 @@ export class FamillePage {
   isAuth: boolean;
   userAuthId: string;
   stateConnexion: string;
-  text_user_name = 'pseudo';
+  userPseudo: string;
+  childs:any;
+  
   constructor(
               public navCtrl: NavController, 
               public navParams: NavParams, 
               public  afAuth: AngularFireAuth,
               private toastProvider: ToastProvider,
-              private userProvider: UserProvider
+              private userProvider: UserProvider,
+              private childProvider: ChildProvider
             ) {
   }
 
 
-  ionViewDidLoad() {   
-    
+  ionViewDidLoad() {  
+
+    console.clear();
     this.afAuth.auth.onAuthStateChanged((user) => {
       if(user) {      
         this.isAuth = true;
@@ -42,16 +48,26 @@ export class FamillePage {
       } else {
     
         this.isAuth = false;
-        this.userAuthId = "0";  
-
+        this.userAuthId = "0";
       }  
     });
-  }
-  onUpdatePseudo = () => {
 
+    this.userProvider.getUser(this.userAuthId);
+    console.log('Pseudo: ' + this.userProvider.userPseudo);
+    this.userPseudo = this.userProvider.userPseudo;
+    this.childs = this.childProvider.getListChildByUser(this.userAuthId);
+    console.log('Tableau famille');
+    console.log(this.childs);
   }
-  onLienFormEnfant = () =>{
-    this.navCtrl.push(EnfantPage, {id: this.userAuthId});
+
+
+  onLienFormEnfant = (childId:number) =>{
+    this.navCtrl.push(EnfantPage, {id: childId});
   }
+
+
+  
+
+  
 
 }

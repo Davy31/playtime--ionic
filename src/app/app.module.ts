@@ -16,6 +16,7 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 
 import { ToastProvider } from '../providers/toast/toast';
 import { UserProvider} from '../providers/api-base/user';
+import { ChildProvider} from '../providers/api-base/child';
 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/database';
@@ -67,7 +68,8 @@ export const firebaseConfig = {
     AngularFireDatabase,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ToastProvider,
-    UserProvider
+    UserProvider,
+    ChildProvider
   ]
 })
 export class AppModule {}

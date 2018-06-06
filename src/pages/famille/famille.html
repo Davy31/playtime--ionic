@@ -8,52 +8,61 @@
 </ion-header>
 
 <ion-content>
-    <form (ngSubmit)="onSubmit(form)" #form="ngForm">
+
+    <ion-title>{{userPseudo}}</ion-title>
+    
+    <button ion-button full (click)="onLienFormEnfant(0)">Ajouter un enfant</button>
 
     <ion-list>
-      <ion-item>
-        <ion-label fixed>Pseudo </ion-label>
-        <ion-input type="text" [value]="text_user_name" required minlength="3" name="pseudo" ></ion-input>
-      </ion-item>
+
+      <ion-row>
+
+      <ion-col col-6 *ngFor="let childs of childs">
 
       <ion-item>
-          <button ion-button full  (click)="onUpdatePesudo()">Enregistrer mon pseudo</button>
-      </ion-item>
-    
-      <ion-item>
-        <button ion-button full (click)="onLienFormEnfant()">Ajouter un enfant</button>
-      </ion-item>
-
-      <ion-item>
+        
           <ion-card >
-              <img src="assets/imgs/Your_Photo.png" />
+              <img class="img-family-child" src="assets/imgs/Your_Photo.png" />
           
               <ion-card-content>
-                <ion-card-title>
-                  Colin
-                </ion-card-title>            
+
+                <ion-card-title *ngIf="!childs.nickname">
+                  {{childs.firstname}}
+                </ion-card-title>
+                <ion-card-title *ngIf="childs.nickname">
+                  {{childs.nickname}}
+                </ion-card-title>
+                
+                <ion-grid>
+
+                    <ion-row>
+                      <ion-col>
+                        <ion-icon name="clipboard"></ion-icon> 
+                      </ion-col>
+                      <ion-col>                   
+                        <ion-icon name="contacts"></ion-icon>
+                      </ion-col>
+                    </ion-row>
+
+                    <ion-row>
+                      
+                      <ion-col>   
+                        <ion-icon name="alarm"></ion-icon>
+                      </ion-col>
+                    </ion-row>
+
+                </ion-grid>
               </ion-card-content>  
           
-            </ion-card>
+          </ion-card>
 
-            <ion-card>
-                <img src="assets/imgs/Your_Photo.png" />
-            
-                <ion-card-content>
-                  <ion-card-title>
-                    Melody
-                  </ion-card-title>            
-                </ion-card-content>  
-            
-              </ion-card>
+      </ion-item>
 
-        </ion-item>
+      </ion-col>
+
+      </ion-row>
 
     </ion-list>
-  </form>
-
-
-  
     
 </ion-content>  
   

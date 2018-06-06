@@ -20,10 +20,11 @@
 .presentToast {
     .toast-message {
       border-radius: 0.65rem !important;
-      color : red;
+      color : rgb(73, 11, 11);
       font-weight: 900;
-      height:100px;
+      height:50px;
       text-align:center;
+      background-color:rgb(173, 189, 202);
     }
   }
 

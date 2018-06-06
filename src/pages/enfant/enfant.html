@@ -10,37 +10,38 @@
 
 
 <ion-content padding>
+
+    <form (ngSubmit)="onSubmit(formChild)" #formChild="ngForm">
   <ion-list>
 
     <ion-item>
-      <ion-label stacked>Prénom  {{user_id}}</ion-label>
-      <ion-input type="text" #prenom required></ion-input>
+      <ion-label stacked>Prénom  </ion-label>
+      <ion-input type="text" required  ngModel name="firstname"  ></ion-input>
     </ion-item>
   
     <ion-item>
       <ion-label stacked>Surnom</ion-label>
-      <ion-input type="text" #surnom></ion-input>
+      <ion-input type="text" ngModel name="nickname"></ion-input>
     </ion-item>
 
-    <ion-list radio-group #sexe>
+    <ion-list radio-group [(ngModel)]="childSexe" name=sexe>
         <ion-label>Sexe</ion-label>
       <ion-item>
         <ion-label>Fille</ion-label>
-        <ion-radio value="friends" checked></ion-radio>
+        <ion-radio value=0 ></ion-radio>
       </ion-item>
       <ion-item>
-        <ion-label>Garcon</ion-label>
-        <ion-radio value="family"></ion-radio>
+        <ion-label>Garçon</ion-label>
+        <ion-radio value=1  ></ion-radio>
       </ion-item>
      
     </ion-list>
 
-    <ion-item>
-        <ion-label stacked>Temps départ ( minutes )</ion-label>
-        <ion-input type="number" #temps required >0</ion-input>
-      </ion-item>
+    
   
   </ion-list>
 
-  <button ion-button full (click)="onValidationEnfant(prenom, surnom, sexe, temps)">Validation</button>
+  <button ion-button full type="submit" >Validation</button>
+
+  </form>
 </ion-content>

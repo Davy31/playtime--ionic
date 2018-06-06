@@ -6,6 +6,7 @@ import { NgForm } from '@angular/forms';
 
 import { AngularFireAuth } from 'angularfire2/auth';
 import * as firebase from 'firebase/app';
+import { FamillePage } from '../famille/famille';
 
 /**
  * Generated class for the LoginPage page.
@@ -34,8 +35,7 @@ export class LoginPage {
   onSubmit = (form:NgForm) => {
 
     // Teste le formulaire
-    console.log(form.value);
-    console.log('valide: '+ form.valid);
+    
 
     // si formulaire invalide affiche la première erreur
     if(form.controls['email'].invalid){
@@ -60,7 +60,7 @@ export class LoginPage {
       this.toastProvider.presentToast("Heureux de vous revoir");  
      
       //----------- Retour Home
-      this.navCtrl.setRoot( HomePage);
+      this.navCtrl.setRoot( FamillePage);
     
       })
     //************************** Connexion refusée
