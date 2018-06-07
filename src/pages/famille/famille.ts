@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { EnfantPage } from '../../pages/enfant/enfant';
+import { DashboardPage } from '../../pages/dashboard/dashboard';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { ToastProvider }  from '../../providers/toast/toast';
 import { UserProvider} from '../../providers/api-base/user';
@@ -45,8 +46,7 @@ export class FamillePage {
       if(user) {      
         this.isAuth = true;
         this.userAuthId = this.afAuth.auth.currentUser.uid;
-      } else {
-    
+      } else {    
         this.isAuth = false;
         this.userAuthId = "0";
       }  
@@ -61,11 +61,22 @@ export class FamillePage {
   }
 
 
-  onLienFormEnfant = (childId:number) =>{
+  onLinkChronoChild = (childId:number) => {
+    console.log('Chrono id:' + childId);
     this.navCtrl.push(EnfantPage, {id: childId});
   }
 
+  onLinkDashboardChild = (childId:number) => {
+    console.log('Dashboard id:' + childId);
+    this.navCtrl.push(DashboardPage, {id: childId});
+  }
 
+  onLinkFormChild = (childId:number) => {
+    console.log('Enfant id:' + childId);
+    //this.navCtrl.push(EnfantPage, {id: childId});
+  }
+
+ 
   
 
   

@@ -9,6 +9,8 @@ import { RegisterPage } from '../pages/register/register';
 import { LoginPage } from '../pages/login/login';
 import { FamillePage } from '../pages/famille/famille';
 import { EnfantPage } from '../pages/enfant/enfant';
+import { DashboardPage } from '../pages/dashboard/dashboard';
+import { ModalActionPage } from '../pages/modal-action/modal-action';
 import { LogoutComponent } from '../components/logout/logout';
 import { HttpClientModule} from '@angular/common/http';
 import { StatusBar } from '@ionic-native/status-bar';
@@ -17,6 +19,8 @@ import { SplashScreen } from '@ionic-native/splash-screen';
 import { ToastProvider } from '../providers/toast/toast';
 import { UserProvider} from '../providers/api-base/user';
 import { ChildProvider} from '../providers/api-base/child';
+import { ActionProvider} from '../providers/api-base/action';
+import { DashboardProvider} from '../providers/api-base/dashboard';
 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/database';
@@ -42,6 +46,8 @@ export const firebaseConfig = {
     LogoutComponent,
     FamillePage,
     EnfantPage,
+    DashboardPage,
+    ModalActionPage
   ],
   imports: [
     BrowserModule,
@@ -60,7 +66,9 @@ export const firebaseConfig = {
     LoginPage,
     LogoutComponent,
     FamillePage,
-    EnfantPage
+    EnfantPage,
+    DashboardPage,
+    ModalActionPage
   ],
   providers: [
     StatusBar,
@@ -69,7 +77,9 @@ export const firebaseConfig = {
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ToastProvider,
     UserProvider,
-    ChildProvider
+    ChildProvider,
+    ActionProvider,
+    DashboardProvider
   ]
 })
 export class AppModule {}

@@ -1,0 +1,44 @@
+
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>Tableau de bord</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content padding-top>
+
+  <ion-list>
+      
+    <ion-item *ngFor="let dashActions of dashActions">
+    
+      <ion-label class="label-text-action" no-padding>{{dashActions.labelAction}}</ion-label>
+      <ion-badge item-start>{{dashActions.count}}</ion-badge>
+      <ion-badge item-end>{{dashActions.count}}</ion-badge>
+      <ion-icon name="add-circle" item-end (click)="onAddRealisedAction()"></ion-icon>
+      <ion-icon name="remove-circle" item-end (click)="onRemoveRealisedAction()"></ion-icon>
+      
+      <!--
+        {{dashActions.labelAction}} / {{dashActions.count}} / 9     
+        <button ion-button small>-</button>
+        <button ion-button small>+</button>
+        <button ion-button danger>Sup</button>
+      -->
+
+    </ion-item>
+      
+  </ion-list>
+
+  <ion-list>
+      <ion-item>
+        <ion-label>Ajouter une action</ion-label >
+        <ion-select  [(ngModel)]="action" (ionChange)="addAction()" 
+          multiple="true" cancelText="Annuler" okText="Ajouter">
+          <ion-option *ngFor="let listAction of listActionsFree" [value]="listAction.id">{{listAction.label}}</ion-option >
+          
+        </ion-select>
+      </ion-item>
+    </ion-list>
+</ion-content>

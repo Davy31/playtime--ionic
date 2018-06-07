@@ -48,7 +48,9 @@ export class EnfantPage {
         this.userAuthId = "0";
       } 
 
-    this.childId = this.navParams.get('id');
+      if(this.childId ){
+      this.childId = this.navParams.get('id');
+    }
     
     console.log( 'user id: ' + this.userAuthId );
     console.log( 'chil id: ' + this.childId );       
