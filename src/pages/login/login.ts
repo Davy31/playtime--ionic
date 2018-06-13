@@ -4,8 +4,6 @@ import { ToastProvider } from '../../providers/toast/toast';
 import { HomePage } from '../home/home';
 import { NgForm } from '@angular/forms';
 
-import { AngularFireAuth } from 'angularfire2/auth';
-import * as firebase from 'firebase/app';
 import { FamillePage } from '../famille/famille';
 
 /**
@@ -23,8 +21,7 @@ export class LoginPage {
 
   constructor(public navCtrl: NavController,
               public navParams: NavParams,
-              public toastProvider: ToastProvider,
-              private afAuth: AngularFireAuth ) {
+              public toastProvider: ToastProvider ) {
   }
 
   ionViewDidLoad() {
@@ -48,26 +45,7 @@ export class LoginPage {
       return;
     }
 
-   
-    //************************** Tentative inscription firebase
-      this.afAuth.auth.signInWithEmailAndPassword(form.controls['email'].value,form.controls['password'].value)
-      
-      .then((data)=>{
-      //************************** Connexion validée
-      const user_id = data.user.uid;
-      
-      
-      this.toastProvider.presentToast("Heureux de vous revoir");  
-     
-      //----------- Retour Home
-      this.navCtrl.setRoot( FamillePage);
-    
-      })
-    //************************** Connexion refusée
-     .catch((erreur) => {  
-      this.toastProvider.presentToast(this.toastProvider.get_messagesErreurs(erreur.code));     
-     });
-    
+  
   }
 
   

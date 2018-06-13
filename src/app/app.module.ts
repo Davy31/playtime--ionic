@@ -9,6 +9,7 @@ import { RegisterPage } from '../pages/register/register';
 import { LoginPage } from '../pages/login/login';
 import { FamillePage } from '../pages/famille/famille';
 import { EnfantPage } from '../pages/enfant/enfant';
+import { ConnexionPage } from '../pages/connexion/connexion';
 import { DashboardPage } from '../pages/dashboard/dashboard';
 import { ModalActionPage } from '../pages/modal-action/modal-action';
 import { LogoutComponent } from '../components/logout/logout';
@@ -24,19 +25,6 @@ import { ActionProvider} from '../providers/api-base/action';
 import { DashboardProvider} from '../providers/api-base/dashboard';
 
 
-import { AngularFireModule } from 'angularfire2';
-import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/database';
-import { AngularFireAuthModule } from 'angularfire2/auth';
-
-
-export const firebaseConfig = {
-  apiKey: "AIzaSyC2FGz-B-J1IaLhbSqmbF59ET2Si2HJzuM",
-  authDomain: "playtime-1974.firebaseapp.com",
-  databaseURL: "https://playtime-1974.firebaseio.com",
-  projectId: "playtime-1974",
-  storageBucket: "playtime-1974.appspot.com",
-  messagingSenderId: "350372660694"
-};
 
 @NgModule({
   declarations: [
@@ -49,14 +37,12 @@ export const firebaseConfig = {
     FamillePage,
     EnfantPage,
     DashboardPage,
-    ModalActionPage
+    ModalActionPage,
+    ConnexionPage
   ],
   imports: [
     BrowserModule,
     IonicModule.forRoot(MyApp),
-    AngularFireModule.initializeApp(firebaseConfig),
-    AngularFireDatabaseModule,
-    AngularFireAuthModule,
     HttpClientModule,
     IonicStorageModule.forRoot()
   ],
@@ -71,12 +57,12 @@ export const firebaseConfig = {
     FamillePage,
     EnfantPage,
     DashboardPage,
-    ModalActionPage
+    ModalActionPage,
+    ConnexionPage
   ],
   providers: [
     StatusBar,
     SplashScreen,
-    AngularFireDatabase,
     {provide: ErrorHandler, useClass: IonicErrorHandler},
     ToastProvider,
     UserProvider,

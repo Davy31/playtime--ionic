@@ -71,7 +71,7 @@ export class RegisterPage {
        }
       
      }, (err: any) => {
-      this.toastProvider.presentToast('Inscription impossible !!!');
+      this.toastProvider.presentToast('Inscription impossible :'+ err);
       console.log(err)
      });
   }

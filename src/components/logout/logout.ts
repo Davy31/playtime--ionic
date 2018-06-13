@@ -1,9 +1,9 @@
 import { Component } from '@angular/core';
+import { NavController, NavParams } from 'ionic-angular';
 import { ToastProvider }  from '../../providers/toast/toast';
+import { Storage } from '@ionic/storage';
+import { LoginPage } from '../../pages/login/login';
 
-
-import { AngularFireAuth } from 'angularfire2/auth';
-import * as firebase from 'firebase/app';
 /**
  * Generated class for the LogoutComponent component.
  *
@@ -18,30 +18,18 @@ export class LogoutComponent {
 
   text: string;
   isAuth = false;
-  constructor(private toastProvider: ToastProvider,
-               private afAuth: AngularFireAuth) {}
+  constructor(public navCtrl: NavController,
+              public navParams: NavParams,
+              private storage: Storage
+          ) {}
 
     ngOnInit() {
-    this.afAuth.auth.onAuthStateChanged((user) => {
-      if(user) {
-        console.log(user);
-        this.isAuth =true;
-      } else {
-        console.log('Déconnecté');
-        this.isAuth =false;
-      }
-    });
-  }
+      this.storage.clear();
+      this.navCtrl.setRoot("LoginPage");
+    }
 
   onSigneOut(){
-    this.afAuth.auth.signOut()
-    .then((date) => {
-      this.toastProvider.presentToast("Au revoir!!!");
-
-    })
-    .catch((error) => {
-      this.toastProvider.presentToast("Vous ne pouvez pas nous quitter!!!");
-    });
+    
   }
 }
 

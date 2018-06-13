@@ -8,6 +8,7 @@ import { ListPage } from '../pages/list/list';
 import { RegisterPage } from '../pages/register/register';
 import { LoginPage } from '../pages/login/login';
 import { FamillePage } from '../pages/famille/famille';
+import { ConnexionPage } from '../pages/connexion/connexion';
 import { DashboardPage } from '../pages/dashboard/dashboard';
 
 @Component({
@@ -17,11 +18,9 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   // page par défaut
-  rootPage: any = LoginPage;
+  rootPage: any = ConnexionPage;
 
   pages: Array<{title: string, component: any}>;
-
-  
 
   constructor(public platform: Platform, public statusBar: StatusBar, public splashScreen: SplashScreen) {
     this.initializeApp();

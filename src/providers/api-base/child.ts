@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { updateDate } from 'ionic-angular/util/datetime-util';
-import { AngularFireAuth } from 'angularfire2/auth';
 import { Observable} from  'rxjs/observable'
 
 
@@ -12,7 +11,7 @@ export class ChildProvider {
 
   public userPseudo:string;  
   
-  constructor(public http: HttpClient, private afAuth: AngularFireAuth) {}
+  constructor(public http: HttpClient) {}
   
   addChild = (user_auth_id: string, child_firstname: string, child_nickname: string, child_sexe) =>{ 
    /*

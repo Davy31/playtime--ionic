@@ -4,7 +4,6 @@ import { ActionProvider} from '../../providers/api-base/action';
 import { DashboardProvider} from '../../providers/api-base/dashboard';
 import { ToastProvider }  from '../../providers/toast/toast';
 import { UserProvider} from '../../providers/api-base/user';
-import { AngularFireAuth } from 'angularfire2/auth';
 import { ChildProvider} from '../../providers/api-base/child';
 import { ModalActionPage } from '../../pages/modal-action/modal-action';
 import { ModalController } from 'ionic-angular';
@@ -35,7 +34,6 @@ export class DashboardPage {
           public navCtrl: NavController,
           public navParams: NavParams,
           public toastProvider : ToastProvider,
-          public  afAuth: AngularFireAuth,
          private userProvider: UserProvider,
          private childProvider: ChildProvider,
          private actionProvider : ActionProvider,
@@ -45,17 +43,7 @@ export class DashboardPage {
 
 
   ionViewDidLoad() {
-    console.clear()
-    console.log('ionViewDidLoad DashboardPage');
-    this.afAuth.auth.onAuthStateChanged((user) => {
-      if(user) {      
-        this.isAuth = true;
-        this.userAuthId = this.afAuth.auth.currentUser.uid;
-      } else {    
-        this.isAuth = false;
-        this.userAuthId = "0";
-      } 
-    });
+  
 
     if(this.navParams.get('id')){
       this.childId = this.navParams.get('id');

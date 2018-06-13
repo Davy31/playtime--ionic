@@ -2,7 +2,6 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { updateDate } from 'ionic-angular/util/datetime-util';
-import { AngularFireAuth } from 'angularfire2/auth';
 
 
 @Injectable()
@@ -11,7 +10,7 @@ export class DashboardProvider {
 
    
   
-  constructor(public http: HttpClient, private afAuth: AngularFireAuth) {}
+  constructor(public http: HttpClient) {}
   
   
   getListActionByChild = (child_id:number) => {
