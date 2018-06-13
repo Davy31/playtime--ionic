@@ -3,8 +3,9 @@ import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { ToastProvider }  from '../../providers/toast/toast';
 import { UserProvider} from '../../providers/api-base/user';
 import { HomePage } from '../home/home';
+import { FamillePage } from '../famille/famille';
 import { NgForm } from '@angular/forms';
-import { AngularFireAuth } from 'angularfire2/auth';
+import { Storage } from '@ionic/storage';
 
 
 @Component({
@@ -14,23 +15,24 @@ import { AngularFireAuth } from 'angularfire2/auth';
 export class RegisterPage {
 
   api_result:any;
-  email='ppp@aezez.';
-  password='123456';
-  pseudo = "Toto";
+
+  username="username";
+  email = "toto@enshort.com";
+  password = "123456";
+  passwordCopie = "123456";
 
   constructor( public navCtrl: NavController,
                public navParams: NavParams,
                private toastProvider: ToastProvider,
-               private afAuth: AngularFireAuth,
-               private userProvider: UserProvider
+               private userProvider: UserProvider,
+               private  storage: Storage
                ) {}
 
 
   onSubmit = (form:NgForm) => {
 
     // Teste le formulaire
-    console.log(form.value);
-    console.log('valide: '+ form.valid);
+    
 
     // si formulaire invalide affiche la première erreur
     if(form.controls['email'].invalid){
@@ -40,7 +42,7 @@ export class RegisterPage {
 
     if(form.controls['password'].invalid){
       this.toastProvider.presentToast('Le mot de passe doit comporter au moins 6 caractères !!!');
-      return;
+      return; 
     }
 
     if(form.controls['password'].value != form.controls['passwordCopie'].value ){
@@ -48,36 +50,30 @@ export class RegisterPage {
       return;
     }
 
-    if(form.controls['pseudo'].invalid){
+    if(form.controls['username'].invalid){
       this.toastProvider.presentToast('Le pseudo doit comporter au moins 3 caractères !!!');
       return;
-    }      
+    }   
     
-    //************************** Tentative inscription firebase
-      this.afAuth.auth.createUserWithEmailAndPassword(form.controls['email'].value,form.controls['password'].value)
-      
-      .then((data)=>{
-      //************************** inscription validée ******************************************
-      const user_id = data.user.uid;
-      
-      // *********création  l'utilisateur sur la base de données mySql via l'api**************
-      this.api_result = this.userProvider.addUser(user_id,form.controls['pseudo'].value);
-    
-      if(this.api_result[0].sucess){ 
-           
-        this.toastProvider.presentToast("Utilsateur crée");
-          //----------- Retour Home            
-          this.navCtrl.setRoot( HomePage);
+     this.userProvider.register(form.controls['email'].value, form.controls['password'].value, form.controls['username'].value)
+     .subscribe((data:any) => {
+       if(data.success){
+         // stocke les identifiants 
+       
+        this.storage.set('user_id', data.result.userId);
+        this.storage.set('user_username', form.controls['username'].value);
+        this.storage.set('user_email', form.controls['email'].value);       
+        this.toastProvider.presentToast('Inscription validée !!!');
         
-        }else{
-          this.toastProvider.presentToast("Création utilisateur impossible");
-        }
-    })
-    //************************** inscription refusée
-     .catch((erreur) => {  
-      this.toastProvider.presentToast(this.toastProvider.get_messagesErreurs(erreur.code));     
+        this.navCtrl.setRoot( FamillePage);
+       }else{
+        this.toastProvider.presentToast(data.message);
+       }
+      
+     }, (err: any) => {
+      this.toastProvider.presentToast('Inscription impossible !!!');
+      console.log(err)
      });
-    
   }
 
 }

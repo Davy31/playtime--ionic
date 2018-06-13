@@ -4,9 +4,11 @@ import { EnfantPage } from '../../pages/enfant/enfant';
 import { DashboardPage } from '../../pages/dashboard/dashboard';
 import { AngularFireAuth } from 'angularfire2/auth';
 import { ToastProvider }  from '../../providers/toast/toast';
+import { LoginPage }  from '../../pages/login/login';
 import { UserProvider} from '../../providers/api-base/user';
 import { ChildProvider} from '../../providers/api-base/child';
 import { NgForm } from '@angular/forms';
+import { Storage } from '@ionic/storage';
 
 /**
  * Generated class for the FamillePage page.
@@ -23,7 +25,8 @@ import { NgForm } from '@angular/forms';
 export class FamillePage {
 
   isAuth: boolean;
-  userAuthId: string;
+  user_id: number;
+  user_username: string;
   stateConnexion: string;
   userPseudo: string;
   childs:any;
@@ -34,7 +37,9 @@ export class FamillePage {
               public  afAuth: AngularFireAuth,
               private toastProvider: ToastProvider,
               private userProvider: UserProvider,
-              private childProvider: ChildProvider
+              private childProvider: ChildProvider,
+              private storage: Storage
+             
             ) {
   }
 
@@ -42,25 +47,38 @@ export class FamillePage {
   ionViewDidLoad() {  
 
     console.clear();
-    this.afAuth.auth.onAuthStateChanged((user) => {
-      if(user) {      
-        this.isAuth = true;
-        this.userAuthId = this.afAuth.auth.currentUser.uid;
-      } else {    
-        this.isAuth = false;
-        this.userAuthId = "0";
-      }  
-    });
+    this.storage.get('user_id').then((val) =>{
+     
+      if ((val == null)){
+        this.toastProvider.presentToast("Vous n'êtes pas connecté");
+        this.navCtrl.setRoot( LoginPage);
+      }else{
+        this.user_id = val;
+        this.isAuth=true;
+      }
+     }).catch((err) =>{
+       this.toastProvider.presentToast("Vous n'êtes pas connecté");
+       this.navCtrl.setRoot( LoginPage);
+     })
 
+     this.storage.get('user_username').then((val) =>{
+      this.user_username= val
+      console.log(this.user_username) ;
+     }).catch((err) =>{
+       this.toastProvider.presentToast("Vous n'êtes pas connecté");
+       this.navCtrl.setRoot( LoginPage);
+     })
+   
+/*
     this.userProvider.getUser(this.userAuthId);
     console.log('Pseudo: ' + this.userProvider.userPseudo);
     this.userPseudo = this.userProvider.userPseudo;
     this.childs = this.childProvider.getListChildByUser(this.userAuthId);
     console.log('Tableau famille');
     console.log(this.childs);
+  
+*/
   }
-
-
   onLinkChronoChild = (childId:number) => {
     console.log('Chrono id:' + childId);
     this.navCtrl.push(EnfantPage, {id: childId});

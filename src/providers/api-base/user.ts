@@ -12,25 +12,21 @@ export class UserProvider {
   
   constructor(public http: HttpClient, private afAuth: AngularFireAuth) {}
   
-  addUser(user_auth_id, user_pseudo){ 
-   /*
-      const api_key = 25;
-      const uri_movie = 'https://api.themoviedb.org/3/movie/'+ user_id +'?api_key=' + api_key;
-        return this.http.get(uri_movie);
-      */
-
-      //const tab_retour = [{sucess: true}];
-      const tab_retour = [{sucess: true}];
-      
-      //delete user sur fire base
-      //this.afAuth.auth.currentUser.delete;
-
-      return tab_retour;
-
-  }
 
   getUser(user_auth_Id:string){    
     this.userPseudo = "MonPseudo";
+  }
+
+  register = (email:string,password:string,username:string) => {
+    
+    let postData = new FormData();
+      postData.append('email' , email);
+      postData.append('password' , password);
+      postData.append('username' , username);
+    const uri_api = 'http://localhost/playtime/user/user_add.php';
+    let tab_retour =  this.http.post(uri_api,postData);
+  
+    return tab_retour;
   }
 
 

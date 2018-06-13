@@ -15,12 +15,14 @@ import { LogoutComponent } from '../components/logout/logout';
 import { HttpClientModule} from '@angular/common/http';
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
+import { IonicStorageModule } from '@ionic/storage';
 
 import { ToastProvider } from '../providers/toast/toast';
 import { UserProvider} from '../providers/api-base/user';
 import { ChildProvider} from '../providers/api-base/child';
 import { ActionProvider} from '../providers/api-base/action';
 import { DashboardProvider} from '../providers/api-base/dashboard';
+
 
 import { AngularFireModule } from 'angularfire2';
 import { AngularFireDatabaseModule, AngularFireDatabase } from 'angularfire2/database';
@@ -55,7 +57,8 @@ export const firebaseConfig = {
     AngularFireModule.initializeApp(firebaseConfig),
     AngularFireDatabaseModule,
     AngularFireAuthModule,
-    HttpClientModule
+    HttpClientModule,
+    IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
   entryComponents: [

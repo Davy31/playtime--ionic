@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { Http } from '@angular/http';
 import { updateDate } from 'ionic-angular/util/datetime-util';
 import { AngularFireAuth } from 'angularfire2/auth';
+import { Observable} from  'rxjs/observable'
 
 
 @Injectable()
@@ -31,11 +32,20 @@ export class ChildProvider {
   }
 
   getListChildByUser = (user_auth_id: string) => {
-
+/*
+    const uri_child = 'http://localhost/playtime/child.php?id=1';
+    let childs =  this.http.get(uri_child)
+    .map( (resultat) => {
+      return resultat;
+    })
+    .catch(this.handleError)
+  }
+    */
     let childs=[
         {id: 1,firstname: "Pierre" ,nickname: null, sexe: 1},
         {id: 2,firstname: "Cèline" ,nickname: "Line", sexe: 0}
     ];
+    
     return  childs;
   }
 
@@ -51,7 +61,7 @@ export class ChildProvider {
    
     }
   
+  }
 
 
-}
 
