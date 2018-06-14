@@ -6,7 +6,6 @@ import { MyApp } from './app.component';
 import { HomePage } from '../pages/home/home';
 import { ListPage } from '../pages/list/list';
 import { RegisterPage } from '../pages/register/register';
-import { LoginPage } from '../pages/login/login';
 import { FamillePage } from '../pages/famille/famille';
 import { EnfantPage } from '../pages/enfant/enfant';
 import { ConnexionPage } from '../pages/connexion/connexion';
@@ -32,7 +31,6 @@ import { DashboardProvider} from '../providers/api-base/dashboard';
     HomePage,
     ListPage,
     RegisterPage,
-    LoginPage,
     LogoutComponent,
     FamillePage,
     EnfantPage,
@@ -52,7 +50,6 @@ import { DashboardProvider} from '../providers/api-base/dashboard';
     HomePage,
     ListPage,
     RegisterPage,
-    LoginPage,
     LogoutComponent,
     FamillePage,
     EnfantPage,

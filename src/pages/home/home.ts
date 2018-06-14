@@ -1,10 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { FamillePage} from '../famille/famille';
 import { RegisterPage} from '../register/register';
-import { LoginPage } from '../login/login';
-import { AngularFireAuth } from 'angularfire2/auth';
-import * as firebase from 'firebase/app';
+import { ConnexionPage } from '../connexion/connexion';
 
 @Component({
   selector: 'page-home',
@@ -16,24 +14,9 @@ export class HomePage  {
     userAuthId: string;
     stateConnexion: string;
     
-  constructor(public navCtrl: NavController,
-              public   afAuth: AngularFireAuth  ) {
+  constructor(public navCtrl: NavController) {}
 
-  }
-
-  ionViewDidLoad() {   
-    
-    this.afAuth.auth.onAuthStateChanged((user) => {
-      if(user) {      
-        this.isAuth = true;
-        this.userAuthId = this.afAuth.auth.currentUser.uid;
-      } else {
-    
-        this.isAuth = false;
-        this.userAuthId = "0";         
-      }  
-    });
-  }
+  ionViewDidLoad() {   }
 
 
   onLienFamille(){
@@ -41,7 +24,7 @@ export class HomePage  {
   }
   
   onLienConnexion(){
-    this.navCtrl.setRoot( LoginPage );
+    this.navCtrl.setRoot( ConnexionPage );
   }
 
   onLienInscription(){

@@ -1,19 +1,12 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
-import { updateDate } from 'ionic-angular/util/datetime-util';
-
 
 @Injectable()
 
 export class ActionProvider {
 
-   
-  
   constructor(public http: HttpClient, ) {}
   
-  
-
   getListAction = () => {
 
     let actions=[

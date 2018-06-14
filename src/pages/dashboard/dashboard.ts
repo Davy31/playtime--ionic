@@ -69,15 +69,13 @@ export class DashboardPage {
   }
 
   
-
+  
   onAddRealisedAction(){
+    this.toastProvider.presentToast("ca marche");
     console.log("click +");
   }
 
-  onOpenModalAction() {
-    const modal = this.modalCtrl.create(ModalActionPage);
-    modal.present();
-  }
+  
    
 
 }

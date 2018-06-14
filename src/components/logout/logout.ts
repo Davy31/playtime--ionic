@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { ToastProvider }  from '../../providers/toast/toast';
 import { Storage } from '@ionic/storage';
-import { LoginPage } from '../../pages/login/login';
 
 /**
  * Generated class for the LogoutComponent component.
@@ -25,7 +23,7 @@ export class LogoutComponent {
 
     ngOnInit() {
       this.storage.clear();
-      this.navCtrl.setRoot("LoginPage");
+      // this.navCtrl.setRoot("LoginPage");
     }
 
   onSigneOut(){

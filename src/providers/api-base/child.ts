@@ -1,9 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Http } from '@angular/http';
-import { updateDate } from 'ionic-angular/util/datetime-util';
-import { Observable} from  'rxjs/observable'
-
 
 @Injectable()
 
@@ -41,8 +37,8 @@ export class ChildProvider {
   }
     */
     let childs=[
-        {id: 1,firstname: "Pierre" ,nickname: null, sexe: 1},
-        {id: 2,firstname: "Cèline" ,nickname: "Line", sexe: 0}
+        {id: 1,firstname: "Pierre Henri Michel" ,nickname: null, sexe: 1,playtime: '01h10'},
+        {id: 2,firstname: "Cèline" ,nickname: "Line", sexe: 0,playtime: '00h40'}
     ];
     
     return  childs;
@@ -51,9 +47,9 @@ export class ChildProvider {
     getDetailChild = (child_id: number) =>{
       let child:any
       if(child_id === 1){
-        child = {id: 1,firstname: "Pierre" ,nickname: null, sexe: 1};
+        child = {id: 1,firstname: "Pierre" ,nickname: null, sexe: 1,playtime: '01h10' };
       }else{
-        child =  {id: 2,firstname: "Cèline" ,nickname: "Line", sexe: 0};
+        child =  {id: 2,firstname: "Cèline" ,nickname: "Line", sexe: 0,playtime: '00h40'};
       }
       
       return child;

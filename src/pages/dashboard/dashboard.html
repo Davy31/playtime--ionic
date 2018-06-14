@@ -2,43 +2,75 @@
 <ion-header>
 
   <ion-navbar>
-    <ion-title>Tableau de bord</ion-title>
+    
+    <ion-title>
+      <img class="img-icon-header" src="assets/imgs/icon-tbb.png" (click)="onLinkDashboardChild(childs.id)"  />
+      <span>Line</span>
+    </ion-title>
   </ion-navbar>
 
 </ion-header>
 
 
-<ion-content padding-top>
-
-  <ion-list>
+<ion-content no-padding>
+  <div class="select-card">
+    <ion-grid>
+        <ion-row>
+  
+          <ion-col col-4>
+            <div class="badge-title-time-recap" >Temps gagné</div>
+            <ion-badge class="badge-time-recap">01h10</ion-badge>
+          </ion-col>
       
-    <ion-item *ngFor="let dashActions of dashActions">
-    
-      <ion-label class="label-text-action" no-padding>{{dashActions.labelAction}}</ion-label>
-      <ion-badge item-start>{{dashActions.count}}</ion-badge>
-      <ion-badge item-end>{{dashActions.count}}</ion-badge>
-      <ion-icon name="add-circle" item-end (click)="onAddRealisedAction()"></ion-icon>
-      <ion-icon name="remove-circle" item-end (click)="onRemoveRealisedAction()"></ion-icon>
-      
-      <!--
-        {{dashActions.labelAction}} / {{dashActions.count}} / 9     
-        <button ion-button small>-</button>
-        <button ion-button small>+</button>
-        <button ion-button danger>Sup</button>
-      -->
+          <ion-col col-4>
+            <div class="badge-title-time-recap" >Temps joué</div>
+            <ion-badge class="badge-time-recap">01h10</ion-badge>
+          </ion-col>
+  
+          <ion-col col-4>
+            <div class="badge-title-time-recap" >Temps restant</div>
+            <ion-badge class="badge-time-recap">01h10</ion-badge>
+          </ion-col>
+  
+          </ion-row>   
+        </ion-grid>
 
-    </ion-item>
+        <ion-card class="select-card">            
+            <ion-card-content no-padding>
       
-  </ion-list>
-
-  <ion-list>
-      <ion-item>
-        <ion-label>Ajouter une action</ion-label >
+        <ion-list>
+            <ion-item>
+      
+        
+        
+        <ion-label>Ajouter une action</ion-label>
         <ion-select  [(ngModel)]="action" (ionChange)="addAction()" 
           multiple="true" cancelText="Annuler" okText="Ajouter">
           <ion-option *ngFor="let listAction of listActionsFree" [value]="listAction.id">{{listAction.label}}</ion-option >
-          
         </ion-select>
       </ion-item>
-    </ion-list>
+      </ion-list>
+      
+      </ion-card-content>
+      
+      </ion-card>
+      
+    </div>
+  <ion-list>
+    <ion-item *ngFor="let dashActions of dashActions" >
+      <div class="line-action">
+        <div class="badge-time" [class.badge-positive]="dashActions.positive" [class.badge-negative]="!dashActions.positive">00h20</div>
+        <div class="text-action" text-wrap>{{dashActions.labelAction}}</div>          
+        <ion-badge class="badge-action-count" [class.badge-positive]="dashActions.positive" [class.badge-negative]="!dashActions.positive">{{dashActions.count}}</ion-badge>
+        <ion-icon  class="btn-plus" name="add-circle"  (click)="onAddRealisedAction()"></ion-icon>
+        <ion-icon class="btn-minus" name="remove-circle"  (click)="onRemoveRealisedAction()"></ion-icon>
+      </div> 
+    </ion-item>
+  </ion-list>
+
+  
+
+    
+
+
 </ion-content>

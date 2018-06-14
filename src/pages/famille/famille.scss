@@ -1,4 +1,15 @@
 page-famille {
-    img.img-family-child{width:100px;}
-    img.img-icon{width: 30px}
+    // img.img-family-child{width:100px;}
+    // img.img-icon{width: 30px}
+
+    .ion-card-title {
+        font-size: 18px;
+    }
+
+    .vertical-align {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 10px;
+    }
 }

@@ -2,9 +2,8 @@ import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import { EnfantPage } from '../../pages/enfant/enfant';
 import { DashboardPage } from '../../pages/dashboard/dashboard';
-import { AngularFireAuth } from 'angularfire2/auth';
 import { ToastProvider }  from '../../providers/toast/toast';
-import { LoginPage }  from '../../pages/login/login';
+import { ConnexionPage }  from '../../pages/connexion/connexion';
 import { UserProvider} from '../../providers/api-base/user';
 import { ChildProvider} from '../../providers/api-base/child';
 import { NgForm } from '@angular/forms';
@@ -34,7 +33,6 @@ export class FamillePage {
   constructor(
               public navCtrl: NavController, 
               public navParams: NavParams, 
-              public  afAuth: AngularFireAuth,
               private toastProvider: ToastProvider,
               private userProvider: UserProvider,
               private childProvider: ChildProvider,
@@ -48,17 +46,17 @@ export class FamillePage {
 
     console.clear();
     this.storage.get('user_id').then((val) =>{
-     
+    
       if ((val == null)){
         this.toastProvider.presentToast("Vous n'êtes pas connecté");
-        this.navCtrl.setRoot( LoginPage);
+       // this.navCtrl.setRoot( ConnexionPage );
       }else{
         this.user_id = val;
         this.isAuth=true;
       }
      }).catch((err) =>{
        this.toastProvider.presentToast("Vous n'êtes pas connecté");
-       this.navCtrl.setRoot( LoginPage);
+      // this.navCtrl.setRoot( ConnexionPage);
      })
 
      this.storage.get('user_username').then((val) =>{
@@ -66,18 +64,14 @@ export class FamillePage {
       console.log(this.user_username) ;
      }).catch((err) =>{
        this.toastProvider.presentToast("Vous n'êtes pas connecté");
-       this.navCtrl.setRoot( LoginPage);
+       //this.navCtrl.setRoot( ConnexionPage);
      })
    
-/*
-    this.userProvider.getUser(this.userAuthId);
-    console.log('Pseudo: ' + this.userProvider.userPseudo);
-    this.userPseudo = this.userProvider.userPseudo;
-    this.childs = this.childProvider.getListChildByUser(this.userAuthId);
-    console.log('Tableau famille');
-    console.log(this.childs);
+
+    
+    this.childs = this.childProvider.getListChildByUser('1');
   
-*/
+
   }
   onLinkChronoChild = (childId:number) => {
     console.log('Chrono id:' + childId);

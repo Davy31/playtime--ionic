@@ -36,10 +36,14 @@ $app-direction: ltr;
 $colors: (
   primary:    #488aff,
   secondary:  #32db64,
+  card-color:  #eeeeee,
   danger:     #f53d3d,
-  light:      #f4f4f4,
+  light:      #b83333,
   dark:       #222
 );
+
+$positive: green;
+$negative: red;
 
 
 // App iOS Variables

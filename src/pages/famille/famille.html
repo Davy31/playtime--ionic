@@ -6,53 +6,54 @@
     <ion-title>Famille</ion-title>
   </ion-navbar>
 </ion-header>
-  
-<ion-content> 
-    <ion-list>
-      <ion-row>
-      <ion-col col-12 *ngFor="let childs of childs">
 
+<ion-content no-padding> 
+    <ion-list >
+      <ion-col no-padding col-12 *ngFor="let child of childs">
         <ion-item>
-          <ion-card>          
-            <ion-avatar item-start>
-              <img class="avatar" src="assets/imgs/boy.png">
-            </ion-avatar>
-            <h2>Marty McFly</h2>
-            <p>November 5, 1955</p>
-          </ion-card>        
+            <ion-card color="card-color">
 
-          <ion-card >
-              <ion-card-title *ngIf="!childs.nickname">
-                  {{childs.firstname}}
-                </ion-card-title>
-                <ion-card-title *ngIf="childs.nickname">
-                  {{childs.nickname}}
-                </ion-card-title>
-              <img class="img-family-child" src="assets/imgs/boy.png" *ngIf="childs.sexe" />
-              <img class="img-family-child" src="assets/imgs/girl.png" *ngIf="!childs.sexe" />          
-              <ion-card-content>
-                <ion-grid>
+                <ion-card-content no-padding>
+          <ion-grid no-padding>
+            <ion-row>
+                <ion-col col-4>
+                      <img class="img-family-child" src="assets/imgs/boy.png" *ngIf="child.sexe" />
+                      <img class="img-family-child" src="assets/imgs/girl.png" *ngIf="!child.sexe" />                    
+              </ion-col>
+              <ion-col col-8>
+                  <ion-grid>
+                      <ion-row>
+                          <ion-col col-12>
+                              <ion-card-title class="ion-card-title" no-padding text-center text-wrap *ngIf="!child.nickname">
+                                  {{child.firstname }}
+                                </ion-card-title>
+                                <ion-card-title class="ion-card-title" no-padding text-center *ngIf="child.nickname">
+                                  {{child.nickname }}
+                                </ion-card-title>
+                            </ion-col>
+                      </ion-row>
                     <ion-row>
-                      
-                      <ion-col col-4>
-                        <img class='img-icon' src='assets/imgs/icon-tbb.png' (click)="onLinkDashboardChild(childs.id)"  />
+                      <ion-col col-3>
+                        <img class="img-icon" src="assets/imgs/icon-tbb.png" (click)="onLinkDashboardChild(childs.id)"  />
                       </ion-col>
-                      <ion-col col-4 >                   
-                        <img class='img-icon' src='assets/imgs/icon-child.png' (click)="onLinkFormChild(childs.id)"/> 
+                      <ion-col col-3 class="vertical-align">                   
+                          {{child.playtime}}
                       </ion-col>                   
-                      
-                      <ion-col col-4>   
-                        <img class='img-icon' src='assets/imgs/icon-chrono.png' (click)="onLinkChronoChild(childs.id)" /> 
+                      <ion-col col-3>   
+                        <img class="img-icon" src="assets/imgs/icon-chrono.png" (click)="onLinkChronoChild(childs.id)" /> 
                       </ion-col>
+                      <ion-col col-3>   
+                          <img class="img-icon" src="assets/imgs/icon-modif.png" (click)="onLinkChronoChild(childs.id)" /> 
+                        </ion-col>
                     </ion-row>
                 </ion-grid>
-              </ion-card-content>            
-          </ion-card>
+              </ion-col>
+            </ion-row>
+        </ion-grid>
+        </ion-card-content>
+        </ion-card>
        </ion-item>
-
       </ion-col> 
-    </ion-row>
-   
     </ion-list>
     
   <button ion-button full (click)="onLinkFormEnfant(0)">Ajouter un enfant</button>

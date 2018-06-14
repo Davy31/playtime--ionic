@@ -1,8 +1,6 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import { AngularFireAuth } from 'angularfire2/auth';
 import { ToastProvider }  from '../../providers/toast/toast';
-import { UserProvider} from '../../providers/api-base/user';
 import { NgForm } from '@angular/forms';
 import { ChildProvider} from '../../providers/api-base/child';
 import { FamillePage } from '../famille/famille';
@@ -30,33 +28,14 @@ export class EnfantPage {
   constructor(public navCtrl: NavController,
      public navParams: NavParams,
      public toastProvider : ToastProvider,
-     public  afAuth: AngularFireAuth,
-    private userProvider: UserProvider,
-    private childProvider: ChildProvider
+      private childProvider: ChildProvider
   ) {}
 
 
   ionViewDidLoad() {
     console.clear();
     console.log('ionViewDidLoad EnfantPage');
-    this.afAuth.auth.onAuthStateChanged((user) => {
-      if(user) {      
-        this.isAuth = true;
-        this.userAuthId = this.afAuth.auth.currentUser.uid;
-      } else {    
-        this.isAuth = false;
-        this.userAuthId = "0";
-      } 
-
-      if(this.childId ){
-      this.childId = this.navParams.get('id');
-    }
-    
-    console.log( 'user id: ' + this.userAuthId );
-    console.log( 'chil id: ' + this.childId );       
-    });     
   }
-
   onSubmit = (formChild:NgForm) => {
 
     if(formChild.controls['firstname'].invalid){
