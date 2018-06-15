@@ -1,5 +1,13 @@
 page-dashboard {
 
+  .select {
+      max-width: 100%;
+  }
+
+  .ion-select {
+    display: none;
+  }
+
   .select-card {
     position: sticky;
     top: 00px;
@@ -64,8 +72,10 @@ page-dashboard {
       font-size:11px;
     }
     .badge-time-recap{
-      width:90%;
+      //width:90%;
       padding:5px
     }
+
+   
 }
 

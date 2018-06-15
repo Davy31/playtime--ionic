@@ -3,9 +3,10 @@
 
   <ion-navbar>
     
-    <ion-title>
-      <img class="img-icon-header" src="assets/imgs/icon-tbb.png" (click)="onLinkDashboardChild(childs.id)"  />
-      <span>Line</span>
+      <ion-title r>
+      <img class="img-icon-header"  float-start src="assets/imgs/icon-tbb.png"  />
+      Line
+      <logout></logout>      
     </ion-title>
   </ion-navbar>
 
@@ -13,50 +14,34 @@
 
 
 <ion-content no-padding>
-  <div class="select-card">
-    <ion-grid>
+
+    <ion-fab top right>
+        <button ion-fab (click)="onOpenSelectAction()"><ion-icon name="add"></ion-icon></button>
+    </ion-fab>
+
+    <ion-grid class="select-card">
         <ion-row>
   
-          <ion-col col-4>
-            <div class="badge-title-time-recap" >Temps gagné</div>
+          <ion-col col-3 text-center >
+            <div class="badge-title-time-recap" >Gagné</div>
             <ion-badge class="badge-time-recap">01h10</ion-badge>
           </ion-col>
       
-          <ion-col col-4>
-            <div class="badge-title-time-recap" >Temps joué</div>
+          <ion-col col-3  text-center >
+            <div class="badge-title-time-recap" >Utilisé</div>
             <ion-badge class="badge-time-recap">01h10</ion-badge>
           </ion-col>
   
-          <ion-col col-4>
-            <div class="badge-title-time-recap" >Temps restant</div>
+          <ion-col col-3 text-center >
+            <div class="badge-title-time-recap" >Restant</div>
             <ion-badge class="badge-time-recap">01h10</ion-badge>
           </ion-col>
   
           </ion-row>   
         </ion-grid>
-
-        <ion-card class="select-card">            
-            <ion-card-content no-padding>
       
-        <ion-list>
-            <ion-item>
-      
-        
-        
-        <ion-label>Ajouter une action</ion-label>
-        <ion-select  [(ngModel)]="action" (ionChange)="addAction()" 
-          multiple="true" cancelText="Annuler" okText="Ajouter">
-          <ion-option *ngFor="let listAction of listActionsFree" [value]="listAction.id">{{listAction.label}}</ion-option >
-        </ion-select>
-      </ion-item>
-      </ion-list>
-      
-      </ion-card-content>
-      
-      </ion-card>
-      
-    </div>
   <ion-list>
+
     <ion-item *ngFor="let dashActions of dashActions" >
       <div class="line-action">
         <div class="badge-time" [class.badge-positive]="dashActions.positive" [class.badge-negative]="!dashActions.positive">00h20</div>
@@ -68,9 +53,29 @@
     </ion-item>
   </ion-list>
 
-  
-
-    
-
+  <ion-item class="ion-select" >
+  <ion-select  #selectAction [(ngModel)]="action" (ionChange)="addAction()" [selectOptions]="selectOptions"
+  multiple="true" cancelText="Annuler" okText="Ajouter">
+  <ion-option *ngFor="let listAction of listActionsFree" [value]="listAction.id">{{listAction.label}}</ion-option >
+  </ion-select> 
+</ion-item>
 
 </ion-content>
+
+<ion-footer>
+    <ion-toolbar>
+      <ion-grid>
+        <ion-row>
+            <ion-col col-3 text-center>
+                <img class="img-icon-footer"   src="assets/imgs/icon-family.png"  />    
+            </ion-col>
+
+          <ion-col col-6 text-center>PLAYTIME</ion-col>
+
+            <ion-col col-3 text-center>
+                <img class="img-icon-footer"   src="assets/imgs/icon-tbb.png"  />
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+    </ion-toolbar>            
+  </ion-footer>

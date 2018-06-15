@@ -9667,10 +9667,10 @@ ion-datetime {
   z-index: 0;
   display: block;
   overflow: hidden;
-  width: 56px;
-  height: 56px;
+  width: 150px;
+  height: 150px;
   font-size: 14px;
-  line-height: 56px;
+  line-height: 150px;
   text-overflow: ellipsis;
   text-transform: none;
   white-space: nowrap;
@@ -9696,14 +9696,14 @@ ion-datetime {
 }
 
 .fab[mini] {
-  margin: 8px;
-  width: 40px;
-  height: 40px;
-  line-height: 40px;
+  margin: 60px;
+  width: 30px;
+  height: 30px;
+  line-height: 30px;
 }
 
 .fab[mini] .fab-close-icon {
-  line-height: 40px;
+  line-height: 30px;
 }
 
 ion-fab {
@@ -9713,11 +9713,11 @@ ion-fab {
 
 ion-fab[center] {
   left: 50%;
-  margin-left: -28px;
+  margin-left: -75px;
 }
 
 ion-fab[middle] {
-  margin-top: -28px;
+  margin-top: -75px;
   top: 50%;
 }
 
@@ -9754,15 +9754,15 @@ ion-fab[start] {
 }
 
 ion-fab[top][edge] {
-  top: -28px;
+  top: -75px;
 }
 
 ion-fab[bottom][edge] {
-  bottom: -28px;
+  bottom: -75px;
 }
 
 ion-fab-list {
-  margin: 66px 0;
+  margin: 160px 0;
   position: absolute;
   top: 0;
   display: none;
@@ -9775,14 +9775,14 @@ ion-fab-list {
   -webkit-align-items: center;
   -ms-flex-align: center;
   align-items: center;
-  min-width: 56px;
-  min-height: 56px;
+  min-width: 150px;
+  min-height: 150px;
 }
 
 .fab-in-list {
   margin: 8px 0;
-  width: 40px;
-  height: 40px;
+  width: 30px;
+  height: 30px;
   opacity: 0;
   visibility: hidden;
   -webkit-transform: scale(0);
@@ -9812,7 +9812,7 @@ ion-fab-list[side=top] {
 }
 
 ion-fab-list[side=left] {
-  margin: 0 66px;
+  margin: 0 160px;
   right: 0;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: reverse;
@@ -9822,7 +9822,7 @@ ion-fab-list[side=left] {
 }
 
 ion-fab-list[side=right] {
-  margin: 0 66px;
+  margin: 0 160px;
   left: 0;
   -webkit-box-orient: horizontal;
   -webkit-box-direction: normal;
@@ -9843,7 +9843,7 @@ ion-fab-list[side=right] {
   right: 0;
   top: 0;
   position: absolute;
-  line-height: 56px;
+  line-height: 150px;
   opacity: 0;
   -webkit-transform: scale(0.4) rotateZ(-45deg);
   transform: scale(0.4) rotateZ(-45deg);
@@ -27981,12 +27981,21 @@ ion-navbar.toolbar {
   background-color: #adbdca;
 }
 
+/***************** footer  */
 .img-icon-header {
   width: 20px;
 }
 
-ion-content {
-  background-color: aqua;
+.img-icon-footer {
+  width: 30px;
+}
+
+page-dashboard .select {
+  max-width: 100%;
+}
+
+page-dashboard .ion-select {
+  display: none;
 }
 
 page-dashboard .select-card {
@@ -28073,7 +28082,6 @@ page-dashboard .badge-title-time-recap {
 }
 
 page-dashboard .badge-time-recap {
-  width: 90%;
   padding: 5px;
 }
 

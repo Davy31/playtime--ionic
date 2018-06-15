@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import {  NavController, NavParams } from 'ionic-angular';
+import { Component, ViewChild } from '@angular/core';
+import {  NavController, NavParams, Select } from 'ionic-angular';
 import { ActionProvider} from '../../providers/api-base/action';
 import { DashboardProvider} from '../../providers/api-base/dashboard';
 import { ToastProvider }  from '../../providers/toast/toast';
@@ -21,6 +21,8 @@ import { ModalController } from 'ionic-angular';
 })
 export class DashboardPage {
 
+  @ViewChild('selectAction') selectRef: Select;
+
   isAuth: boolean;
   userAuthId: string;
   stateConnexion: string;
@@ -28,6 +30,12 @@ export class DashboardPage {
   dashActions = [];
   listActions = [];
   listActionsFree = [];
+
+  selectOptions = {
+    title: 'Pizza Toppings',
+    subTitle: 'Select your toppings',
+    mode: 'md'
+  };
   
 
   constructor(
@@ -43,7 +51,6 @@ export class DashboardPage {
 
 
   ionViewDidLoad() {
-  
 
     if(this.navParams.get('id')){
       this.childId = this.navParams.get('id');
@@ -69,12 +76,15 @@ export class DashboardPage {
   }
 
   
-  
-  onAddRealisedAction(){
+  onOpenSelectAction = () => {
+    this.selectRef.open();
+  }
+  onAddRealisedAction = () => {
     this.toastProvider.presentToast("ca marche");
     console.log("click +");
   }
 
+  
   
    
 

@@ -4,6 +4,7 @@ import { EnfantPage } from '../../pages/enfant/enfant';
 import { DashboardPage } from '../../pages/dashboard/dashboard';
 import { ToastProvider }  from '../../providers/toast/toast';
 import { ConnexionPage }  from '../../pages/connexion/connexion';
+import { ChronoPage }  from '../../pages/chrono/chrono';
 import { UserProvider} from '../../providers/api-base/user';
 import { ChildProvider} from '../../providers/api-base/child';
 import { NgForm } from '@angular/forms';
@@ -66,21 +67,18 @@ export class FamillePage {
        this.toastProvider.presentToast("Vous n'êtes pas connecté");
        //this.navCtrl.setRoot( ConnexionPage);
      })
-   
-
     
-    this.childs = this.childProvider.getListChildByUser('1');
-  
+    this.childs = this.childProvider.getListChildByUser('1');  
 
   }
-  onLinkChronoChild = (childId:number) => {
-    console.log('Chrono id:' + childId);
-    this.navCtrl.push(EnfantPage, {id: childId});
+  onLinkChrono = (childId:number) => {
+    console.log('childId:' + childId);
+    this.navCtrl.setRoot(ChronoPage, {id: childId});
   }
 
   onLinkDashboardChild = (childId:number) => {
     console.log('Dashboard id:' + childId);
-    this.navCtrl.push(DashboardPage, {id: childId});
+    this.navCtrl.setRoot(DashboardPage, {id: childId});
   }
 
   onLinkFormChild = (childId:number) => {

@@ -1,9 +1,16 @@
 <ion-header>
   <ion-navbar>
+    <!-->
     <button ion-button menuToggle>
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Famille</ion-title>
+  -->
+    <ion-title text-center>
+        <img class="img-icon-header" float-start src="assets/imgs/icon-family.png"  />
+      <span>Famille</span>
+      <logout></logout>
+    </ion-title>
+
   </ion-navbar>
 </ion-header>
 
@@ -40,7 +47,7 @@
                           {{child.playtime}}
                       </ion-col>                   
                       <ion-col col-3>   
-                        <img class="img-icon" src="assets/imgs/icon-chrono.png" (click)="onLinkChronoChild(childs.id)" /> 
+                        <img class="img-icon" src="assets/imgs/icon-chrono.png" (click)="onLinkChrono(childs.id)" /> 
                       </ion-col>
                       <ion-col col-3>   
                           <img class="img-icon" src="assets/imgs/icon-modif.png" (click)="onLinkChronoChild(childs.id)" /> 
@@ -57,7 +64,6 @@
     </ion-list>
     
   <button ion-button full (click)="onLinkFormEnfant(0)">Ajouter un enfant</button>
-  <logout></logout> <!-- bouton déconnexion-->
 </ion-content>  
   
     

@@ -7,6 +7,7 @@ import { HomePage } from '../pages/home/home';
 import { RegisterPage } from '../pages/register/register';
 import { FamillePage } from '../pages/famille/famille';
 import { ConnexionPage } from '../pages/connexion/connexion';
+import { ChronoPage } from '../pages/chrono/chrono';
 
 @Component({
   templateUrl: 'app.html'
@@ -15,7 +16,7 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   // page par défaut
-  rootPage: any = FamillePage;
+  rootPage: any = ChronoPage;
 
   pages: Array<{title: string, component: any}>;
 
@@ -47,5 +48,7 @@ export class MyApp {
     // we wouldn't want the back button to show in this scenario
     this.nav.setRoot(page.component);
   }
+
+ 
   
 }

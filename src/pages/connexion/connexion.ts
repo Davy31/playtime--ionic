@@ -73,9 +73,9 @@ export class ConnexionPage {
        if(data.success){
           
            // stocke les identifiants        
-     this.storage.set('user_id', data.result.userId);
-     this.storage.set('user_username', form.controls['username'].value);
-     this.storage.set('user_email', form.controls['email'].value);  
+     this.storage.set('playtime_user_id', data.result.userId);
+     this.storage.set('playtime_user_username', form.controls['username'].value);
+     this.storage.set('playtime_user_email', form.controls['email'].value);  
      this.toastProvider.presentToast('Inscription validée');   
 
        }else{

@@ -10,6 +10,7 @@ import { FamillePage } from '../pages/famille/famille';
 import { EnfantPage } from '../pages/enfant/enfant';
 import { ConnexionPage } from '../pages/connexion/connexion';
 import { DashboardPage } from '../pages/dashboard/dashboard';
+import { ChronoPage } from '../pages/chrono/chrono';
 import { ModalActionPage } from '../pages/modal-action/modal-action';
 import { LogoutComponent } from '../components/logout/logout';
 import { HttpClientModule} from '@angular/common/http';
@@ -22,7 +23,7 @@ import { UserProvider} from '../providers/api-base/user';
 import { ChildProvider} from '../providers/api-base/child';
 import { ActionProvider} from '../providers/api-base/action';
 import { DashboardProvider} from '../providers/api-base/dashboard';
-
+import { TextToSpeech } from '@ionic-native/text-to-speech';
 
 
 @NgModule({
@@ -36,7 +37,8 @@ import { DashboardProvider} from '../providers/api-base/dashboard';
     EnfantPage,
     DashboardPage,
     ModalActionPage,
-    ConnexionPage
+    ConnexionPage,
+    ChronoPage
   ],
   imports: [
     BrowserModule,
@@ -55,7 +57,8 @@ import { DashboardProvider} from '../providers/api-base/dashboard';
     EnfantPage,
     DashboardPage,
     ModalActionPage,
-    ConnexionPage
+    ConnexionPage,
+    ChronoPage
   ],
   providers: [
     StatusBar,
@@ -65,7 +68,8 @@ import { DashboardProvider} from '../providers/api-base/dashboard';
     UserProvider,
     ChildProvider,
     ActionProvider,
-    DashboardProvider
+    DashboardProvider,
+    TextToSpeech
   ]
 })
 export class AppModule {}

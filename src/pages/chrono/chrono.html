@@ -1,0 +1,46 @@
+<!--
+  Generated template for the ChronoPage page.
+
+  See http://ionicframework.com/docs/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+  <ion-navbar>
+    <ion-title >
+        <img class="img-icon-header" float-start src="assets/imgs/icon-chrono.png"  />
+       LINE
+      <logout></logout>
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+{{afficheTemps}}
+
+<ion-fab middle center *ngIf="!isRunning">
+    <button  ion-fab  (click)="onStartChrono()" color="secondary"><ion-icon >START</ion-icon></button>
+</ion-fab>
+<ion-fab middle center *ngIf="isRunning">
+  <button  ion-fab  (click)="onStopChrono()" color="danger"><ion-icon >STOP</ion-icon></button>
+</ion-fab>
+
+</ion-content>
+
+<ion-footer>
+    <ion-toolbar>
+      <ion-grid>
+        <ion-row>
+            <ion-col col-3 text-center>
+                <img class="img-icon-footer"   src="assets/imgs/icon-family.png"  />    
+            </ion-col>
+
+          <ion-col col-6 text-center>PLAYTIME</ion-col>
+
+            <ion-col col-3 text-center>
+                <img class="img-icon-footer"   src="assets/imgs/icon-tbb.png"  />
+            </ion-col>
+        </ion-row>
+    </ion-grid>
+    </ion-toolbar>            
+  </ion-footer>
