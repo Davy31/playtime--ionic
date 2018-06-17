@@ -5,7 +5,8 @@ import { DashboardProvider} from '../../providers/api-base/dashboard';
 import { ToastProvider }  from '../../providers/toast/toast';
 import { UserProvider} from '../../providers/api-base/user';
 import { ChildProvider} from '../../providers/api-base/child';
-import { ModalActionPage } from '../../pages/modal-action/modal-action';
+import { FamillePage }  from '../../pages/famille/famille';
+import { ChronoPage }  from '../../pages/chrono/chrono';
 import { ModalController } from 'ionic-angular';
 /**
  * Generated class for the DashboardPage page.
@@ -32,8 +33,8 @@ export class DashboardPage {
   listActionsFree = [];
 
   selectOptions = {
-    title: 'Pizza Toppings',
-    subTitle: 'Select your toppings',
+    title: 'Selectionner  des actions',
+    subTitle: '',
     mode: 'md'
   };
   
@@ -46,7 +47,6 @@ export class DashboardPage {
          private childProvider: ChildProvider,
          private actionProvider : ActionProvider,
          private dashboardProvider: DashboardProvider,
-         public modalCtrl: ModalController
           ) {}
 
 
@@ -84,8 +84,13 @@ export class DashboardPage {
     console.log("click +");
   }
 
+  onLinkFamily = () => {
+    this.navCtrl.setRoot(FamillePage);
+  }
   
-  
+  onLinkChrono = () => {
+    this.navCtrl.setRoot(ChronoPage);
+  }
    
 
 }

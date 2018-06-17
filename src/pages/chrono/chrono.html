@@ -7,24 +7,32 @@
 <ion-header>
   <ion-navbar>
     <ion-title >
-        <img class="img-icon-header" float-start src="assets/imgs/icon-chrono.png"  />
-       LINE
+      <img class="img-icon-header" float-start src="assets/imgs/icon-chrono.png"  />
+      LINE
       <logout></logout>
     </ion-title>
   </ion-navbar>
 </ion-header>
 
 <ion-content padding>
+    <ion-grid>
 
-{{afficheTemps}}
+      <ion-row>
+          <ion-col col-12 text-center col-top class="display-text">{{afficheTemps}}</ion-col>        
+      </ion-row>
 
-<ion-fab middle center *ngIf="!isRunning">
-    <button  ion-fab  (click)="onStartChrono()" color="secondary"><ion-icon >START</ion-icon></button>
-</ion-fab>
-<ion-fab middle center *ngIf="isRunning">
-  <button  ion-fab  (click)="onStopChrono()" color="danger"><ion-icon >STOP</ion-icon></button>
-</ion-fab>
+      <ion-row>
+          <ion-col co-12 col-bottom>
+              <ion-fab  center *ngIf="!isRunning">
+                  <button  ion-fab  (click)="onStartChrono()" color="secondary"><ion-icon >START</ion-icon></button>
+              </ion-fab>
+              <ion-fab  center *ngIf="isRunning">
+                <button  ion-fab  (click)="onStopChrono()" color="danger"><ion-icon >STOP</ion-icon></button>
+              </ion-fab>
+          </ion-col>
+      </ion-row>
 
+    </ion-grid>
 </ion-content>
 
 <ion-footer>
@@ -32,13 +40,13 @@
       <ion-grid>
         <ion-row>
             <ion-col col-3 text-center>
-                <img class="img-icon-footer"   src="assets/imgs/icon-family.png"  />    
+                <img class="img-icon-footer" src="assets/imgs/icon-family.png" (click)="onLinkFamily()" />    
             </ion-col>
 
           <ion-col col-6 text-center>PLAYTIME</ion-col>
 
             <ion-col col-3 text-center>
-                <img class="img-icon-footer"   src="assets/imgs/icon-tbb.png"  />
+                <img class="img-icon-footer" src="assets/imgs/icon-tbb.png" (click)="onLinkDashboard()" />
             </ion-col>
         </ion-row>
     </ion-grid>

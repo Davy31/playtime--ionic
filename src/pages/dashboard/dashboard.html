@@ -3,7 +3,7 @@
 
   <ion-navbar>
     
-      <ion-title r>
+      <ion-title >
       <img class="img-icon-header"  float-start src="assets/imgs/icon-tbb.png"  />
       Line
       <logout></logout>      
@@ -15,10 +15,11 @@
 
 <ion-content no-padding>
 
-    <ion-fab top right>
-        <button ion-fab (click)="onOpenSelectAction()"><ion-icon name="add"></ion-icon></button>
+    <!---
+    <ion-fab  edge right>
+        <button ion-fab mini (click)="onOpenSelectAction()"><ion-icon name="add"></ion-icon></button>
     </ion-fab>
-
+  -->
     <ion-grid class="select-card">
         <ion-row>
   
@@ -36,7 +37,12 @@
             <div class="badge-title-time-recap" >Restant</div>
             <ion-badge class="badge-time-recap">01h10</ion-badge>
           </ion-col>
-  
+
+          <ion-col col-3 text-center  >
+            <ion-icon class="icon-add-action" name="add-circle" (click)="onOpenSelectAction()"></ion-icon>
+          </ion-col>
+           
+         
           </ion-row>   
         </ion-grid>
       
@@ -67,13 +73,13 @@
       <ion-grid>
         <ion-row>
             <ion-col col-3 text-center>
-                <img class="img-icon-footer"   src="assets/imgs/icon-family.png"  />    
+                <img class="img-icon-footer" src="assets/imgs/icon-family.png" (click)="onLinkFamily()" />    
             </ion-col>
 
           <ion-col col-6 text-center>PLAYTIME</ion-col>
 
             <ion-col col-3 text-center>
-                <img class="img-icon-footer"   src="assets/imgs/icon-tbb.png"  />
+                <img class="img-icon-footer" src="assets/imgs/icon-chrono.png" (click)="onLinkChrono()"  />
             </ion-col>
         </ion-row>
     </ion-grid>

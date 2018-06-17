@@ -5,7 +5,7 @@
       <ion-icon name="menu"></ion-icon>
     </button>
   -->
-    <ion-title text-center>
+    <ion-title text-left>
         <img class="img-icon-header" float-start src="assets/imgs/icon-family.png"  />
       <span>Famille</span>
       <logout></logout>
@@ -24,8 +24,8 @@
           <ion-grid no-padding>
             <ion-row>
                 <ion-col col-4>
-                      <img class="img-family-child" src="assets/imgs/boy.png" *ngIf="child.sexe" />
-                      <img class="img-family-child" src="assets/imgs/girl.png" *ngIf="!child.sexe" />                    
+                      <img class="img-family-child" src="assets/imgs/boy.png" *ngIf="child.gender=='M'" />
+                      <img class="img-family-child" src="assets/imgs/girl.png" *ngIf="child.gender=='F'" />                    
               </ion-col>
               <ion-col col-8>
                   <ion-grid>
@@ -41,16 +41,17 @@
                       </ion-row>
                     <ion-row>
                       <ion-col col-3>
-                        <img class="img-icon" src="assets/imgs/icon-tbb.png" (click)="onLinkDashboardChild(childs.id)"  />
+                        <img class="img-icon" src="assets/imgs/icon-tbb.png" (click)="onLinkDashboardChild(child.id)"  />
                       </ion-col>
                       <ion-col col-3 class="vertical-align">                   
                           {{child.playtime}}
                       </ion-col>                   
                       <ion-col col-3>   
-                        <img class="img-icon" src="assets/imgs/icon-chrono.png" (click)="onLinkChrono(childs.id)" /> 
+                        <img class="img-icon" src="assets/imgs/icon-chrono.png" (click)="onLinkChrono(child.id)" /> 
                       </ion-col>
-                      <ion-col col-3>   
-                          <img class="img-icon" src="assets/imgs/icon-modif.png" (click)="onLinkChronoChild(childs.id)" /> 
+                      <ion-col col-3 col-bottom> 
+                          <ion-icon name="person" float-end (click)="onLinkFormChild(child.id)"></ion-icon>  
+                          <!--<img class="img-icon" src="assets/imgs/icon-modif.png" (click)="onLinkChronoChild(childs.id)" /> -->
                         </ion-col>
                     </ion-row>
                 </ion-grid>
@@ -63,7 +64,7 @@
       </ion-col> 
     </ion-list>
     
-  <button ion-button full (click)="onLinkFormEnfant(0)">Ajouter un enfant</button>
+  <button ion-button full (click)="onLinkFormChild(0)">Ajouter un enfant</button>
 </ion-content>  
   
     

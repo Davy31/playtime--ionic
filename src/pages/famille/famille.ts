@@ -7,7 +7,6 @@ import { ConnexionPage }  from '../../pages/connexion/connexion';
 import { ChronoPage }  from '../../pages/chrono/chrono';
 import { UserProvider} from '../../providers/api-base/user';
 import { ChildProvider} from '../../providers/api-base/child';
-import { NgForm } from '@angular/forms';
 import { Storage } from '@ionic/storage';
 
 /**
@@ -39,38 +38,59 @@ export class FamillePage {
               private childProvider: ChildProvider,
               private storage: Storage
              
-            ) {
-  }
+            ) {}
 
 
-  ionViewDidLoad() {  
+  ionViewDidLoad() {
 
     console.clear();
-    this.storage.get('user_id').then((val) =>{
+    console.log("famille");
+    this.storage.get('playtime_user_id').then((val) =>{
     
       if ((val == null)){
         this.toastProvider.presentToast("Vous n'êtes pas connecté");
-       // this.navCtrl.setRoot( ConnexionPage );
+        this.navCtrl.setRoot( ConnexionPage );
       }else{
+         /// *****Connecté *******************/
         this.user_id = val;
         this.isAuth=true;
+        console.log("id= " + this.user_id);
+        this.getListChild(this.user_id);
       }
      }).catch((err) =>{
        this.toastProvider.presentToast("Vous n'êtes pas connecté");
-      // this.navCtrl.setRoot( ConnexionPage);
+       this.navCtrl.setRoot( ConnexionPage);
      })
 
-     this.storage.get('user_username').then((val) =>{
+     this.storage.get('playtime_user_username').then((val) =>{
       this.user_username= val
       console.log(this.user_username) ;
      }).catch((err) =>{
        this.toastProvider.presentToast("Vous n'êtes pas connecté");
-       //this.navCtrl.setRoot( ConnexionPage);
-     })
+       this.navCtrl.setRoot( ConnexionPage);
+     })    
     
-    this.childs = this.childProvider.getListChildByUser('1');  
-
   }
+
+
+   /**********recupere sur la base la liste des enfants************************************/
+  getListChild = (param_user_id:number) =>{
+    
+    this.childProvider.getListChildByUser(param_user_id)
+   .subscribe((data:any) => {
+     if(data.success){ 
+      this.childs = data.result;
+
+    }else{  
+     this.toastProvider.presentToast(data.message);
+    }
+   
+  }, (err: any) => {
+   this.toastProvider.presentToast('Inscription impossible :'+ err);
+   console.log(err)
+  }); 
+}
+
   onLinkChrono = (childId:number) => {
     console.log('childId:' + childId);
     this.navCtrl.setRoot(ChronoPage, {id: childId});
@@ -81,13 +101,9 @@ export class FamillePage {
     this.navCtrl.setRoot(DashboardPage, {id: childId});
   }
 
-  onLinkFormChild = (childId:number) => {
-    console.log('Enfant id:' + childId);
-    //this.navCtrl.push(EnfantPage, {id: childId});
+  onLinkFormChild = (param_childId:number) => {
+    this.navCtrl.setRoot(EnfantPage, {userId: this.user_id,childId: param_childId} );
   }
-
- 
-  
 
   
 

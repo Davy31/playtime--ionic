@@ -18,12 +18,15 @@ import { FamillePage } from '../famille/famille';
 })
 export class EnfantPage {
 
-  isAuth: boolean;
-  userAuthId: string;
+  
+  user_id: number;
   stateConnexion: string;
-  childId:number;
+  child_id:number;  
+  firstname:string; 
+  nickname:string;
+  sexe:string ;
+  childDetail: any;
   api_result: any;
-  childSexe:number  = 0;
 
   constructor(public navCtrl: NavController,
      public navParams: NavParams,
@@ -35,33 +38,86 @@ export class EnfantPage {
   ionViewDidLoad() {
     console.clear();
     console.log('ionViewDidLoad EnfantPage');
-  }
-  onSubmit = (formChild:NgForm) => {
+    console.log(this.navParams.get('childId'));
+    console.log(this.navParams.get('userId'));
 
-    if(formChild.controls['firstname'].invalid){
+    // initialise le formulaire
+    this.child_id = this.navParams.get('childId');
+    this.user_id = this.navParams.get('userId');
+
+    if(this.child_id===0){
+      /******************** Ajout enfant ************************* */
+      this.sexe = 'M';
+    }else{
+      /******************** Modif enfant ************************* */
+      this.childDetail= this.childProvider.getDetailChild(this.child_id)
+      .subscribe((data:any) => {
+        if(data.success){ 
+          this.childDetail = data.result[0];
+          this.firstname =this.childDetail.firstname;
+          this.nickname =this.childDetail.nickname;
+          this.sexe =this.childDetail.gender;
+   
+       }else{  
+         console.log(data)
+        this.toastProvider.presentToast(data.message);
+       }
+      
+     }, (err: any) => {
+      this.toastProvider.presentToast('Inscription impossible :'+ err);
+      console.log(err)
+     }); 
+   }
+  
+  }
+
+  /******************************** Soummsion Formulaire *********************************** */
+  onSubmit = (form:NgForm) => {    
+    
+    // Teste le prénom
+    if(form.controls['firstname'].invalid){
       this.toastProvider.presentToast('Le prénom doit être renseigné !!!');
       return;
     }
 
-    /********Ajout de l'enfant sur la base de données mySql via l'api************* */
-
-    this.api_result = this.childProvider.addChild(this.userAuthId,formChild.controls['firstname'].value,formChild.controls['nickname'].value,formChild.controls['sexe'].value);
-    
-    if(this.api_result[0].sucess){ 
-         
-      this.toastProvider.presentToast("Fiche enfant créee");
-        //----------- Retour Home            
-        this.navCtrl.setRoot( FamillePage);
+    if(this.child_id===0){
+     
+      /******************** Ajout enfant ************************* */
+      this.childDetail= this.childProvider.addChild(this.user_id, form.controls['firstname'].value, form.controls['nickname'].value, form.controls['sexe'].value)
+      .subscribe((data:any) => {
+        if(data.success){          
+          this.toastProvider.presentToast('Enfant ajouté');
+          this.navCtrl.setRoot(FamillePage);
+       }else{  
+         console.log(data);
+        this.toastProvider.presentToast(data.message);
+       }
       
-      }else{
-        this.toastProvider.presentToast("Création enfant impossible");
-      }
-    
-  }
+     }, (err: any) => {
+      this.toastProvider.presentToast('ajout de l\'enfant impossible :'+ err);
+     }); 
+      
+    }else{
+      /******************** Modif enfant ************************* */
+      this.childDetail= this.childProvider.updateChild(this.user_id, form.controls['firstname'].value, form.controls['nickname'].value, form.controls['sexe'].value)
+      .subscribe((data:any) => {
+        if(data.success){          
+          this.toastProvider.presentToast('Enfant modifié');
+         // this.navCtrl.setRoot(FamillePage);
+       }else{  
+         console.log(data);
+        this.toastProvider.presentToast(data.message);
+       }
+      
+     }, (err: any) => {
+      this.toastProvider.presentToast('Modification de l\'enfant impossible :'+ err);
+     }); 
+    }
 
-  
+  }
+  onLinkCancel = () => {
+  this.navCtrl.setRoot(FamillePage);
+   }
 
 
 }
-
-

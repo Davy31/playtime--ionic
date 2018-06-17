@@ -27981,13 +27981,20 @@ ion-navbar.toolbar {
   background-color: #adbdca;
 }
 
-/***************** footer  */
+/***************** header  ****************************/
 .img-icon-header {
-  width: 20px;
+  width: 30px;
+  margin-right: 10px;
 }
 
+/***************** footer  ****************************/
 .img-icon-footer {
   width: 30px;
+}
+
+page-chrono .display-text {
+  font-size: 70px;
+  height: 200px;
 }
 
 page-dashboard .select {
@@ -28083,6 +28090,12 @@ page-dashboard .badge-title-time-recap {
 
 page-dashboard .badge-time-recap {
   padding: 5px;
+}
+
+page-dashboard .icon-add-action {
+  margin-top: 10px;
+  font-size: 30px;
+  color: #488aff;
 }
 
 page-famille .ion-card-title {

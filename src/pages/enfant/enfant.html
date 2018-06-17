@@ -1,9 +1,10 @@
 <ion-header>
   <ion-navbar>
-    <button ion-button menuToggle>
-      <ion-icon name="Enfant"></ion-icon>
-    </button>
-    <ion-title>Enfant</ion-title>
+    <ion-title text-left>
+      <img class="img-icon-header" float-start src="assets/imgs/icon-child.png"  />
+    <span>Enfant</span>
+    <logout></logout>
+  </ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -11,37 +12,38 @@
 
 <ion-content padding>
 
-    <form (ngSubmit)="onSubmit(formChild)" #formChild="ngForm">
-  <ion-list>
+  <form (ngSubmit)="onSubmit(form)" #form="ngForm">
 
-    <ion-item>
-      <ion-label stacked>Prénom  </ion-label>
-      <ion-input type="text" required  ngModel name="firstname"  ></ion-input>
-    </ion-item>
+    <ion-list>
+
+      <ion-item>
+        <ion-label stacked>Prénom </ion-label>
+        <ion-input type="text" required  [(ngModel)]='firstname' name="firstname" minlength="3" maxlength="100" ></ion-input>
+      </ion-item>
   
-    <ion-item>
-      <ion-label stacked>Surnom</ion-label>
-      <ion-input type="text" ngModel name="nickname"></ion-input>
-    </ion-item>
+      <ion-item>
+        <ion-label stacked>Surnom (non obligatoire)</ion-label>
+        <ion-input type="text" [(ngModel)]='nickname' name="nickname" ngModel  minlength="3" maxlength="100"></ion-input>
+      </ion-item>
 
-    <ion-list radio-group [(ngModel)]="childSexe" name=sexe>
+      <ion-list radio-group [(ngModel)]="sexe" name=sexe>
         <ion-label>Sexe</ion-label>
-      <ion-item>
-        <ion-label>Fille</ion-label>
-        <ion-radio value=0 ></ion-radio>
-      </ion-item>
-      <ion-item>
-        <ion-label>Garçon</ion-label>
-        <ion-radio value=1  ></ion-radio>
-      </ion-item>
-     
+        <ion-item>
+          <ion-label>Fille</ion-label>
+          <ion-radio value='F' ></ion-radio>
+        </ion-item>
+        <ion-item>
+          <ion-label>Garçon</ion-label>
+          <ion-radio value='M'  ></ion-radio>
+        </ion-item>     
+      </ion-list>
+  
     </ion-list>
 
-    
-  
-  </ion-list>
-
-  <button ion-button full type="submit" >Validation</button>
+    <button ion-button  type="submit"float-start >Validation</button>
+    <button ion-button  type="button"float-start  color=danger >Suppression</button>
+    <button ion-button  type="button" float-end  (click)="onLinkCancel()">Annuler  </button>
 
   </form>
+
 </ion-content>

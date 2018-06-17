@@ -9,54 +9,62 @@ export class ChildProvider {
   
   constructor(public http: HttpClient) {}
   
-  addChild = (user_auth_id: string, child_firstname: string, child_nickname: string, child_sexe) =>{ 
-   /*
-      const api_key = 25;
-      const uri_movie = 'https://api.themoviedb.org/3/movie/'+ user_id +'?api_key=' + api_key;
-        return this.http.get(uri_movie);
-      */
-
-      //const tab_retour = [{sucess: true}];
-      const tab_retour = [{sucess: true}];
+  
+  addChild = (user_id: any, child_firstname: string, child_nickname: string, child_sexe: string) => {     
       
-      //delete user sur fire base
-      //this.afAuth.auth.currentUser.delete;
+      console.log(user_id);
+      console.log(child_firstname);
+      console.log(child_nickname);
+      console.log(child_sexe);
 
-      return tab_retour;
+    let postData = new FormData();
+      postData.append('idUser' , user_id);
+      postData.append('firstname' , child_firstname);
+      postData.append('nickname' , child_nickname);
+      postData.append('gender' , child_sexe);
+    const uri_api = 'http://localhost/playtime/child/child_add.php';
+    let tab_retour =  this.http.post(uri_api,postData);
+
+    return tab_retour
 
   }
 
-  getListChildByUser = (user_auth_id: string) => {
-/*
-    const uri_child = 'http://localhost/playtime/child.php?id=1';
-    let childs =  this.http.get(uri_child)
-    .map( (resultat) => {
-      return resultat;
-    })
-    .catch(this.handleError)
-  }
-    */
-    let childs=[
-        {id: 1,firstname: "Pierre Henri Michel" ,nickname: null, sexe: 1,playtime: '01h10'},
-        {id: 2,firstname: "Cèline" ,nickname: "Line", sexe: 0,playtime: '00h40'}
-    ];
-    
-    return  childs;
-  }
-
-    getDetailChild = (child_id: number) =>{
-      let child:any
-      if(child_id === 1){
-        child = {id: 1,firstname: "Pierre" ,nickname: null, sexe: 1,playtime: '01h10' };
-      }else{
-        child =  {id: 2,firstname: "Cèline" ,nickname: "Line", sexe: 0,playtime: '00h40'};
-      }
+  updateChild = (child_id: any, child_firstname: string, child_nickname: string, child_sexe: string) => {     
       
-      return child;
-   
-    }
+    console.log('idChild= ' + child_id);
+    console.log('firstname= ' +child_firstname);
+    console.log('nickname= ' +child_nickname);
+    console.log('sexe= ' +child_sexe);
+
+  let postData = new FormData();
+    postData.append('idChild' , child_id);
+    postData.append('firstname' , child_firstname);
+    postData.append('nickname' , child_nickname);
+    postData.append('gender' , child_sexe);
+  const uri_api = 'http://localhost/playtime/child/child_update.php';
+  let tab_retour =  this.http.post(uri_api,postData);
+
+  return tab_retour
+
+}
+  
+
+  getListChildByUser = (user_id: number) => {
+    const uri_child = 'http://localhost/playtime/child/child_list.php?id='+ user_id;
+    let tab_retour =  this.http.get(uri_child);
+    return tab_retour;
+  }
+  
+  
+
+  getDetailChild = (child_id: number) => {
+    const uri_child = 'http://localhost/playtime/child/child_detail.php?id='+ child_id;  
+    let tab_retour =  this.http.get(uri_child);  
+    return tab_retour;
   
   }
+
+}
 
 
 

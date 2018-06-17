@@ -14,6 +14,7 @@ import { ChronoPage } from '../pages/chrono/chrono';
 import { ModalActionPage } from '../pages/modal-action/modal-action';
 import { LogoutComponent } from '../components/logout/logout';
 import { HttpClientModule} from '@angular/common/http';
+import { HttpModule } from '@angular/http'
 import { StatusBar } from '@ionic-native/status-bar';
 import { SplashScreen } from '@ionic-native/splash-screen';
 import { IonicStorageModule } from '@ionic/storage';
@@ -24,6 +25,8 @@ import { ChildProvider} from '../providers/api-base/child';
 import { ActionProvider} from '../providers/api-base/action';
 import { DashboardProvider} from '../providers/api-base/dashboard';
 import { TextToSpeech } from '@ionic-native/text-to-speech';
+import { Vibration } from '@ionic-native/vibration';
+import { AuthentProvider } from '../providers/authent/authent';
 
 
 @NgModule({
@@ -44,6 +47,7 @@ import { TextToSpeech } from '@ionic-native/text-to-speech';
     BrowserModule,
     IonicModule.forRoot(MyApp),
     HttpClientModule,
+    HttpModule,
     IonicStorageModule.forRoot()
   ],
   bootstrap: [IonicApp],
@@ -69,7 +73,10 @@ import { TextToSpeech } from '@ionic-native/text-to-speech';
     ChildProvider,
     ActionProvider,
     DashboardProvider,
-    TextToSpeech
+    TextToSpeech,
+    Vibration,
+    AuthentProvider
+    
   ]
 })
 export class AppModule {}

@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { NavController, NavParams } from 'ionic-angular';
 import { ToastProvider } from '../../providers/toast/toast';
-import { HomePage } from '../home/home';
 import { NgForm } from '@angular/forms';
 
 import { FamillePage } from '../famille/famille';
@@ -31,8 +30,7 @@ export class LoginPage {
 
   onSubmit = (form:NgForm) => {
 
-    // Teste le formulaire
-    
+    //******** Teste le formulaire    ******
 
     // si formulaire invalide affiche la première erreur
     if(form.controls['email'].invalid){

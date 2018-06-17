@@ -8,6 +8,7 @@ import { RegisterPage } from '../pages/register/register';
 import { FamillePage } from '../pages/famille/famille';
 import { ConnexionPage } from '../pages/connexion/connexion';
 import { ChronoPage } from '../pages/chrono/chrono';
+import { DashboardPage } from '../pages/dashboard/dashboard';
 
 @Component({
   templateUrl: 'app.html'
@@ -16,7 +17,7 @@ export class MyApp {
   @ViewChild(Nav) nav: Nav;
 
   // page par défaut
-  rootPage: any = ChronoPage;
+  rootPage: any = FamillePage;
 
   pages: Array<{title: string, component: any}>;
 
@@ -27,9 +28,11 @@ export class MyApp {
     this.pages = [
       //{ title: 'Home', component: HomePage },
      // { title: 'List', component: ListPage },
-      { title: 'Inscription', component: RegisterPage },
+      { title: 'Chrono', component: ChronoPage },
       { title: 'Connexion', component: ConnexionPage },
-      { title: 'Ma famille', component: FamillePage }
+      { title: 'Ma famille', component: FamillePage },
+      { title: 'TBB', component: DashboardPage },
+      
     ];
 
   }
