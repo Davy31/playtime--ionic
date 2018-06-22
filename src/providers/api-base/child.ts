@@ -22,7 +22,7 @@ export class ChildProvider {
       postData.append('firstname' , child_firstname);
       postData.append('nickname' , child_nickname);
       postData.append('gender' , child_sexe);
-    const uri_api = 'http://localhost/playtime/child/child_add.php';
+    const uri_api = 'https://davy3165.000webhostapp.com/child/child_add.php';
     let tab_retour =  this.http.post(uri_api,postData);
 
     return tab_retour
@@ -41,7 +41,7 @@ export class ChildProvider {
     postData.append('firstname' , child_firstname);
     postData.append('nickname' , child_nickname);
     postData.append('gender' , child_sexe);
-  const uri_api = 'http://localhost/playtime/child/child_update.php';
+  const uri_api = 'https://davy3165.000webhostapp.com/child/child_update.php';
   let tab_retour =  this.http.post(uri_api,postData);
 
   return tab_retour
@@ -50,15 +50,17 @@ export class ChildProvider {
   
 
   getListChildByUser = (user_id: number) => {
-    const uri_child = 'http://localhost/playtime/child/child_list.php?id='+ user_id;
+    const uri_child = 'https://davy3165.000webhostapp.com/child/child_list.php?id='+ user_id;
     let tab_retour =  this.http.get(uri_child);
+    console.log(' provider -liste famille : '+ uri_child);
+    console.log(tab_retour)
     return tab_retour;
   }
   
   
 
   getDetailChild = (child_id: number) => {
-    const uri_child = 'http://localhost/playtime/child/child_detail.php?id='+ child_id;  
+    const uri_child = 'https://davy3165.000webhostapp.com/child/child_detail.php?id='+ child_id;  
     let tab_retour =  this.http.get(uri_child);  
     return tab_retour;
   

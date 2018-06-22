@@ -86,7 +86,7 @@ export class FamillePage {
     }
    
   }, (err: any) => {
-   this.toastProvider.presentToast('Inscription impossible :'+ err);
+   this.toastProvider.presentToast('Pas d\'enfants :'+ err);
    console.log(err)
   }); 
 }
