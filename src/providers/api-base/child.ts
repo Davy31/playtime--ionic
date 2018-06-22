@@ -24,6 +24,8 @@ export class ChildProvider {
       postData.append('gender' , child_sexe);
     const uri_api = 'https://davy3165.000webhostapp.com/child/child_add.php';
     let tab_retour =  this.http.post(uri_api,postData);
+    console.log('Provider - détail enfant : ' + user_id + " " + child_firstname + " " + child_nickname+ " " + child_sexe+ " " + uri_api);
+    console.log(tab_retour)
 
     return tab_retour
 
@@ -62,6 +64,8 @@ export class ChildProvider {
   getDetailChild = (child_id: number) => {
     const uri_child = 'https://davy3165.000webhostapp.com/child/child_detail.php?id='+ child_id;  
     let tab_retour =  this.http.get(uri_child);  
+    console.log(' provider - détail enfant : '+ uri_child);
+    console.log(tab_retour)
     return tab_retour;
   
   }
