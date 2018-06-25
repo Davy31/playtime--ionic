@@ -99,11 +99,11 @@ export class EnfantPage {
       
     }else{
       /******************** Modif enfant ************************* */
-      this.childDetail= this.childProvider.updateChild(this.user_id, form.controls['firstname'].value, form.controls['nickname'].value, form.controls['sexe'].value)
+      this.childDetail= this.childProvider.updateChild(this.child_id, form.controls['firstname'].value, form.controls['nickname'].value, form.controls['sexe'].value)
       .subscribe((data:any) => {
         if(data.success){          
           this.toastProvider.presentToast('Enfant modifié');
-         // this.navCtrl.setRoot(FamillePage);
+          this.navCtrl.setRoot(FamillePage);
        }else{  
          console.log(data);
         this.toastProvider.presentToast(data.message);

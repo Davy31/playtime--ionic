@@ -12,6 +12,9 @@ export class ChildProvider {
   
   addChild = (user_id: any, child_firstname: string, child_nickname: string, child_sexe: string) => {     
       
+    if(child_nickname === undefined ){
+      child_nickname= "";
+    }
       console.log(user_id);
       console.log(child_firstname);
       console.log(child_nickname);
@@ -31,12 +34,16 @@ export class ChildProvider {
 
   }
 
-  updateChild = (child_id: any, child_firstname: string, child_nickname: string, child_sexe: string) => {     
+  updateChild = (child_id: any, child_firstname: string, child_nickname: string, child_sexe: string) => {    
+    
+    if(child_nickname === undefined ){
+      child_nickname= "";
+    }    
       
     console.log('idChild= ' + child_id);
-    console.log('firstname= ' +child_firstname);
-    console.log('nickname= ' +child_nickname);
-    console.log('sexe= ' +child_sexe);
+    console.log('firstname= ' + child_firstname);
+    console.log('nickname= ' + child_nickname);
+    console.log('sexe= ' + child_sexe);
 
   let postData = new FormData();
     postData.append('idChild' , child_id);
@@ -44,8 +51,9 @@ export class ChildProvider {
     postData.append('nickname' , child_nickname);
     postData.append('gender' , child_sexe);
   const uri_api = 'https://davy3165.000webhostapp.com/child/child_update.php';
+  console.log(uri_api);
   let tab_retour =  this.http.post(uri_api,postData);
-
+    console.log(tab_retour);
   return tab_retour
 
 }
