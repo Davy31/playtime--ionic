@@ -4,6 +4,7 @@ import { ToastProvider }  from '../../providers/toast/toast';
 import { NgForm } from '@angular/forms';
 import { ChildProvider} from '../../providers/api-base/child';
 import { FamillePage } from '../famille/famille';
+import { AlertController } from 'ionic-angular';
 
 /**
  * Generated class for the EnfantPage page.
@@ -29,9 +30,10 @@ export class EnfantPage {
   api_result: any;
 
   constructor(public navCtrl: NavController,
-     public navParams: NavParams,
-     public toastProvider : ToastProvider,
-      private childProvider: ChildProvider
+    public navParams: NavParams,
+    public toastProvider : ToastProvider,
+    private childProvider: ChildProvider,
+    public alertCtrl: AlertController
   ) {}
 
 
@@ -115,6 +117,27 @@ export class EnfantPage {
     }
 
   }
+
+  onChildDelete = () => { 
+     const confirm = this.alertCtrl.create({
+    title: 'Voulez-vous vraiment vous vraiment enlver cet enfant de \'application ?',
+    buttons: [
+      {
+        text: 'Annuler',
+        handler: () => {
+          console.log('Annuler');
+        }
+      },
+      {
+        text: 'OUI',
+        handler: () => {          
+          this.childProvider.deleteChild(this.child_id);
+        }
+      }
+    ]
+  });
+  confirm.present();
+}
   onLinkCancel = () => {
   this.navCtrl.setRoot(FamillePage);
    }
