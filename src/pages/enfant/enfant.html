@@ -41,7 +41,7 @@
     </ion-list>
 
     <button ion-button  type="submit" float-start >Validation</button>
-    <button ion-button  type="button" float-start  color=danger >Suppression</button>
+    <button ion-button  type="button" float-start (click)="onChildDelete()" color=danger >Suppression</button>
     <button ion-button  type="button" float-end  (click)="onLinkCancel()">Annuler  </button>
 
   </form>

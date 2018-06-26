@@ -73,7 +73,7 @@ export class EnfantPage {
   
   }
 
-  /******************************** Soummsion Formulaire *********************************** */
+  /******************************** Soummission Formulaire *********************************** */
   onSubmit = (form:NgForm) => {    
     
     // Teste le prénom
@@ -120,7 +120,7 @@ export class EnfantPage {
 
   onChildDelete = () => { 
      const confirm = this.alertCtrl.create({
-    title: 'Voulez-vous vraiment vous vraiment enlver cet enfant de \'application ?',
+    title: 'Voulez-vous vraiment vous vraiment enlever  ' + this.firstname + ' de \'application ?',
     buttons: [
       {
         text: 'Annuler',
@@ -130,8 +130,22 @@ export class EnfantPage {
       },
       {
         text: 'OUI',
-        handler: () => {          
-          this.childProvider.deleteChild(this.child_id);
+        handler: () => {      
+           /******************** Modif enfant ************************* */
+      this.childDetail= this.childProvider.deleteChild(this.child_id)
+      .subscribe((data:any) => {
+        if(data.success){          
+          this.toastProvider.presentToast('Enfant enlevé de l\'application');
+          this.navCtrl.setRoot(FamillePage);
+       }else{  
+         console.log(data);
+        this.toastProvider.presentToast(data.message);
+       }
+      
+     }, (err: any) => {
+      this.toastProvider.presentToast('Suppression de l\'enfant impossible :'+ err);
+     });    
+          
         }
       }
     ]

@@ -61,29 +61,29 @@ export class ChildProvider {
 
 deleteChild = (child_id: number) => {
   const uri_child = 'https://davy3165.000webhostapp.com/child/child_delete.php?id='+ child_id;
-  let tab_retour =  this.http.get(uri_child);
-  console.log(' provider suppression enfant : '+ uri_child);
+  let tab_retour = this.http.get(uri_child);
+  console.log('provider suppression enfant : '+ uri_child);
   console.log(tab_retour)
   return tab_retour;
 } 
 
-  getListChildByUser = (user_id: number) => {
-    const uri_child = 'https://davy3165.000webhostapp.com/child/child_list.php?id='+ user_id;
-    let tab_retour =  this.http.get(uri_child);
-    console.log(' provider -liste famille : '+ uri_child);
-    console.log(tab_retour)
-    return tab_retour;
-  } 
+getListChildByUser = (user_id: number) => {
+  const uri_child = 'https://davy3165.000webhostapp.com/child/child_list.php?id='+ user_id;
+  let tab_retour =  this.http.get(uri_child);
+  console.log(' provider -liste famille : '+ uri_child);
+  console.log(tab_retour)
+  return tab_retour;
+} 
   
 
-  getDetailChild = (child_id: number) => {
-    const uri_child = 'https://davy3165.000webhostapp.com/child/child_detail.php?id='+ child_id;  
-    let tab_retour =  this.http.get(uri_child);  
-    console.log(' provider - détail enfant : '+ uri_child);
-    console.log(tab_retour)
-    return tab_retour;
-  
-  }
+getDetailChild = (child_id: number) => {
+  const uri_child = 'https://davy3165.000webhostapp.com/child/child_detail.php?id='+ child_id;  
+  let tab_retour =  this.http.get(uri_child);  
+  console.log(' provider - détail enfant : '+ uri_child);
+  console.log(tab_retour)
+  return tab_retour;
+
+}
 
 }
 
