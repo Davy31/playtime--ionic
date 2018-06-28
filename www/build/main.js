@@ -42,9 +42,9 @@ webpackEmptyAsyncContext.id = 163;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_toast_toast__ = __webpack_require__(32);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_api_base_child__ = __webpack_require__(58);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_api_base_child__ = __webpack_require__(59);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__famille_famille__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_dashboard_dashboard__ = __webpack_require__(59);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_dashboard_dashboard__ = __webpack_require__(46);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -194,12 +194,15 @@ var EnfantPage = /** @class */ (function () {
     };
     EnfantPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-enfant',template:/*ion-inline-start:"C:\Users\dlapeyrade\mes-projets\Playtime\Ionic\playtime--ionic\src\pages\enfant\enfant.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <ion-title text-left>\n\n      <img class="img-icon-header" float-start src="assets/imgs/icon-child.png"  />\n\n    <span>Enfant</span>\n\n    <logout></logout>\n\n  </ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n\n\n\n\n<ion-content padding>\n\n\n\n  <form (ngSubmit)="onSubmit(form)" #form="ngForm">\n\n\n\n    <ion-list>\n\n\n\n      <ion-item>\n\n        <ion-label stacked>Prénom </ion-label>\n\n        <ion-input type="text" required  [(ngModel)]=\'firstname\' name="firstname" minlength="3" maxlength="100" ></ion-input>\n\n      </ion-item>\n\n  \n\n      <ion-item>\n\n        <ion-label stacked>Surnom (non obligatoire)</ion-label>\n\n        <ion-input type="text" [(ngModel)]=\'nickname\' name="nickname" ngModel  minlength="3" maxlength="100"></ion-input>\n\n      </ion-item>\n\n\n\n      <ion-list radio-group [(ngModel)]="sexe" name=sexe>\n\n        <ion-label>Sexe</ion-label>\n\n        <ion-item>\n\n          <ion-label>Fille</ion-label>\n\n          <ion-radio value=\'F\'></ion-radio>\n\n        </ion-item>\n\n        <ion-item>\n\n          <ion-label>Garçon</ion-label>\n\n          <ion-radio value=\'M\' ></ion-radio>\n\n        </ion-item>     \n\n      </ion-list>\n\n  \n\n    </ion-list>\n\n\n\n    <button ion-button  type="submit" float-start >Validation</button>\n\n    <button ion-button  type="button" float-start (click)="onChildDelete()" color=danger >Suppression</button>\n\n    <button ion-button  type="button" float-end  (click)="onLinkCancel()">Annuler  </button>\n\n\n\n  </form>\n\n\n\n  <ion-footer>\n\n    <ion-toolbar>\n\n      <ion-grid>\n\n        <ion-row>\n\n            <ion-col col-3 text-center>\n\n                <img class="img-icon-footer" src="assets/imgs/icon-family.png" (click)="onLinkFamily()" />    \n\n            </ion-col>\n\n\n\n          <ion-col col-6 text-center>PLAYTIME</ion-col>\n\n\n\n            <ion-col col-3 text-center>\n\n                <img class="img-icon-footer" src="assets/imgs/icon-tbb.png" (click)="onLinkDashboard()" />\n\n            </ion-col>\n\n        </ion-row>\n\n    </ion-grid>\n\n    </ion-toolbar>            \n\n  </ion-footer>\n\n\n\n</ion-content>'/*ion-inline-end:"C:\Users\dlapeyrade\mes-projets\Playtime\Ionic\playtime--ionic\src\pages\enfant\enfant.html"*/,
+            selector: 'page-enfant',template:/*ion-inline-start:"C:\Users\Aries\Desktop\ionic\playtime--ionic\src\pages\enfant\enfant.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <ion-title text-left>\n\n      <img class="img-icon-header" float-start src="assets/imgs/icon-child.png"  />\n\n    <span>Enfant</span>\n\n    <logout></logout>\n\n  </ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n\n\n\n\n<ion-content padding>\n\n\n\n  <form (ngSubmit)="onSubmit(form)" #form="ngForm">\n\n\n\n    <ion-list>\n\n\n\n      <ion-item>\n\n        <ion-label stacked>Prénom </ion-label>\n\n        <ion-input type="text" required  [(ngModel)]=\'firstname\' name="firstname" minlength="3" maxlength="100" ></ion-input>\n\n      </ion-item>\n\n  \n\n      <ion-item>\n\n        <ion-label stacked>Surnom (non obligatoire)</ion-label>\n\n        <ion-input type="text" [(ngModel)]=\'nickname\' name="nickname" ngModel  minlength="3" maxlength="100"></ion-input>\n\n      </ion-item>\n\n\n\n      <ion-list radio-group [(ngModel)]="sexe" name=sexe>\n\n        <ion-label>Sexe</ion-label>\n\n        <ion-item>\n\n          <ion-label>Fille</ion-label>\n\n          <ion-radio value=\'F\'></ion-radio>\n\n        </ion-item>\n\n        <ion-item>\n\n          <ion-label>Garçon</ion-label>\n\n          <ion-radio value=\'M\' ></ion-radio>\n\n        </ion-item>     \n\n      </ion-list>\n\n  \n\n    </ion-list>\n\n\n\n    <button ion-button  type="submit" float-start >Validation</button>\n\n    <button ion-button  type="button" float-start (click)="onChildDelete()" color=danger >Suppression</button>\n\n    <button ion-button  type="button" float-end  (click)="onLinkCancel()">Annuler  </button>\n\n\n\n  </form>\n\n\n\n  <ion-footer>\n\n    <ion-toolbar>\n\n      <ion-grid>\n\n        <ion-row>\n\n            <ion-col col-3 text-center>\n\n                <img class="img-icon-footer" src="assets/imgs/icon-family.png" (click)="onLinkFamily()" />    \n\n            </ion-col>\n\n\n\n          <ion-col col-6 text-center>PLAYTIME</ion-col>\n\n\n\n            <ion-col col-3 text-center>\n\n                <img class="img-icon-footer" src="assets/imgs/icon-tbb.png" (click)="onLinkDashboard()" />\n\n            </ion-col>\n\n        </ion-row>\n\n    </ion-grid>\n\n    </ion-toolbar>            \n\n  </ion-footer>\n\n\n\n</ion-content>'/*ion-inline-end:"C:\Users\Aries\Desktop\ionic\playtime--ionic\src\pages\enfant\enfant.html"*/,
         }),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_2__providers_toast_toast__["a" /* ToastProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_toast_toast__["a" /* ToastProvider */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_3__providers_api_base_child__["a" /* ChildProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_api_base_child__["a" /* ChildProvider */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]) === "function" && _e || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_2__providers_toast_toast__["a" /* ToastProvider */],
+            __WEBPACK_IMPORTED_MODULE_3__providers_api_base_child__["a" /* ChildProvider */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]])
     ], EnfantPage);
     return EnfantPage;
-    var _a, _b, _c, _d, _e;
 }());
 
 //# sourceMappingURL=enfant.js.map
@@ -226,30 +229,39 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 var ActionProvider = /** @class */ (function () {
     function ActionProvider(http) {
+        var _this = this;
         this.http = http;
         this.getListAction = function () {
-            var actions = [
-                { id: 1, label: "Mettre la table", positive: true },
-                { id: 2, label: "Faire mes devoirs sans raler", positive: true },
-                { id: 3, label: "Etre puni(e) à l'ecole", positive: false },
-                { id: 4, label: "Embeter mon frère/ma soeur", positive: false },
-                { id: 5, label: "Etre sérieux à l'entrainement", positive: true },
-                { id: 6, label: "Me préparer tout seul", positive: true },
-                { id: 7, label: "Faire un caprice", positive: false },
-                { id: 8, label: "Parler mal", positive: false },
-                { id: 9, label: "Ranger ma chambre", positive: true },
-                { id: 10, label: "Manger sans raler", positive: true },
-                { id: 11, label: "Oublier cahiers ou livres", positive: false },
-                { id: 12, label: "Bonne note à l'ecole", positive: true }
+            /*
+            let actions=[
+                {id: 1,label: "Mettre la table" ,positive: true},
+                {id: 2,label: "Faire mes devoirs sans raler" ,positive: true},
+                {id: 3,label: "Etre puni(e) à l'ecole" ,positive: false},
+                {id: 4,label: "Embeter mon frère/ma soeur" ,positive: false},
+                {id: 5,label: "Etre sérieux à l'entrainement" ,positive: true},
+                {id: 6,label: "Me préparer tout seul" ,positive: true},
+                {id: 7,label: "Faire un caprice" ,positive: false},
+                {id: 8,label: "Parler mal" ,positive: false},
+                {id: 9,label: "Ranger ma chambre" ,positive: true},
+                {id: 10,label: "Manger sans raler" ,positive: true},
+                {id: 11,label: "Oublier cahiers ou livres" ,positive: false},
+                {id: 12,label: "Bonne note à l'ecole" ,positive: true}
+                
             ];
-            return actions;
+            return  actions;*/
+            var uri_child = 'https://davy3165.000webhostapp.com/action/action_list.php';
+            var tab_retour = _this.http.get(uri_child);
+            console.log(' provider -liste action : ' + uri_child);
+            console.log(tab_retour);
+            return tab_retour;
         };
     }
     ActionProvider = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */]) === "function" && _a || Object])
     ], ActionProvider);
     return ActionProvider;
+    var _a;
 }());
 
 //# sourceMappingURL=action.js.map
@@ -305,12 +317,12 @@ var DashboardProvider = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_enfant_enfant__ = __webpack_require__(206);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pages_dashboard_dashboard__ = __webpack_require__(59);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pages_dashboard_dashboard__ = __webpack_require__(46);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_toast_toast__ = __webpack_require__(32);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_connexion_connexion__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_connexion_connexion__ = __webpack_require__(48);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_chrono_chrono__ = __webpack_require__(60);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__providers_api_base_user__ = __webpack_require__(46);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__providers_api_base_child__ = __webpack_require__(58);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__providers_api_base_user__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__providers_api_base_child__ = __webpack_require__(59);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__ionic_storage__ = __webpack_require__(37);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -404,12 +416,16 @@ var FamillePage = /** @class */ (function () {
     };
     FamillePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-famille',template:/*ion-inline-start:"C:\Users\dlapeyrade\mes-projets\Playtime\Ionic\playtime--ionic\src\pages\famille\famille.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <!-->\n\n    <button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n  -->\n\n    <ion-title text-left>\n\n        <img class="img-icon-header" float-start src="assets/imgs/icon-family.png"  />\n\n      <span>Famille</span>\n\n      <logout></logout>\n\n    </ion-title>\n\n\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content no-padding> \n\n    <ion-list >\n\n      <ion-col no-padding col-12 *ngFor="let child of childs">\n\n        <ion-item>\n\n            <ion-card color="card-color">\n\n\n\n                <ion-card-content no-padding>\n\n          <ion-grid no-padding>\n\n            <ion-row>\n\n                <ion-col col-4>\n\n                      <img class="img-family-child" src="assets/imgs/boy.png" *ngIf="child.gender==\'M\'" />\n\n                      <img class="img-family-child" src="assets/imgs/girl.png" *ngIf="child.gender==\'F\'" />                    \n\n              </ion-col>\n\n              <ion-col col-8>\n\n                  <ion-grid>\n\n                      <ion-row>\n\n                          <ion-col col-12>\n\n                              <ion-card-title class="ion-card-title" no-padding text-center text-wrap *ngIf="!child.nickname">\n\n                                  {{child.firstname }}\n\n                                </ion-card-title>\n\n                                <ion-card-title class="ion-card-title" no-padding text-center *ngIf="child.nickname">\n\n                                  {{child.nickname }}\n\n                                </ion-card-title>\n\n                            </ion-col>\n\n                      </ion-row>\n\n                    <ion-row>\n\n                      <ion-col col-3>\n\n                        <img class="img-icon" src="assets/imgs/icon-tbb.png" (click)="onLinkDashboardChild(child.id)"  />\n\n                      </ion-col>\n\n                      <ion-col col-3 class="vertical-align">                   \n\n                          {{child.playTime | slice:0:5}}\n\n                      </ion-col>                   \n\n                      <ion-col col-3>   \n\n                        <img class="img-icon" src="assets/imgs/icon-chrono.png" (click)="onLinkChrono(child.id)" /> \n\n                      </ion-col>\n\n                      <ion-col col-3 col-bottom> \n\n                          <ion-icon name="person" float-end (click)="onLinkFormChild(child.id)"></ion-icon>  \n\n                          <!--<img class="img-icon" src="assets/imgs/icon-modif.png" (click)="onLinkChronoChild(childs.id)" /> -->\n\n                        </ion-col>\n\n                    </ion-row>\n\n                </ion-grid>\n\n              </ion-col>\n\n            </ion-row>\n\n        </ion-grid>\n\n        </ion-card-content>\n\n        </ion-card>\n\n       </ion-item>\n\n      </ion-col> \n\n    </ion-list>\n\n    \n\n  <button ion-button full (click)="onLinkFormChild(0)">Ajouter un enfant</button>\n\n</ion-content>  \n\n  \n\n    \n\n  \n\n    \n\n  \n\n  \n\n  \n\n  \n\n  '/*ion-inline-end:"C:\Users\dlapeyrade\mes-projets\Playtime\Ionic\playtime--ionic\src\pages\famille\famille.html"*/,
+            selector: 'page-famille',template:/*ion-inline-start:"C:\Users\Aries\Desktop\ionic\playtime--ionic\src\pages\famille\famille.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <!-->\n\n    <button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n  -->\n\n    <ion-title text-left>\n\n        <img class="img-icon-header" float-start src="assets/imgs/icon-family.png"  />\n\n      <span>Famille</span>\n\n      <logout></logout>\n\n    </ion-title>\n\n\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content no-padding> \n\n    <ion-list >\n\n      <ion-col no-padding col-12 *ngFor="let child of childs">\n\n        <ion-item>\n\n            <ion-card color="card-color">\n\n\n\n                <ion-card-content no-padding>\n\n          <ion-grid no-padding>\n\n            <ion-row>\n\n                <ion-col col-4>\n\n                      <img class="img-family-child" src="assets/imgs/boy.png" *ngIf="child.gender==\'M\'" />\n\n                      <img class="img-family-child" src="assets/imgs/girl.png" *ngIf="child.gender==\'F\'" />                    \n\n              </ion-col>\n\n              <ion-col col-8>\n\n                  <ion-grid>\n\n                      <ion-row>\n\n                          <ion-col col-12>\n\n                              <ion-card-title class="ion-card-title" no-padding text-center text-wrap *ngIf="!child.nickname">\n\n                                  {{child.firstname }}\n\n                                </ion-card-title>\n\n                                <ion-card-title class="ion-card-title" no-padding text-center *ngIf="child.nickname">\n\n                                  {{child.nickname }}\n\n                                </ion-card-title>\n\n                            </ion-col>\n\n                      </ion-row>\n\n                    <ion-row>\n\n                      <ion-col col-3>\n\n                        <img class="img-icon" src="assets/imgs/icon-tbb.png" (click)="onLinkDashboardChild(child.id)"  />\n\n                      </ion-col>\n\n                      <ion-col col-3 class="vertical-align">                   \n\n                          {{child.playTime | slice:0:5}}\n\n                      </ion-col>                   \n\n                      <ion-col col-3>   \n\n                        <img class="img-icon" src="assets/imgs/icon-chrono.png" (click)="onLinkChrono(child.id)" /> \n\n                      </ion-col>\n\n                      <ion-col col-3 col-bottom> \n\n                          <ion-icon name="person" float-end (click)="onLinkFormChild(child.id)"></ion-icon>  \n\n                          <!--<img class="img-icon" src="assets/imgs/icon-modif.png" (click)="onLinkChronoChild(childs.id)" /> -->\n\n                        </ion-col>\n\n                    </ion-row>\n\n                </ion-grid>\n\n              </ion-col>\n\n            </ion-row>\n\n        </ion-grid>\n\n        </ion-card-content>\n\n        </ion-card>\n\n       </ion-item>\n\n      </ion-col> \n\n    </ion-list>\n\n    \n\n  <button ion-button full (click)="onLinkFormChild(0)">Ajouter un enfant</button>\n\n</ion-content>  \n\n  \n\n    \n\n  \n\n    \n\n  \n\n  \n\n  \n\n  \n\n  '/*ion-inline-end:"C:\Users\Aries\Desktop\ionic\playtime--ionic\src\pages\famille\famille.html"*/,
         }),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_4__providers_toast_toast__["a" /* ToastProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__providers_toast_toast__["a" /* ToastProvider */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_7__providers_api_base_user__["a" /* UserProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__providers_api_base_user__["a" /* UserProvider */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_8__providers_api_base_child__["a" /* ChildProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_8__providers_api_base_child__["a" /* ChildProvider */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_9__ionic_storage__["b" /* Storage */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_9__ionic_storage__["b" /* Storage */]) === "function" && _f || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_4__providers_toast_toast__["a" /* ToastProvider */],
+            __WEBPACK_IMPORTED_MODULE_7__providers_api_base_user__["a" /* UserProvider */],
+            __WEBPACK_IMPORTED_MODULE_8__providers_api_base_child__["a" /* ChildProvider */],
+            __WEBPACK_IMPORTED_MODULE_9__ionic_storage__["b" /* Storage */]])
     ], FamillePage);
     return FamillePage;
-    var _a, _b, _c, _d, _e, _f;
 }());
 
 //# sourceMappingURL=famille.js.map
@@ -521,7 +537,7 @@ var ToastProvider = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_toast_toast__ = __webpack_require__(32);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_api_base_user__ = __webpack_require__(46);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_api_base_user__ = __webpack_require__(47);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__famille_famille__ = __webpack_require__(28);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_storage__ = __webpack_require__(37);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -591,7 +607,7 @@ var RegisterPage = /** @class */ (function () {
     }
     RegisterPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-register',template:/*ion-inline-start:"C:\Users\dlapeyrade\mes-projets\Playtime\Ionic\playtime--ionic\src\pages\register\register.html"*/'\n\n<ion-header>\n\n  <ion-navbar>\n\n    <button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n    <ion-title>Inscription</ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n\n\n<ion-content padding>\n\n\n\n<form (ngSubmit)="onSubmit(form)" #form="ngForm">\n\n\n\n  <ion-list>    \n\n\n\n    <ion-item>\n\n      <ion-label stacked>E-mail</ion-label>\n\n      <ion-input type="email" required email=true [(ngModel)]="email" name="email" ></ion-input>\n\n    </ion-item>\n\n  \n\n    <ion-item>\n\n      <ion-label stacked>Mot de passe</ion-label>\n\n      <ion-input type="password" required minlength="6" [(ngModel)]="password" name="password" ></ion-input>\n\n    </ion-item>\n\n\n\n    <ion-item>\n\n      <ion-label stacked>Confirmation mot de passe</ion-label>\n\n      <ion-input type="password"  name="passwordCopie" [(ngModel)]="password"  ></ion-input>\n\n    </ion-item>\n\n\n\n    <ion-item>\n\n        <ion-label stacked>Nom Utilisateur</ion-label>\n\n        <ion-input type="text" required minlength="3" maxlength="50" name="username" [(ngModel)]="username" ></ion-input>\n\n      </ion-item>\n\n  \n\n  </ion-list>\n\n\n\n  <button ion-button full type="submit">Valider</button>\n\n\n\n</form>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\dlapeyrade\mes-projets\Playtime\Ionic\playtime--ionic\src\pages\register\register.html"*/,
+            selector: 'page-register',template:/*ion-inline-start:"C:\Users\Aries\Desktop\ionic\playtime--ionic\src\pages\register\register.html"*/'\n\n<ion-header>\n\n  <ion-navbar>\n\n    <button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n    <ion-title>Inscription</ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n\n\n<ion-content padding>\n\n\n\n<form (ngSubmit)="onSubmit(form)" #form="ngForm">\n\n\n\n  <ion-list>    \n\n\n\n    <ion-item>\n\n      <ion-label stacked>E-mail</ion-label>\n\n      <ion-input type="email" required email=true [(ngModel)]="email" name="email" ></ion-input>\n\n    </ion-item>\n\n  \n\n    <ion-item>\n\n      <ion-label stacked>Mot de passe</ion-label>\n\n      <ion-input type="password" required minlength="6" [(ngModel)]="password" name="password" ></ion-input>\n\n    </ion-item>\n\n\n\n    <ion-item>\n\n      <ion-label stacked>Confirmation mot de passe</ion-label>\n\n      <ion-input type="password"  name="passwordCopie" [(ngModel)]="password"  ></ion-input>\n\n    </ion-item>\n\n\n\n    <ion-item>\n\n        <ion-label stacked>Nom Utilisateur</ion-label>\n\n        <ion-input type="text" required minlength="3" maxlength="50" name="username" [(ngModel)]="username" ></ion-input>\n\n      </ion-item>\n\n  \n\n  </ion-list>\n\n\n\n  <button ion-button full type="submit">Valider</button>\n\n\n\n</form>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Aries\Desktop\ionic\playtime--ionic\src\pages\register\register.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */],
@@ -634,8 +650,8 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_register_register__ = __webpack_require__(334);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_famille_famille__ = __webpack_require__(28);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_enfant_enfant__ = __webpack_require__(206);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_connexion_connexion__ = __webpack_require__(47);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_dashboard_dashboard__ = __webpack_require__(59);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__pages_connexion_connexion__ = __webpack_require__(48);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__pages_dashboard_dashboard__ = __webpack_require__(46);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__pages_chrono_chrono__ = __webpack_require__(60);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__pages_modal_action_modal_action__ = __webpack_require__(419);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__components_logout_logout__ = __webpack_require__(420);
@@ -645,8 +661,8 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__ionic_native_splash_screen__ = __webpack_require__(205);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__ionic_storage__ = __webpack_require__(37);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__providers_toast_toast__ = __webpack_require__(32);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__providers_api_base_user__ = __webpack_require__(46);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__providers_api_base_child__ = __webpack_require__(58);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__providers_api_base_user__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__providers_api_base_child__ = __webpack_require__(59);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__providers_api_base_action__ = __webpack_require__(207);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_23__providers_api_base_dashboard__ = __webpack_require__(208);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_24__ionic_native_text_to_speech__ = __webpack_require__(332);
@@ -758,9 +774,9 @@ var AppModule = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__ = __webpack_require__(203);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__ = __webpack_require__(205);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_famille_famille__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_connexion_connexion__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_connexion_connexion__ = __webpack_require__(48);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_chrono_chrono__ = __webpack_require__(60);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_dashboard_dashboard__ = __webpack_require__(59);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_dashboard_dashboard__ = __webpack_require__(46);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -815,7 +831,7 @@ var MyApp = /** @class */ (function () {
         __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["e" /* Nav */])
     ], MyApp.prototype, "nav", void 0);
     MyApp = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"C:\Users\dlapeyrade\mes-projets\Playtime\Ionic\playtime--ionic\src\app\app.html"*/'<ion-menu [content]="content">\n\n  <ion-header>\n\n    <ion-toolbar>\n\n      <ion-title>Menu</ion-title>\n\n    </ion-toolbar>\n\n  </ion-header>\n\n\n\n  <ion-content>\n\n    <ion-list>\n\n      <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">\n\n        {{p.title}}\n\n      </button>\n\n    </ion-list>\n\n  </ion-content>\n\n\n\n</ion-menu>\n\n\n\n<!-- Disable swipe-to-go-back because it\'s poor UX to combine STGB with side menus -->\n\n<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>'/*ion-inline-end:"C:\Users\dlapeyrade\mes-projets\Playtime\Ionic\playtime--ionic\src\app\app.html"*/
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({template:/*ion-inline-start:"C:\Users\Aries\Desktop\ionic\playtime--ionic\src\app\app.html"*/'<ion-menu [content]="content">\n\n  <ion-header>\n\n    <ion-toolbar>\n\n      <ion-title>Menu</ion-title>\n\n    </ion-toolbar>\n\n  </ion-header>\n\n\n\n  <ion-content>\n\n    <ion-list>\n\n      <button menuClose ion-item *ngFor="let p of pages" (click)="openPage(p)">\n\n        {{p.title}}\n\n      </button>\n\n    </ion-list>\n\n  </ion-content>\n\n\n\n</ion-menu>\n\n\n\n<!-- Disable swipe-to-go-back because it\'s poor UX to combine STGB with side menus -->\n\n<ion-nav [root]="rootPage" #content swipeBackEnabled="false"></ion-nav>'/*ion-inline-end:"C:\Users\Aries\Desktop\ionic\playtime--ionic\src\app\app.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["h" /* Platform */], __WEBPACK_IMPORTED_MODULE_2__ionic_native_status_bar__["a" /* StatusBar */], __WEBPACK_IMPORTED_MODULE_3__ionic_native_splash_screen__["a" /* SplashScreen */]])
     ], MyApp);
@@ -1104,7 +1120,7 @@ webpackContext.id = 413;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__famille_famille__ = __webpack_require__(28);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__register_register__ = __webpack_require__(334);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__connexion_connexion__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__connexion_connexion__ = __webpack_require__(48);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1135,7 +1151,7 @@ var HomePage = /** @class */ (function () {
     };
     HomePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-home',template:/*ion-inline-start:"C:\Users\dlapeyrade\mes-projets\Playtime\Ionic\playtime--ionic\src\pages\home\home.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n    <ion-title>Home</ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content padding>\n\n\n\n  <ion-title>PLAYTIME </ion-title>\n\n\n\n<ion-list>\n\n      \n\n  <ion-item>Gérer le temps de loisir de vos enfants</ion-item>  \n\n  \n\n  <ion-item *ngIf="isAuth"><button ion-button full (click)="onLienFamille()">Ma famille</button></ion-item>\n\n\n\n  <ion-item *ngIf="!isAuth"><button ion-button full (click)="onLienConnexion()">Connexion</button></ion-item>\n\n \n\n  <ion-item *ngIf="!isAuth"><button ion-button full (click)="onLienInscription()">Inscription</button></ion-item>\n\n    <logout></logout> <!-- bouton déconnexion-->\n\n  </ion-list> \n\n\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\dlapeyrade\mes-projets\Playtime\Ionic\playtime--ionic\src\pages\home\home.html"*/
+            selector: 'page-home',template:/*ion-inline-start:"C:\Users\Aries\Desktop\ionic\playtime--ionic\src\pages\home\home.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n    <ion-title>Home</ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content padding>\n\n\n\n  <ion-title>PLAYTIME </ion-title>\n\n\n\n<ion-list>\n\n      \n\n  <ion-item>Gérer le temps de loisir de vos enfants</ion-item>  \n\n  \n\n  <ion-item *ngIf="isAuth"><button ion-button full (click)="onLienFamille()">Ma famille</button></ion-item>\n\n\n\n  <ion-item *ngIf="!isAuth"><button ion-button full (click)="onLienConnexion()">Connexion</button></ion-item>\n\n \n\n  <ion-item *ngIf="!isAuth"><button ion-button full (click)="onLienInscription()">Inscription</button></ion-item>\n\n    <logout></logout> <!-- bouton déconnexion-->\n\n  </ion-list> \n\n\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Aries\Desktop\ionic\playtime--ionic\src\pages\home\home.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */]])
     ], HomePage);
@@ -1191,7 +1207,7 @@ var ListPage = /** @class */ (function () {
     };
     ListPage = ListPage_1 = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-list',template:/*ion-inline-start:"C:\Users\dlapeyrade\mes-projets\Playtime\Ionic\playtime--ionic\src\pages\list\list.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n    <ion-title>List</ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content>\n\n  <ion-list>\n\n    <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">\n\n      <ion-icon [name]="item.icon" item-start></ion-icon>\n\n      {{item.title}}\n\n      <div class="item-note" item-end>\n\n        {{item.note}}\n\n      </div>\n\n    </button>\n\n  </ion-list>\n\n  <div *ngIf="selectedItem" padding>\n\n    You navigated here from <b>{{selectedItem.title}}</b>\n\n  </div>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\dlapeyrade\mes-projets\Playtime\Ionic\playtime--ionic\src\pages\list\list.html"*/
+            selector: 'page-list',template:/*ion-inline-start:"C:\Users\Aries\Desktop\ionic\playtime--ionic\src\pages\list\list.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n    <ion-title>List</ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content>\n\n  <ion-list>\n\n    <button ion-item *ngFor="let item of items" (click)="itemTapped($event, item)">\n\n      <ion-icon [name]="item.icon" item-start></ion-icon>\n\n      {{item.title}}\n\n      <div class="item-note" item-end>\n\n        {{item.note}}\n\n      </div>\n\n    </button>\n\n  </ion-list>\n\n  <div *ngIf="selectedItem" padding>\n\n    You navigated here from <b>{{selectedItem.title}}</b>\n\n  </div>\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Aries\Desktop\ionic\playtime--ionic\src\pages\list\list.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */]])
     ], ListPage);
@@ -1237,7 +1253,7 @@ var ModalActionPage = /** @class */ (function () {
     };
     ModalActionPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-modal-action',template:/*ion-inline-start:"C:\Users\dlapeyrade\mes-projets\Playtime\Ionic\playtime--ionic\src\pages\modal-action\modal-action.html"*/'<!--\n\n  Generated template for the ModalActionPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n\n\n  <ion-navbar>\n\n    <ion-title>Ajouter une action</ion-title>\n\n  </ion-navbar>\n\n\n\n</ion-header>\n\n\n\n\n\n<ion-content padding>\n\n\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\dlapeyrade\mes-projets\Playtime\Ionic\playtime--ionic\src\pages\modal-action\modal-action.html"*/,
+            selector: 'page-modal-action',template:/*ion-inline-start:"C:\Users\Aries\Desktop\ionic\playtime--ionic\src\pages\modal-action\modal-action.html"*/'<!--\n\n  Generated template for the ModalActionPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n\n\n  <ion-navbar>\n\n    <ion-title>Ajouter une action</ion-title>\n\n  </ion-navbar>\n\n\n\n</ion-header>\n\n\n\n\n\n<ion-content padding>\n\n\n\n</ion-content>\n\n'/*ion-inline-end:"C:\Users\Aries\Desktop\ionic\playtime--ionic\src\pages\modal-action\modal-action.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */], __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */]])
     ], ModalActionPage);
@@ -1256,7 +1272,7 @@ var ModalActionPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_storage__ = __webpack_require__(37);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pages_connexion_connexion__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pages_connexion_connexion__ = __webpack_require__(48);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1312,7 +1328,7 @@ var LogoutComponent = /** @class */ (function () {
     };
     LogoutComponent = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'logout',template:/*ion-inline-start:"C:\Users\dlapeyrade\mes-projets\Playtime\Ionic\playtime--ionic\src\components\logout\logout.html"*/'<!-- Generated template for the LogoutComponent component -->\n\n\n\n<ion-icon float-end color=\'danger\' name="close-circle" (click)="onSigneOut()"></ion-icon> \n\n'/*ion-inline-end:"C:\Users\dlapeyrade\mes-projets\Playtime\Ionic\playtime--ionic\src\components\logout\logout.html"*/
+            selector: 'logout',template:/*ion-inline-start:"C:\Users\Aries\Desktop\ionic\playtime--ionic\src\components\logout\logout.html"*/'<!-- Generated template for the LogoutComponent component -->\n\n\n\n<ion-icon float-end color=\'danger\' name="close-circle" (click)="onSigneOut()"></ion-icon> \n\n'/*ion-inline-end:"C:\Users\Aries\Desktop\ionic\playtime--ionic\src\components\logout\logout.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */],
@@ -1408,6 +1424,130 @@ var AuthentProvider = /** @class */ (function () {
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DashboardPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_api_base_action__ = __webpack_require__(207);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_api_base_dashboard__ = __webpack_require__(208);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_toast_toast__ = __webpack_require__(32);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_api_base_user__ = __webpack_require__(47);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_api_base_child__ = __webpack_require__(59);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_famille_famille__ = __webpack_require__(28);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_chrono_chrono__ = __webpack_require__(60);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+
+
+/**
+ * Generated class for the DashboardPage page.
+ *
+ * See https://ionicframework.com/docs/components/#navigation for more info on
+ * Ionic pages and navigation.
+ */
+var DashboardPage = /** @class */ (function () {
+    function DashboardPage(navCtrl, navParams, toastProvider, userProvider, childProvider, actionProvider, dashboardProvider) {
+        var _this = this;
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.toastProvider = toastProvider;
+        this.userProvider = userProvider;
+        this.childProvider = childProvider;
+        this.actionProvider = actionProvider;
+        this.dashboardProvider = dashboardProvider;
+        this.dashActions = [];
+        this.listActions = [];
+        this.listActionsFree = [];
+        this.selectOptions = {
+            title: 'Selectionner  des actions',
+            subTitle: '',
+            mode: 'md'
+        };
+        this.onOpenSelectAction = function () {
+            _this.selectRef.open();
+        };
+        this.onAddRealisedAction = function () {
+            _this.toastProvider.presentToast("ca marche");
+            console.log("click +");
+        };
+        this.onLinkFamily = function () {
+            _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_7__pages_famille_famille__["a" /* FamillePage */]);
+        };
+        this.onLinkChrono = function () {
+            _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_8__pages_chrono_chrono__["a" /* ChronoPage */]);
+        };
+    }
+    DashboardPage.prototype.ionViewDidLoad = function () {
+        var _this = this;
+        if (this.navParams.get('id')) {
+            this.childId = this.navParams.get('id');
+        }
+        else {
+            console.log("il manque le parametre id enfant");
+            this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_7__pages_famille_famille__["a" /* FamillePage */]);
+        }
+        //recupere la liste de toutes les actions
+        this.listActions = this.actionProvider.getListAction()
+            .subscribe(function (data) {
+            if (data.success) {
+            }
+            else {
+                console.log(data);
+                _this.toastProvider.presentToast(data.message);
+            }
+        }, function (err) {
+            _this.toastProvider.presentToast('Recupération des actions impossibles :' + err);
+            console.log(err);
+        });
+        // Créé un array des actions non utilisées
+        var actionId;
+        this.dashActions = this.dashboardProvider.getListActionByChild(this.childId);
+        //console.log(this.dashActions);
+        this.listActionsFree = this.listActions;
+        //console.log(this.listActions);
+        for (var i = 0, len = this.dashActions.length; i < len; i++) {
+            actionId = (this.dashActions[i].idAction) - 1;
+            //console.log('actionId=' + actionId);
+            this.listActionsFree.splice(actionId, 1);
+        }
+        ;
+        //console.log(this.listActionsFree);
+    };
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_8" /* ViewChild */])('selectAction'),
+        __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* Select */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* Select */]) === "function" && _a || Object)
+    ], DashboardPage.prototype, "selectRef", void 0);
+    DashboardPage = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-dashboard',template:/*ion-inline-start:"C:\Users\Aries\Desktop\ionic\playtime--ionic\src\pages\dashboard\dashboard.html"*/'\n\n<ion-header>\n\n\n\n  <ion-navbar>\n\n    \n\n      <ion-title >\n\n      <img class="img-icon-header"  float-start src="assets/imgs/icon-tbb.png"  />\n\n      Line\n\n      <logout></logout>      \n\n    </ion-title>\n\n  </ion-navbar>\n\n\n\n</ion-header>\n\n\n\n\n\n<ion-content no-padding>\n\n\n\n    <!---\n\n    <ion-fab  edge right>\n\n        <button ion-fab mini (click)="onOpenSelectAction()"><ion-icon name="add"></ion-icon></button>\n\n    </ion-fab>\n\n  -->\n\n    <ion-grid class="select-card">\n\n        <ion-row>\n\n  \n\n          <ion-col col-3 text-center >\n\n            <div class="badge-title-time-recap" >Gagné</div>\n\n            <ion-badge class="badge-time-recap">01h10</ion-badge>\n\n          </ion-col>\n\n      \n\n          <ion-col col-3  text-center >\n\n            <div class="badge-title-time-recap" >Utilisé</div>\n\n            <ion-badge class="badge-time-recap">01h10</ion-badge>\n\n          </ion-col>\n\n  \n\n          <ion-col col-3 text-center >\n\n            <div class="badge-title-time-recap" >Restant</div>\n\n            <ion-badge class="badge-time-recap">01h10</ion-badge>\n\n          </ion-col>\n\n\n\n          <ion-col col-3 text-center  >\n\n            <ion-icon class="icon-add-action" name="add-circle" (click)="onOpenSelectAction()"></ion-icon>\n\n          </ion-col>\n\n           \n\n         \n\n          </ion-row>   \n\n        </ion-grid>\n\n      \n\n  <ion-list>\n\n\n\n    <ion-item *ngFor="let dashActions of dashActions" >\n\n      <div class="line-action">\n\n        <div class="badge-time" [class.badge-positive]="dashActions.positive" [class.badge-negative]="!dashActions.positive">00h20</div>\n\n        <div class="text-action" text-wrap>{{dashActions.labelAction}}</div>          \n\n        <ion-badge class="badge-action-count" [class.badge-positive]="dashActions.positive" [class.badge-negative]="!dashActions.positive">{{dashActions.count}}</ion-badge>\n\n        <ion-icon  class="btn-plus" name="add-circle"  (click)="onAddRealisedAction()"></ion-icon>\n\n        <ion-icon class="btn-minus" name="remove-circle"  (click)="onRemoveRealisedAction()"></ion-icon>\n\n      </div> \n\n    </ion-item>\n\n  </ion-list>\n\n\n\n  <ion-item class="ion-select" >\n\n  <ion-select  #selectAction [(ngModel)]="action" (ionChange)="addAction()" [selectOptions]="selectOptions"\n\n  multiple="true" cancelText="Annuler" okText="Ajouter">\n\n  <ion-option *ngFor="let listAction of listActionsFree" [value]="listAction.id">{{listAction.label}}</ion-option >\n\n  </ion-select> \n\n</ion-item>\n\n\n\n</ion-content>\n\n\n\n<ion-footer>\n\n    <ion-toolbar>\n\n      <ion-grid>\n\n        <ion-row>\n\n            <ion-col col-3 text-center>\n\n                <img class="img-icon-footer" src="assets/imgs/icon-family.png" (click)="onLinkFamily()" />    \n\n            </ion-col>\n\n\n\n          <ion-col col-6 text-center>PLAYTIME</ion-col>\n\n\n\n            <ion-col col-3 text-center>\n\n                <img class="img-icon-footer" src="assets/imgs/icon-chrono.png" (click)="onLinkChrono()"  />\n\n            </ion-col>\n\n        </ion-row>\n\n    </ion-grid>\n\n    </ion-toolbar>            \n\n  </ion-footer>'/*ion-inline-end:"C:\Users\Aries\Desktop\ionic\playtime--ionic\src\pages\dashboard\dashboard.html"*/,
+        }),
+        __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4__providers_toast_toast__["a" /* ToastProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__providers_toast_toast__["a" /* ToastProvider */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_5__providers_api_base_user__["a" /* UserProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__providers_api_base_user__["a" /* UserProvider */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_6__providers_api_base_child__["a" /* ChildProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__providers_api_base_child__["a" /* ChildProvider */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_2__providers_api_base_action__["a" /* ActionProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_api_base_action__["a" /* ActionProvider */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_3__providers_api_base_dashboard__["a" /* DashboardProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_api_base_dashboard__["a" /* DashboardProvider */]) === "function" && _h || Object])
+    ], DashboardPage);
+    return DashboardPage;
+    var _a, _b, _c, _d, _e, _f, _g, _h;
+}());
+
+//# sourceMappingURL=dashboard.js.map
+
+/***/ }),
+
+/***/ 47:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UserProvider; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common_http__ = __webpack_require__(36);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
@@ -1457,7 +1597,7 @@ var UserProvider = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 47:
+/***/ 48:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1465,7 +1605,7 @@ var UserProvider = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_toast_toast__ = __webpack_require__(32);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_api_base_user__ = __webpack_require__(46);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_api_base_user__ = __webpack_require__(47);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__famille_famille__ = __webpack_require__(28);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_storage__ = __webpack_require__(37);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -1575,7 +1715,7 @@ var ConnexionPage = /** @class */ (function () {
     };
     ConnexionPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-connexion',template:/*ion-inline-start:"C:\Users\dlapeyrade\mes-projets\Playtime\Ionic\playtime--ionic\src\pages\connexion\connexion.html"*/'<!--\n\n  Generated template for the ConnexionPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n\n\n  <ion-navbar>\n\n    <ion-title>LOGIN</ion-title>\n\n  </ion-navbar>\n\n\n\n</ion-header>\n\n\n\n<ion-content padding>\n\n\n\n  \n\n\n\n  <form (ngSubmit)="onSubmit(formLogin)" #formLogin="ngForm">\n\n\n\n    <ion-list>\n\n      \n\n        <ion-item>\n\n            <ion-label stacked>E-mail</ion-label>\n\n            <ion-input type="email" required email=true ngModel name="email" ></ion-input>\n\n          </ion-item>\n\n        \n\n          <ion-item>\n\n            <ion-label stacked>Mot de passe</ion-label>\n\n            <ion-input type="password" required minlength="6" ngModel name="password" ></ion-input>\n\n          </ion-item>   \n\n    \n\n    </ion-list>\n\n  \n\n    <button ion-button full type="submit">Connexion</button>\n\n    \n\n    </form>\n\n\n\n\n\n    <form (ngSubmit)="onSubmit(formRegister)" #formRegister="ngForm">\n\n  \n\n      <ion-list>    \n\n    \n\n        <ion-item>\n\n          <ion-label stacked>E-mail</ion-label>\n\n          <ion-input type="email" required email=true [(ngModel)]="email" name="email" ></ion-input>\n\n        </ion-item>\n\n      \n\n        <ion-item>\n\n          <ion-label stacked>Mot de passe</ion-label>\n\n          <ion-input type="password" required minlength="6" [(ngModel)]="password" name="password" ></ion-input>\n\n        </ion-item>\n\n    \n\n        <ion-item>\n\n          <ion-label stacked>Confirmation mot de passe</ion-label>\n\n          <ion-input type="password"  name="passwordCopie" [(ngModel)]="password"  ></ion-input>\n\n        </ion-item>\n\n    \n\n        <ion-item>\n\n            <ion-label stacked>Nom Utilisateur</ion-label>\n\n            <ion-input type="text" required minlength="3" maxlength="50" name="username" [(ngModel)]="username" ></ion-input>\n\n          </ion-item>\n\n      \n\n      </ion-list>\n\n    \n\n      <button ion-button full type="submit">Inscription</button>\n\n    \n\n    </form>\n\n\n\n  </ion-content>\n\n  \n\n'/*ion-inline-end:"C:\Users\dlapeyrade\mes-projets\Playtime\Ionic\playtime--ionic\src\pages\connexion\connexion.html"*/,
+            selector: 'page-connexion',template:/*ion-inline-start:"C:\Users\Aries\Desktop\ionic\playtime--ionic\src\pages\connexion\connexion.html"*/'<!--\n\n  Generated template for the ConnexionPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n\n\n  <ion-navbar>\n\n    <ion-title>LOGIN</ion-title>\n\n  </ion-navbar>\n\n\n\n</ion-header>\n\n\n\n<ion-content padding>\n\n\n\n  \n\n\n\n  <form (ngSubmit)="onSubmit(formLogin)" #formLogin="ngForm">\n\n\n\n    <ion-list>\n\n      \n\n        <ion-item>\n\n            <ion-label stacked>E-mail</ion-label>\n\n            <ion-input type="email" required email=true ngModel name="email" ></ion-input>\n\n          </ion-item>\n\n        \n\n          <ion-item>\n\n            <ion-label stacked>Mot de passe</ion-label>\n\n            <ion-input type="password" required minlength="6" ngModel name="password" ></ion-input>\n\n          </ion-item>   \n\n    \n\n    </ion-list>\n\n  \n\n    <button ion-button full type="submit">Connexion</button>\n\n    \n\n    </form>\n\n\n\n\n\n    <form (ngSubmit)="onSubmit(formRegister)" #formRegister="ngForm">\n\n  \n\n      <ion-list>    \n\n    \n\n        <ion-item>\n\n          <ion-label stacked>E-mail</ion-label>\n\n          <ion-input type="email" required email=true [(ngModel)]="email" name="email" ></ion-input>\n\n        </ion-item>\n\n      \n\n        <ion-item>\n\n          <ion-label stacked>Mot de passe</ion-label>\n\n          <ion-input type="password" required minlength="6" [(ngModel)]="password" name="password" ></ion-input>\n\n        </ion-item>\n\n    \n\n        <ion-item>\n\n          <ion-label stacked>Confirmation mot de passe</ion-label>\n\n          <ion-input type="password"  name="passwordCopie" [(ngModel)]="password"  ></ion-input>\n\n        </ion-item>\n\n    \n\n        <ion-item>\n\n            <ion-label stacked>Nom Utilisateur</ion-label>\n\n            <ion-input type="text" required minlength="3" maxlength="50" name="username" [(ngModel)]="username" ></ion-input>\n\n          </ion-item>\n\n      \n\n      </ion-list>\n\n    \n\n      <button ion-button full type="submit">Inscription</button>\n\n    \n\n    </form>\n\n\n\n  </ion-content>\n\n  \n\n'/*ion-inline-end:"C:\Users\Aries\Desktop\ionic\playtime--ionic\src\pages\connexion\connexion.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */],
@@ -1590,7 +1730,7 @@ var ConnexionPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 58:
+/***/ 59:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -1684,117 +1824,6 @@ var ChildProvider = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 59:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DashboardPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_api_base_action__ = __webpack_require__(207);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_api_base_dashboard__ = __webpack_require__(208);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_toast_toast__ = __webpack_require__(32);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_api_base_user__ = __webpack_require__(46);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__providers_api_base_child__ = __webpack_require__(58);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_famille_famille__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_chrono_chrono__ = __webpack_require__(60);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-
-
-
-
-/**
- * Generated class for the DashboardPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
-var DashboardPage = /** @class */ (function () {
-    function DashboardPage(navCtrl, navParams, toastProvider, userProvider, childProvider, actionProvider, dashboardProvider) {
-        var _this = this;
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.toastProvider = toastProvider;
-        this.userProvider = userProvider;
-        this.childProvider = childProvider;
-        this.actionProvider = actionProvider;
-        this.dashboardProvider = dashboardProvider;
-        this.dashActions = [];
-        this.listActions = [];
-        this.listActionsFree = [];
-        this.selectOptions = {
-            title: 'Selectionner  des actions',
-            subTitle: '',
-            mode: 'md'
-        };
-        this.onOpenSelectAction = function () {
-            _this.selectRef.open();
-        };
-        this.onAddRealisedAction = function () {
-            _this.toastProvider.presentToast("ca marche");
-            console.log("click +");
-        };
-        this.onLinkFamily = function () {
-            _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_7__pages_famille_famille__["a" /* FamillePage */]);
-        };
-        this.onLinkChrono = function () {
-            _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_8__pages_chrono_chrono__["a" /* ChronoPage */]);
-        };
-    }
-    DashboardPage.prototype.ionViewDidLoad = function () {
-        if (this.navParams.get('id')) {
-            this.childId = this.navParams.get('id');
-        }
-        else {
-            console.log("il manque le parametre id enfant");
-            this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_7__pages_famille_famille__["a" /* FamillePage */]);
-        }
-        // Créé un array des actions non utilisées
-        var actionId;
-        this.dashActions = this.dashboardProvider.getListActionByChild(this.childId);
-        //console.log(this.dashActions);
-        this.listActions = this.actionProvider.getListAction();
-        this.listActionsFree = this.listActions;
-        //console.log(this.listActions);
-        for (var i = 0, len = this.dashActions.length; i < len; i++) {
-            actionId = (this.dashActions[i].idAction) - 1;
-            //console.log('actionId=' + actionId);
-            this.listActionsFree.splice(actionId, 1);
-        }
-        ;
-        //console.log(this.listActionsFree);
-    };
-    __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_8" /* ViewChild */])('selectAction'),
-        __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* Select */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* Select */]) === "function" && _a || Object)
-    ], DashboardPage.prototype, "selectRef", void 0);
-    DashboardPage = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-dashboard',template:/*ion-inline-start:"C:\Users\dlapeyrade\mes-projets\Playtime\Ionic\playtime--ionic\src\pages\dashboard\dashboard.html"*/'\n\n<ion-header>\n\n\n\n  <ion-navbar>\n\n    \n\n      <ion-title >\n\n      <img class="img-icon-header"  float-start src="assets/imgs/icon-tbb.png"  />\n\n      Line\n\n      <logout></logout>      \n\n    </ion-title>\n\n  </ion-navbar>\n\n\n\n</ion-header>\n\n\n\n\n\n<ion-content no-padding>\n\n\n\n    <!---\n\n    <ion-fab  edge right>\n\n        <button ion-fab mini (click)="onOpenSelectAction()"><ion-icon name="add"></ion-icon></button>\n\n    </ion-fab>\n\n  -->\n\n    <ion-grid class="select-card">\n\n        <ion-row>\n\n  \n\n          <ion-col col-3 text-center >\n\n            <div class="badge-title-time-recap" >Gagné</div>\n\n            <ion-badge class="badge-time-recap">01h10</ion-badge>\n\n          </ion-col>\n\n      \n\n          <ion-col col-3  text-center >\n\n            <div class="badge-title-time-recap" >Utilisé</div>\n\n            <ion-badge class="badge-time-recap">01h10</ion-badge>\n\n          </ion-col>\n\n  \n\n          <ion-col col-3 text-center >\n\n            <div class="badge-title-time-recap" >Restant</div>\n\n            <ion-badge class="badge-time-recap">01h10</ion-badge>\n\n          </ion-col>\n\n\n\n          <ion-col col-3 text-center  >\n\n            <ion-icon class="icon-add-action" name="add-circle" (click)="onOpenSelectAction()"></ion-icon>\n\n          </ion-col>\n\n           \n\n         \n\n          </ion-row>   \n\n        </ion-grid>\n\n      \n\n  <ion-list>\n\n\n\n    <ion-item *ngFor="let dashActions of dashActions" >\n\n      <div class="line-action">\n\n        <div class="badge-time" [class.badge-positive]="dashActions.positive" [class.badge-negative]="!dashActions.positive">00h20</div>\n\n        <div class="text-action" text-wrap>{{dashActions.labelAction}}</div>          \n\n        <ion-badge class="badge-action-count" [class.badge-positive]="dashActions.positive" [class.badge-negative]="!dashActions.positive">{{dashActions.count}}</ion-badge>\n\n        <ion-icon  class="btn-plus" name="add-circle"  (click)="onAddRealisedAction()"></ion-icon>\n\n        <ion-icon class="btn-minus" name="remove-circle"  (click)="onRemoveRealisedAction()"></ion-icon>\n\n      </div> \n\n    </ion-item>\n\n  </ion-list>\n\n\n\n  <ion-item class="ion-select" >\n\n  <ion-select  #selectAction [(ngModel)]="action" (ionChange)="addAction()" [selectOptions]="selectOptions"\n\n  multiple="true" cancelText="Annuler" okText="Ajouter">\n\n  <ion-option *ngFor="let listAction of listActionsFree" [value]="listAction.id">{{listAction.label}}</ion-option >\n\n  </ion-select> \n\n</ion-item>\n\n\n\n</ion-content>\n\n\n\n<ion-footer>\n\n    <ion-toolbar>\n\n      <ion-grid>\n\n        <ion-row>\n\n            <ion-col col-3 text-center>\n\n                <img class="img-icon-footer" src="assets/imgs/icon-family.png" (click)="onLinkFamily()" />    \n\n            </ion-col>\n\n\n\n          <ion-col col-6 text-center>PLAYTIME</ion-col>\n\n\n\n            <ion-col col-3 text-center>\n\n                <img class="img-icon-footer" src="assets/imgs/icon-chrono.png" (click)="onLinkChrono()"  />\n\n            </ion-col>\n\n        </ion-row>\n\n    </ion-grid>\n\n    </ion-toolbar>            \n\n  </ion-footer>'/*ion-inline-end:"C:\Users\dlapeyrade\mes-projets\Playtime\Ionic\playtime--ionic\src\pages\dashboard\dashboard.html"*/,
-        }),
-        __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4__providers_toast_toast__["a" /* ToastProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__providers_toast_toast__["a" /* ToastProvider */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_5__providers_api_base_user__["a" /* UserProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_5__providers_api_base_user__["a" /* UserProvider */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_6__providers_api_base_child__["a" /* ChildProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_6__providers_api_base_child__["a" /* ChildProvider */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_2__providers_api_base_action__["a" /* ActionProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_api_base_action__["a" /* ActionProvider */]) === "function" && _g || Object, typeof (_h = typeof __WEBPACK_IMPORTED_MODULE_3__providers_api_base_dashboard__["a" /* DashboardProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_api_base_dashboard__["a" /* DashboardProvider */]) === "function" && _h || Object])
-    ], DashboardPage);
-    return DashboardPage;
-    var _a, _b, _c, _d, _e, _f, _g, _h;
-}());
-
-//# sourceMappingURL=dashboard.js.map
-
-/***/ }),
-
 /***/ 60:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -1807,7 +1836,7 @@ var DashboardPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__ionic_native_text_to_speech__ = __webpack_require__(332);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__ionic_native_vibration__ = __webpack_require__(333);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_famille_famille__ = __webpack_require__(28);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_dashboard_dashboard__ = __webpack_require__(59);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_dashboard_dashboard__ = __webpack_require__(46);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1870,7 +1899,7 @@ var ChronoPage = /** @class */ (function () {
     }
     ChronoPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-chrono',template:/*ion-inline-start:"C:\Users\dlapeyrade\mes-projets\Playtime\Ionic\playtime--ionic\src\pages\chrono\chrono.html"*/'<!--\n\n  Generated template for the ChronoPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n  <ion-navbar>\n\n    <ion-title >\n\n      <img class="img-icon-header" float-start src="assets/imgs/icon-chrono.png"  />\n\n      LINE\n\n      <logout></logout>\n\n    </ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content padding>\n\n    <ion-grid>\n\n\n\n      <ion-row>\n\n          <ion-col col-12 text-center col-top class="display-text">{{afficheTemps}}</ion-col>        \n\n      </ion-row>\n\n\n\n      <ion-row>\n\n          <ion-col co-12 col-bottom>\n\n              <ion-fab  center *ngIf="!isRunning">\n\n                  <button  ion-fab  (click)="onStartChrono()" color="secondary"><ion-icon >START</ion-icon></button>\n\n              </ion-fab>\n\n              <ion-fab  center *ngIf="isRunning">\n\n                <button  ion-fab  (click)="onStopChrono()" color="danger"><ion-icon >STOP</ion-icon></button>\n\n              </ion-fab>\n\n          </ion-col>\n\n      </ion-row>\n\n\n\n    </ion-grid>\n\n</ion-content>\n\n\n\n<ion-footer>\n\n    <ion-toolbar>\n\n      <ion-grid>\n\n        <ion-row>\n\n            <ion-col col-3 text-center>\n\n                <img class="img-icon-footer" src="assets/imgs/icon-family.png" (click)="onLinkFamily()" />    \n\n            </ion-col>\n\n\n\n          <ion-col col-6 text-center>PLAYTIME</ion-col>\n\n\n\n            <ion-col col-3 text-center>\n\n                <img class="img-icon-footer" src="assets/imgs/icon-tbb.png" (click)="onLinkDashboard()" />\n\n            </ion-col>\n\n        </ion-row>\n\n    </ion-grid>\n\n    </ion-toolbar>            \n\n  </ion-footer>\n\n'/*ion-inline-end:"C:\Users\dlapeyrade\mes-projets\Playtime\Ionic\playtime--ionic\src\pages\chrono\chrono.html"*/,
+            selector: 'page-chrono',template:/*ion-inline-start:"C:\Users\Aries\Desktop\ionic\playtime--ionic\src\pages\chrono\chrono.html"*/'<!--\n\n  Generated template for the ChronoPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n  <ion-navbar>\n\n    <ion-title >\n\n      <img class="img-icon-header" float-start src="assets/imgs/icon-chrono.png"  />\n\n      LINE\n\n      <logout></logout>\n\n    </ion-title>\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content padding>\n\n    <ion-grid>\n\n\n\n      <ion-row>\n\n          <ion-col col-12 text-center col-top class="display-text">{{afficheTemps}}</ion-col>        \n\n      </ion-row>\n\n\n\n      <ion-row>\n\n          <ion-col co-12 col-bottom>\n\n              <ion-fab  center *ngIf="!isRunning">\n\n                  <button  ion-fab  (click)="onStartChrono()" color="secondary"><ion-icon >START</ion-icon></button>\n\n              </ion-fab>\n\n              <ion-fab  center *ngIf="isRunning">\n\n                <button  ion-fab  (click)="onStopChrono()" color="danger"><ion-icon >STOP</ion-icon></button>\n\n              </ion-fab>\n\n          </ion-col>\n\n      </ion-row>\n\n\n\n    </ion-grid>\n\n</ion-content>\n\n\n\n<ion-footer>\n\n    <ion-toolbar>\n\n      <ion-grid>\n\n        <ion-row>\n\n            <ion-col col-3 text-center>\n\n                <img class="img-icon-footer" src="assets/imgs/icon-family.png" (click)="onLinkFamily()" />    \n\n            </ion-col>\n\n\n\n          <ion-col col-6 text-center>PLAYTIME</ion-col>\n\n\n\n            <ion-col col-3 text-center>\n\n                <img class="img-icon-footer" src="assets/imgs/icon-tbb.png" (click)="onLinkDashboard()" />\n\n            </ion-col>\n\n        </ion-row>\n\n    </ion-grid>\n\n    </ion-toolbar>            \n\n  </ion-footer>\n\n'/*ion-inline-end:"C:\Users\Aries\Desktop\ionic\playtime--ionic\src\pages\chrono\chrono.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */],

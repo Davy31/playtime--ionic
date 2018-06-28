@@ -9,6 +9,7 @@ export class ActionProvider {
   
   getListAction = () => {
 
+    /*
     let actions=[
         {id: 1,label: "Mettre la table" ,positive: true},
         {id: 2,label: "Faire mes devoirs sans raler" ,positive: true},
@@ -24,7 +25,13 @@ export class ActionProvider {
         {id: 12,label: "Bonne note à l'ecole" ,positive: true}
         
     ];
-    return  actions;
+    return  actions;*/
+
+    const uri_child = 'https://davy3165.000webhostapp.com/action/action_list.php';
+    let tab_retour =  this.http.get(uri_child);
+    console.log(' provider -liste action : '+ uri_child);
+    console.log(tab_retour)
+    return tab_retour;
   }
 
     

@@ -58,12 +58,29 @@ export class DashboardPage {
       console.log("il manque le parametre id enfant");
       this.navCtrl.setRoot(FamillePage);
     }
+
+
+    //recupere la liste de toutes les actions
+    this.listActions= this.actionProvider.getListAction()
+    .subscribe((data:any) => {
+      if(data.success){ 
+        
+ 
+     }else{  
+       console.log(data)
+      this.toastProvider.presentToast(data.message);
+     }
     
+   }, (err: any) => {
+    this.toastProvider.presentToast('Recupération des actions impossibles :'+ err);
+    console.log(err)
+   }); 
+
     // Créé un array des actions non utilisées
     let actionId    
     this.dashActions = this.dashboardProvider.getListActionByChild(this.childId);
     //console.log(this.dashActions);
-    this.listActions = this.actionProvider.getListAction();
+   
     this.listActionsFree = this.listActions;
     //console.log(this.listActions);
     for (var i = 0, len = this.dashActions.length; i < len; i++) {
