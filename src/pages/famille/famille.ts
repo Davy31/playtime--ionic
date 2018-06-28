@@ -80,7 +80,7 @@ export class FamillePage {
    .subscribe((data:any) => {
      if(data.success){ 
       this.childs = data.result;
-
+      console.log(data.result);
     }else{  
      this.toastProvider.presentToast(data.message);
     }

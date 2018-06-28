@@ -55,7 +55,8 @@ export class DashboardPage {
     if(this.navParams.get('id')){
       this.childId = this.navParams.get('id');
     }else{
-      this.childId =1;
+      console.log("il manque le parametre id enfant");
+      this.navCtrl.setRoot(FamillePage);
     }
     
     // Créé un array des actions non utilisées

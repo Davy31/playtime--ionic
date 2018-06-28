@@ -5,7 +5,7 @@ import { NgForm } from '@angular/forms';
 import { ChildProvider} from '../../providers/api-base/child';
 import { FamillePage } from '../famille/famille';
 import { AlertController } from 'ionic-angular';
-
+import { DashboardPage } from '../../pages/dashboard/dashboard';
 /**
  * Generated class for the EnfantPage page.
  *
@@ -156,5 +156,13 @@ export class EnfantPage {
   this.navCtrl.setRoot(FamillePage);
    }
 
+   onLinkDashboard = () => {
+    console.log('Dashboard id:' + this.child_id);
+    this.navCtrl.setRoot(DashboardPage, {id: this.child_id});
+  }
 
+  onLinkFamily = () => {
+    this.navCtrl.setRoot(FamillePage);
+  }
 }
+
