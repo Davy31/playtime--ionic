@@ -1,15 +1,19 @@
 
 <ion-header>
-
   <ion-navbar>
-    
-      <ion-title >
-      <img class="img-icon-header"  float-start src="assets/imgs/icon-tbb.png"  />
-      Line
-      <logout></logout>      
+    <!-->
+    <button ion-button menuToggle>
+      <ion-icon name="menu"></ion-icon>
+    </button>
+  -->
+    <ion-title text-left>
+        <img class="img-icon-header"  float-start src="assets/imgs/icon-tbb.png"  />
+        
+      <span>Line</span>
+      <logout></logout>
     </ion-title>
-  </ion-navbar>
 
+  </ion-navbar>
 </ion-header>
 
 
@@ -21,50 +25,52 @@
     </ion-fab>
   -->
     <ion-grid class="select-card">
-        <ion-row>
-  
-          <ion-col col-3 text-center >
-            <div class="badge-title-time-recap" >Gagné</div>
-            <ion-badge class="badge-time-recap">01h10</ion-badge>
-          </ion-col>
-      
-          <ion-col col-3  text-center >
-            <div class="badge-title-time-recap" >Utilisé</div>
-            <ion-badge class="badge-time-recap">01h10</ion-badge>
-          </ion-col>
-  
-          <ion-col col-3 text-center >
-            <div class="badge-title-time-recap" >Restant</div>
-            <ion-badge class="badge-time-recap">01h10</ion-badge>
-          </ion-col>
+      <ion-row>
 
-          <ion-col col-3 text-center  >
-            <ion-icon class="icon-add-action" name="add-circle" (click)="onOpenSelectAction()"></ion-icon>
-          </ion-col>
-           
-         
-          </ion-row>   
-        </ion-grid>
+        <ion-col col-3 text-center >
+          <div class="badge-title-time-recap" >Gagné</div>
+          <ion-badge class="badge-time-recap">{{timeWin}}</ion-badge>
+        </ion-col>
+    
+        <ion-col col-3  text-center >
+          <div class="badge-title-time-recap" >Utilisé</div>
+          <ion-badge class="badge-time-recap">01h10</ion-badge>
+        </ion-col>
+
+        <ion-col col-3 text-center >
+          <div class="badge-title-time-recap" >Restant</div>
+          <ion-badge class="badge-time-recap">01h10</ion-badge>
+        </ion-col>
+
+        <ion-col col-3 text-center  >
+          <ion-icon class="icon-add-action" name="add-circle" (click)="onOpenSelectAction()"></ion-icon>
+        </ion-col>           
+        
+      </ion-row>   
+    </ion-grid>
       
   <ion-list>
 
-    <ion-item *ngFor="let dashActions of dashActions" >
-      <div class="line-action">
-        <div class="badge-time" [class.badge-positive]="dashActions.positive" [class.badge-negative]="!dashActions.positive">00h20</div>
-        <div class="text-action" text-wrap>{{dashActions.labelAction}}</div>          
-        <ion-badge class="badge-action-count" [class.badge-positive]="dashActions.positive" [class.badge-negative]="!dashActions.positive">{{dashActions.count}}</ion-badge>
-        <ion-icon  class="btn-plus" name="add-circle"  (click)="onAddRealisedAction()"></ion-icon>
-        <ion-icon class="btn-minus" name="remove-circle"  (click)="onRemoveRealisedAction()"></ion-icon>
+    <ion-item *ngFor="let actionSelected of actionsSelected" >
+      <div class="line-action"> 
+        <div class="badge-time"  [class.badge-positive]="actionSelected.positive=='P'" [class.badge-negative]="actionSelected.positive=='N'">{{actionSelected.timep | slice:0:5}}</div>
+        <div class="text-action" text-wrap>{{actionSelected.label}}</div>          
+        <ion-badge class="badge-action-count" [class.badge-positive]="actionSelected.positive=='N'" [class.badge-negative]="actionSelected.positive=='N'">{{actionSelected.nbRealised}}</ion-badge>
+        <ion-icon  class="btn-plus" name="add-circle"  (click)="onAddRealisedAction(actionSelected.id);"></ion-icon>
+        <ion-icon class="btn-minus" name="remove-circle" (click)="onRemoveRealisedAction(actionSelected.id)"></ion-icon>
       </div> 
     </ion-item>
+      
   </ion-list>
-
+  
   <ion-item class="ion-select" >
-  <ion-select  #selectAction [(ngModel)]="action" (ionChange)="addAction()" [selectOptions]="selectOptions"
+  <ion-select  #selectAction [(ngModel)]="action" (ionChange)="onAffectAction()" [selectOptions]="selectOptions"
   multiple="true" cancelText="Annuler" okText="Ajouter">
-  <ion-option *ngFor="let listAction of listActionsFree" [value]="listAction.id">{{listAction.label}}</ion-option >
+  <ion-option *ngFor="let actionNoSelected of actionsNoSelected" [value]="actionNoSelected.id">{{actionNoSelected.label}}</ion-option >
   </ion-select> 
 </ion-item>
+
+
 
 </ion-content>
 

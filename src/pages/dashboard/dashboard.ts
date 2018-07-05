@@ -1,13 +1,11 @@
 import { Component, ViewChild } from '@angular/core';
 import {  NavController, NavParams, Select } from 'ionic-angular';
-import { ActionProvider} from '../../providers/api-base/action';
 import { DashboardProvider} from '../../providers/api-base/dashboard';
 import { ToastProvider }  from '../../providers/toast/toast';
-import { UserProvider} from '../../providers/api-base/user';
-import { ChildProvider} from '../../providers/api-base/child';
 import { FamillePage }  from '../../pages/famille/famille';
 import { ChronoPage }  from '../../pages/chrono/chrono';
-import { ModalController } from 'ionic-angular';
+import { AlertController } from 'ionic-angular';
+import * as moment from 'moment';
 /**
  * Generated class for the DashboardPage page.
  *
@@ -28,10 +26,11 @@ export class DashboardPage {
   userAuthId: string;
   stateConnexion: string;
   childId:number;
-  dashActions = [];
-  listActions = [];
-  listActionsFree = [];
-
+  actionsSelected = [];
+  actionsNoSelected = [];
+  action:any;
+  timeWin = moment({year:0,month:0, day:0, hour:0, minute:0 }).format('HH:mm') ;
+  
   selectOptions = {
     title: 'Selectionner  des actions',
     subTitle: '',
@@ -43,65 +42,173 @@ export class DashboardPage {
           public navCtrl: NavController,
           public navParams: NavParams,
           public toastProvider : ToastProvider,
-         private userProvider: UserProvider,
-         private childProvider: ChildProvider,
-         private actionProvider : ActionProvider,
          private dashboardProvider: DashboardProvider,
+         public alertCtrl: AlertController
           ) {}
 
 
   ionViewDidLoad() {
 
+    console.clear();
+    console.log('Page dashboard');
+
+
     if(this.navParams.get('id')){
       this.childId = this.navParams.get('id');
+      console.log("childId=" + this.childId);
     }else{
       console.log("il manque le parametre id enfant");
       this.navCtrl.setRoot(FamillePage);
     }
 
+    this.getListActionsByChild();
 
-    //recupere la liste de toutes les actions
-    this.listActions= this.actionProvider.getListAction()
+    this.getListActionsNoSelected();
+
+    //this.buildActionsNoSelected();
+  
+  }
+  //----------------- Rècupere les actions affectés à l'enfant --------------------------*
+  getListActionsByChild = () => {
+    this.dashboardProvider.getListActionByChild(this.childId)
+    .subscribe((data:any) => {
+      if(data.success){       
+      this.actionsSelected =  data.result;  
+      console.log( this.actionsSelected);
+    }else{  
+      this.toastProvider.presentToast(data.message);
+    }
+    
+    }, (err: any) => {
+      
+      console.log(err)
+    });   
+  } 
+
+  //-----------------Récupère la liste des actions non affectées
+  getListActionsNoSelected = () => {
+      this.dashboardProvider.getListActionsNoSelected(this.childId)
     .subscribe((data:any) => {
       if(data.success){ 
-        
- 
-     }else{  
-       console.log(data)
+      this.actionsNoSelected = data.result;
+      //console.log( this.actionsNoSelected )
+      }else{  
       this.toastProvider.presentToast(data.message);
-     }
+      }
     
-   }, (err: any) => {
-    this.toastProvider.presentToast('Recupération des actions impossibles :'+ err);
+    }, (err: any) => {
     console.log(err)
-   }); 
+    });   
+  }
+  /*
+    //Créé un array des actions non utilisées
+  buildActionsNoSelected = () => {
 
-    // Créé un array des actions non utilisées
-    let actionId    
-    this.dashActions = this.dashboardProvider.getListActionByChild(this.childId);
-    //console.log(this.dashActions);
-   
-    this.listActionsFree = this.listActions;
-    //console.log(this.listActions);
-    for (var i = 0, len = this.dashActions.length; i < len; i++) {
-      actionId= (this.dashActions[i].idAction) - 1;
-      //console.log('actionId=' + actionId);
-      this.listActionsFree.splice(actionId,1);
+    let actionId:number;
+    this.actionsNoSelected = this.actionsSelected;  
+    console.log(this.actionsSelected)   ;
+    console.log("nb actions selectionnées =" + this.actionsSelected.length)
+    for (var i = 0, len = this.actionsSelected.length; i < len; i++) {
+      actionId= (this.actionsSelected[i].idAction) - 1;
+      console.log('actionId=' + actionId);
+      this.actionsNoSelected.splice(actionId,1);
 
-    };
-    //console.log(this.listActionsFree);
+    }
+    console.log("actions non selectionnées");
+    console.log(this. actionsNoSelected);
     
   }
 
-  
+  */
   onOpenSelectAction = () => {
     this.selectRef.open();
   }
-  onAddRealisedAction = () => {
-    this.toastProvider.presentToast("ca marche");
-    console.log("click +");
+
+  
+  onAffectAction = () =>{
+      this.dashboardProvider.affectActionChild(this.childId,this.action)
+    .subscribe((data:any) => {
+      if(data.success){ 
+      console.log("Affectations faites");
+      console.log(data.message);
+      this.navCtrl.setRoot(DashboardPage, {id: this.childId});
+      }else{  
+      this.toastProvider.presentToast(data.message);
+      }
+    
+    }, (err: any) => {
+    console.log(err)
+    });   
   }
 
+
+  onAddRealisedAction = (action_id) => {
+    let resultat = this.actionsSelected.find( action => action.id === action_id);
+    resultat.nbRealised ++;
+    this.calculTime();
+    
+  }
+
+  onRemoveRealisedAction = (action_id) => {
+    let resultat = this.actionsSelected.find( action => action.id === action_id);
+  
+    if(resultat.nbRealised<1){
+      console.log("ATTENTION");
+      const confirm = this.alertCtrl.create({
+      title: 'Voulez-vous vraiment enlever cettte  action du  dashboard de l\'enfant ?',
+      buttons: [
+            {
+              text: 'Annuler',
+              handler: () => {
+                console.log('Annuler');
+              }
+            },
+            {
+              text: 'OUI',
+              handler: () => {  
+                this.deleteAffectation(action_id);
+              }
+
+            }
+          ]
+      });
+      confirm.present(); 
+
+    }else{
+      resultat.nbRealised --;
+      this.calculTime();
+    }
+    
+  }
+
+
+  deleteAffectation = (action_id: number) => {
+    
+    this.dashboardProvider.affectActionChild(this.childId,this.action)
+    .subscribe((data:any) => {
+      if(data.success){ 
+      
+      this.navCtrl.setRoot(DashboardPage, {id: this.childId});
+      }else{  
+      this.toastProvider.presentToast(data.message);
+      }
+    
+    }, (err: any) => {
+    console.log(err)
+    }); 
+  }
+
+
+  calculTime = () =>{
+    
+    this.actionsSelected.forEach(element => {
+      let temps = moment(element.timep,'HH:mm:ss');
+      moment(this.timeWin).add(120,'m');
+     console.log(this.timeWin);
+    });
+        
+    
+  }
   onLinkFamily = () => {
     this.navCtrl.setRoot(FamillePage);
   }

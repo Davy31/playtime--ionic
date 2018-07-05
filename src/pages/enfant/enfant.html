@@ -8,8 +8,6 @@
   </ion-navbar>
 </ion-header>
 
-
-
 <ion-content padding>
 
   <form (ngSubmit)="onSubmit(form)" #form="ngForm">
@@ -36,14 +34,23 @@
           <ion-label>Garçon</ion-label>
           <ion-radio value='M' ></ion-radio>
         </ion-item>     
-      </ion-list>
-  
+      </ion-list> 
+
     </ion-list>
 
-    <button ion-button  type="submit" float-start >Validation</button>
-    <button ion-button  type="button" float-start (click)="onChildDelete()" color=danger >Suppression</button>
-    <button ion-button  type="button" float-end  (click)="onLinkCancel()">Annuler  </button>
-
+    <ion-grid>
+      <ion-row>
+        <ion-col col-4 text-center>
+          <button ion-button  text-center class="btn-form" type="submit" float-start  >Validation</button>
+        </ion-col>
+        <ion-col col-4 text-center>
+          <button ion-button text-center class="btn-form"type="button" float-start (click)="onChildDelete()" color=danger >Suppression</button>
+        </ion-col>
+        <ion-col col-4 text-center>  
+          <button ion-button text-center class="btn-form" type="button" float-end  (click)="onLinkCancel()">Annuler  </button>
+        </ion-col>
+      </ion-row>
+    </ion-grid>  
   </form>
 
   <ion-footer>

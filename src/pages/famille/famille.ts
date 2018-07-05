@@ -68,7 +68,7 @@ export class FamillePage {
      }).catch((err) =>{
        this.toastProvider.presentToast("Vous n'êtes pas connecté");
        this.navCtrl.setRoot( ConnexionPage);
-     })    
+     });  
     
   }
 

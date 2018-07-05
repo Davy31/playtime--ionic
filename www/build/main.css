@@ -27993,7 +27993,7 @@ ion-navbar.toolbar {
 }
 
 page-chrono .display-text {
-  font-size: 70px;
+  font-size: 60px;
   height: 200px;
 }
 
@@ -28096,6 +28096,11 @@ page-dashboard .icon-add-action {
   margin-top: 10px;
   font-size: 30px;
   color: #488aff;
+}
+
+page-enfant .btn-form {
+  width: 90%;
+  font-size: 10px;
 }
 
 page-famille .ion-card-title {
