@@ -57,34 +57,52 @@ export class ChildProvider {
     console.log(tab_retour);
   return tab_retour
 
-}  
+  }  
 
-deleteChild = (child_id: number) => {
-  const uri_child = 'https://davy3165.000webhostapp.com/child/child_delete.php?id='+ child_id;
-  let tab_retour = this.http.get(uri_child);
-  console.log('provider suppression enfant : '+ uri_child);
-  console.log(tab_retour)
-  return tab_retour;
-} 
+  deleteChild = (child_id: number) => {
+    const uri_child = 'https://davy3165.000webhostapp.com/child/child_delete.php?id='+ child_id;
+    let tab_retour = this.http.get(uri_child);
+    console.log('provider suppression enfant : '+ uri_child);
+    console.log(tab_retour)
+    return tab_retour;
+  } 
 
-getListChildByUser = (user_id: number) => {
-  const uri_child = 'https://davy3165.000webhostapp.com/child/child_list.php?id='+ user_id;
-  let tab_retour =  this.http.get(uri_child);
-  console.log(' provider -liste famille : '+ uri_child);
-  console.log(tab_retour)
-  return tab_retour;
-} 
+  getListChildByUser = (user_id: number) => {
+    const uri_child = 'https://davy3165.000webhostapp.com/child/child_list.php?id='+ user_id;
+    let tab_retour =  this.http.get(uri_child);
+    console.log(' provider -liste famille : '+ uri_child);
+    console.log(tab_retour)
+    return tab_retour;
+  } 
+    
+
+  getDetailChild = (child_id: number) => {
+    const uri_child = 'https://davy3165.000webhostapp.com/child/child_detail.php?id='+ child_id;  
+    let tab_retour =  this.http.get(uri_child);  
+    console.log(' provider - détail enfant : '+ uri_child);
+    console.log(tab_retour);
+    
+    return tab_retour;
+  }
+
+  /**Return le surnom si existe sinon le prénom */
+  getName = (detailsChild) =>{
+    console.log(detailsChild);
+    console.log(detailsChild[0].nickname);
+    if(detailsChild[0].nickname!==null && detailsChild[0].nickname!=="" ){
+      return detailsChild[0].nickname;
+    }else{
+      return detailsChild[0].firstname;
+    }
+  }
+
+  /**Retourne le temps en heure */
+  convertHour = (minute: number) =>{    
+    let temps=new Date();
+    temps.setTime(minute*1000*60);
+   return(temps.getHours()-1)+":"+temps.getMinutes();
+  }
   
-
-getDetailChild = (child_id: number) => {
-  const uri_child = 'https://davy3165.000webhostapp.com/child/child_detail.php?id='+ child_id;  
-  let tab_retour =  this.http.get(uri_child);  
-  console.log(' provider - détail enfant : '+ uri_child);
-  console.log(tab_retour)
-  return tab_retour;
-
-}
-
 }
 
 

@@ -80,6 +80,10 @@ export class FamillePage {
    .subscribe((data:any) => {
      if(data.success){ 
       this.childs = data.result;
+      this.childs.forEach(element => {
+        console.log(element.playTime);
+        element.playTime = this.childProvider.convertHour(parseInt(element.playTime));
+      });
       console.log(data.result);
     }else{  
      this.toastProvider.presentToast(data.message);
@@ -91,19 +95,19 @@ export class FamillePage {
   }); 
 }
 
-  onLinkChrono = (childId:number) => {
-    console.log('childId:' + childId);
-    this.navCtrl.setRoot(ChronoPage, {id: childId});
-  }
+onLinkChrono = (childId:number) => {
+  console.log('childId:' + childId);
+  this.navCtrl.setRoot(ChronoPage, {id: childId});
+}
 
-  onLinkDashboardChild = (childId:number) => {
-    console.log('Dashboard id:' + childId);
-    this.navCtrl.setRoot(DashboardPage, {id: childId});
-  }
+onLinkDashboardChild = (childId:number) => {
+  console.log('Dashboard id:' + childId);
+  this.navCtrl.setRoot(DashboardPage, {id: childId});
+}
 
-  onLinkFormChild = (param_childId:number) => {
-    this.navCtrl.setRoot(EnfantPage, {userId: this.user_id,childId: param_childId} );
-  }
+onLinkFormChild = (param_childId:number) => {
+  this.navCtrl.setRoot(EnfantPage, {userId: this.user_id,childId: param_childId} );
+}
 
   
 

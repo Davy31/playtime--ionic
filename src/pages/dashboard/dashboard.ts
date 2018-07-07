@@ -1,6 +1,7 @@
 import { Component, ViewChild } from '@angular/core';
 import {  NavController, NavParams, Select } from 'ionic-angular';
 import { DashboardProvider} from '../../providers/api-base/dashboard';
+import { ChildProvider} from '../../providers/api-base/child';
 import { ToastProvider }  from '../../providers/toast/toast';
 import { FamillePage }  from '../../pages/famille/famille';
 import { ChronoPage }  from '../../pages/chrono/chrono';
@@ -30,6 +31,11 @@ export class DashboardPage {
   actionsNoSelected = [];
   action:any;
   timeWin = moment({year:0,month:0, day:0, hour:0, minute:0 }).format('HH:mm') ;
+  name: string;
+  childDetail:any;
+
+
+
   
   selectOptions = {
     title: 'Selectionner  des actions',
@@ -43,6 +49,7 @@ export class DashboardPage {
           public navParams: NavParams,
           public toastProvider : ToastProvider,
          private dashboardProvider: DashboardProvider,
+          private childProvider: ChildProvider,
          public alertCtrl: AlertController
           ) {}
 
@@ -65,7 +72,9 @@ export class DashboardPage {
 
     this.getListActionsNoSelected();
 
-    //this.buildActionsNoSelected();
+    this.getDetailChild();
+
+    this.calculTime();
   
   }
   //----------------- Rècupere les actions affectés à l'enfant --------------------------*
@@ -85,6 +94,24 @@ export class DashboardPage {
     });   
   } 
 
+  getDetailChild(){
+    this.childDetail= this.childProvider.getDetailChild(this.childId)
+      .subscribe((data:any) => {
+        if(data.success){ 
+         // console.log(data.result);
+          this.childDetail = data.result;
+        console.log(this.childDetail);
+          this.name = this.childProvider.getName( this.childDetail);
+       }else{  
+         console.log(data)
+          this.toastProvider.presentToast(data.message);
+       }
+      
+     }, (err: any) => {
+     
+      console.log(err)
+     }); 
+  }
   //-----------------Récupère la liste des actions non affectées
   getListActionsNoSelected = () => {
       this.dashboardProvider.getListActionsNoSelected(this.childId)
@@ -100,30 +127,12 @@ export class DashboardPage {
     console.log(err)
     });   
   }
-  /*
-    //Créé un array des actions non utilisées
-  buildActionsNoSelected = () => {
+  
 
-    let actionId:number;
-    this.actionsNoSelected = this.actionsSelected;  
-    console.log(this.actionsSelected)   ;
-    console.log("nb actions selectionnées =" + this.actionsSelected.length)
-    for (var i = 0, len = this.actionsSelected.length; i < len; i++) {
-      actionId= (this.actionsSelected[i].idAction) - 1;
-      console.log('actionId=' + actionId);
-      this.actionsNoSelected.splice(actionId,1);
-
-    }
-    console.log("actions non selectionnées");
-    console.log(this. actionsNoSelected);
-    
-  }
-
-  */
+  
   onOpenSelectAction = () => {
     this.selectRef.open();
   }
-
   
   onAffectAction = () =>{
       this.dashboardProvider.affectActionChild(this.childId,this.action)
@@ -177,20 +186,20 @@ export class DashboardPage {
     }else{
       resultat.nbRealised --;
       this.calculTime();
-    }
-    
+    }    
   }
 
 
   deleteAffectation = (action_id: number) => {
     
-    this.dashboardProvider.affectActionChild(this.childId,this.action)
+    this.dashboardProvider.deleteAffectation(action_id)
     .subscribe((data:any) => {
-      if(data.success){ 
-      
-      this.navCtrl.setRoot(DashboardPage, {id: this.childId});
+      console.log("succes:" + data.success);
+      if(data.success){       
+        console.log(data.message);
+        this.navCtrl.setRoot(DashboardPage, {id: this.childId});
       }else{  
-      this.toastProvider.presentToast(data.message);
+        this.toastProvider.presentToast(data.message);
       }
     
     }, (err: any) => {
@@ -200,15 +209,16 @@ export class DashboardPage {
 
 
   calculTime = () =>{
-    
+    /*
     this.actionsSelected.forEach(element => {
       let temps = moment(element.timep,'HH:mm:ss');
       moment(this.timeWin).add(120,'m');
-     console.log(this.timeWin);
-    });
+     console.log(this.timeWin);*/
+     
+  }
         
     
-  }
+  
   onLinkFamily = () => {
     this.navCtrl.setRoot(FamillePage);
   }
