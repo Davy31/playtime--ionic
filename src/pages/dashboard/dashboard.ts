@@ -59,7 +59,6 @@ export class DashboardPage {
     console.clear();
     console.log('Page dashboard');
 
-
     if(this.navParams.get('id')){
       this.childId = this.navParams.get('id');
       console.log("childId=" + this.childId);
@@ -95,6 +94,7 @@ export class DashboardPage {
   } 
 
   getDetailChild(){
+
     this.childDetail= this.childProvider.getDetailChild(this.childId)
       .subscribe((data:any) => {
         if(data.success){ 
@@ -126,8 +126,7 @@ export class DashboardPage {
     }, (err: any) => {
     console.log(err)
     });   
-  }
-  
+  } 
 
   
   onOpenSelectAction = () => {
@@ -152,9 +151,11 @@ export class DashboardPage {
 
 
   onAddRealisedAction = (action_id) => {
+    // Ajout 1 à l'action
     let resultat = this.actionsSelected.find( action => action.id === action_id);
     resultat.nbRealised ++;
-    this.calculTime();
+    
+    this.changeRealisedAction("add",action_id);  
     
   }
 
@@ -184,7 +185,7 @@ export class DashboardPage {
       confirm.present(); 
 
     }else{
-      resultat.nbRealised --;
+      this.changeRealisedAction("sub",action_id);
       this.calculTime();
     }    
   }
@@ -216,8 +217,25 @@ export class DashboardPage {
      console.log(this.timeWin);*/
      
   }
-        
+
+
+  changeRealisedAction = (action: string, action_id:number) =>{
     
+    this.dashboardProvider.changeNbRealisedAction(action,action_id)
+    .subscribe((data:any) => {
+      console.log("succes" + action_id + " :" + data.success);
+      if(data.success){       
+        console.log(data.message);
+        this.navCtrl.setRoot(DashboardPage, {id: this.childId});
+      }else{  
+        this.toastProvider.presentToast(data.message);
+      }
+    
+    }, (err: any) => {
+    console.log(err)
+    }); 
+    this.calculTime();
+  }
   
   onLinkFamily = () => {
     this.navCtrl.setRoot(FamillePage);

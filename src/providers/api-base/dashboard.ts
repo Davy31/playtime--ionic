@@ -56,6 +56,15 @@ export class DashboardProvider {
     return tab_retour;
   }
 
+  changeNbRealisedAction = (action: string, action_id: number) =>{
+
+    const uri_action_list = 'https://davy3165.000webhostapp.com/dashboard/dashboard_change_nbRealised.php?action=' + action + '&id=' + action_id;
+    let tab_retour =  this.http.get(uri_action_list);
+    console.log('provider - ' + action + ' action : '+ uri_action_list);
+    return tab_retour;
+
+  }
+
   
 
  

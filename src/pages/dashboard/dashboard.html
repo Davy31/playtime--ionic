@@ -56,8 +56,8 @@
         <div class="badge-time"  [class.badge-positive]="actionSelected.positive=='P'" [class.badge-negative]="actionSelected.positive=='N'">{{actionSelected.timep | slice:0:5}}</div>
         <div class="text-action" text-wrap>{{actionSelected.label}}</div>          
         <ion-badge class="badge-action-count" [class.badge-positive]="actionSelected.positive=='N'" [class.badge-negative]="actionSelected.positive=='N'">{{actionSelected.nbRealised}}</ion-badge>
-        <ion-icon  class="btn-plus" name="add-circle"  (click)="onAddRealisedAction(actionSelected.id);"></ion-icon>
-        <ion-icon class="btn-minus" name="remove-circle" (click)="onRemoveRealisedAction(actionSelected.id)"></ion-icon>
+        <ion-icon class="btn-plus"  name="add-circle"  (click)="onAddRealisedAction(actionSelected.id);"></ion-icon>
+        <ion-icon class="btn-minus"  name="remove-circle" (click)="onRemoveRealisedAction(actionSelected.id)"></ion-icon>
       </div> 
     </ion-item>
       

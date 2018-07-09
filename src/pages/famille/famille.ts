@@ -80,10 +80,7 @@ export class FamillePage {
    .subscribe((data:any) => {
      if(data.success){ 
       this.childs = data.result;
-      this.childs.forEach(element => {
-        console.log(element.playTime);
-        element.playTime = this.childProvider.convertHour(parseInt(element.playTime));
-      });
+     
       console.log(data.result);
     }else{  
      this.toastProvider.presentToast(data.message);
