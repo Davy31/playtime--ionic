@@ -8,7 +8,7 @@
   <ion-navbar>
     <ion-title >
       <img class="img-icon-header" float-start src="assets/imgs/icon-chrono.png"  />
-      LINE
+      <span>{{name}}</span>
       <logout></logout>
     </ion-title>
   </ion-navbar>
@@ -17,20 +17,25 @@
 <ion-content padding>
     <ion-grid>
 
-      <ion-row>
-          <ion-col col-12 text-center col-top class="display-text">{{afficheTemps}}</ion-col>        
-      </ion-row>
+        <ion-row>
+            <ion-col col-12 text-center col-top class="display-text">{{remainingTimeDisplay}}</ion-col>        
+        </ion-row>
 
-      <ion-row>
-          <ion-col co-12 col-bottom>
-              <ion-fab  center *ngIf="!isRunning">
-                  <button  ion-fab  (click)="onStartChrono()" color="secondary"><ion-icon >START</ion-icon></button>
-              </ion-fab>
-              <ion-fab  center *ngIf="isRunning">
-                <button  ion-fab  (click)="onStopChrono()" color="danger"><ion-icon >STOP</ion-icon></button>
-              </ion-fab>
-          </ion-col>
-      </ion-row>
+        <ion-row>
+                <ion-col col-12 text-center col-top class="-text">{{playTimeDisplay}}</ion-col>        
+             </ion-row>
+        <ion-row>
+            <ion-col co-12 col-bottom>
+                <ion-fab  center *ngIf="!isRunning">
+                    <button  ion-fab  (click)="onStartChrono()" color="secondary"><ion-icon >START</ion-icon></button>
+                </ion-fab>
+                <ion-fab  center *ngIf="isRunning">
+                    <button  ion-fab  (click)="onStopChrono()" color="danger"><ion-icon >STOP</ion-icon></button>
+                </ion-fab>
+            </ion-col>
+        </ion-row>
+
+      
 
     </ion-grid>
 </ion-content>

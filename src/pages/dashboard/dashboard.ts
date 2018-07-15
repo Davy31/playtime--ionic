@@ -33,9 +33,12 @@ export class DashboardPage {
   timeWin = moment({year:0,month:0, day:0, hour:0, minute:0 }).format('HH:mm') ;
   name: string;
   childDetail:any;
-
-
-
+  winTime:number;
+  playTime:number;
+  remainingTime:number;
+  winTimeDisplay : string;
+  playTimeDisplay : string;
+  remainingTimeDisplay : string;
   
   selectOptions = {
     title: 'Selectionner  des actions',
@@ -72,13 +75,11 @@ export class DashboardPage {
     this.getListActionsNoSelected();
 
     this.getDetailChild();
-
-    this.calculTime();
   
   }
   //----------------- Rècupere les actions affectés à l'enfant --------------------------*
   getListActionsByChild = () => {
-    this.dashboardProvider.getListActionByChild(this.childId)
+    this.dashboardProvider.getListActionByChild(this.childId)   
     .subscribe((data:any) => {
       if(data.success){       
       this.actionsSelected =  data.result;  
@@ -102,6 +103,15 @@ export class DashboardPage {
           this.childDetail = data.result;
         console.log(this.childDetail);
           this.name = this.childProvider.getName( this.childDetail);
+          this.winTime = this.childDetail["0"].winTime;
+          this.playTime= this.childDetail["0"].playTime;
+          this.winTime = this.childDetail["0"].winTime;
+          this.remainingTime = this.winTime - this.playTime ;
+          this.winTimeDisplay = this.dashboardProvider.convertMinuteHeure(this.winTime);
+          this.playTimeDisplay = this.dashboardProvider.convertMinuteHeure(this.playTime);
+          this.remainingTimeDisplay = this.dashboardProvider.convertMinuteHeure(this.remainingTime);
+          console.log(data)
+          console.log('wintime='+ this.winTime);
        }else{  
          console.log(data)
           this.toastProvider.presentToast(data.message);
@@ -185,8 +195,7 @@ export class DashboardPage {
       confirm.present(); 
 
     }else{
-      this.changeRealisedAction("sub",action_id);
-      this.calculTime();
+      this.changeRealisedAction("sub",action_id);     
     }    
   }
 
@@ -209,15 +218,6 @@ export class DashboardPage {
   }
 
 
-  calculTime = () =>{
-    /*
-    this.actionsSelected.forEach(element => {
-      let temps = moment(element.timep,'HH:mm:ss');
-      moment(this.timeWin).add(120,'m');
-     console.log(this.timeWin);*/
-     
-  }
-
 
   changeRealisedAction = (action: string, action_id:number) =>{
     
@@ -234,7 +234,7 @@ export class DashboardPage {
     }, (err: any) => {
     console.log(err)
     }); 
-    this.calculTime();
+    
   }
   
   onLinkFamily = () => {
@@ -242,7 +242,7 @@ export class DashboardPage {
   }
   
   onLinkChrono = () => {
-    this.navCtrl.setRoot(ChronoPage);
+    this.navCtrl.setRoot(ChronoPage, {id: this.childId  });
   }
    
 

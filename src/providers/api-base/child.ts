@@ -96,6 +96,7 @@ export class ChildProvider {
     }
   }
 
+
   /**Retourne le temps en heure */
   convertHour = (minute: number) =>{    
     let temps=new Date();

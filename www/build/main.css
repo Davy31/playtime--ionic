@@ -28042,6 +28042,7 @@ page-dashboard .line-action .badge-time {
   color: white;
   border-radius: 5px;
   padding: 2px;
+  width: 100px;
 }
 
 page-dashboard .line-action .text-action {

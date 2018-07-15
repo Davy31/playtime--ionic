@@ -65,6 +65,32 @@ export class DashboardProvider {
 
   }
 
+ convertMinuteHeure(minute: number){ 
+  let signe="";
+  let heure:any;
+  let min:any;
+
+  if(minute<0){
+      minute = - minute;
+      console.log (minute);
+      signe="-";
+  }
+  let mm= minute % 60;
+  let h = (minute - mm) / 60;
+
+  if(h<10){
+    heure= "0" + h;
+  }else{
+    heure = h;
+  }
+
+  if(mm<10){
+    min= "0" + mm;
+  }else{
+    min = mm;
+  }
+  return (signe + heure + "H" + min);
+ }
   
 
  

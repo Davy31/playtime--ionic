@@ -4,7 +4,10 @@ import * as moment from 'moment';
 import { TextToSpeech } from '@ionic-native/text-to-speech';
 import { Vibration } from '@ionic-native/vibration';
 import { FamillePage }  from '../../pages/famille/famille';
+import { DashboardProvider} from '../../providers/api-base/dashboard';
+import { ToastProvider }  from '../../providers/toast/toast';
 import { DashboardPage }  from '../../pages/dashboard/dashboard';
+import { ChildProvider} from '../../providers/api-base/child';
 
 /**
  * Generated class for the ChronoPage page.
@@ -18,41 +21,101 @@ import { DashboardPage }  from '../../pages/dashboard/dashboard';
   templateUrl: 'chrono.html',
 })
 export class ChronoPage {
-
+  childDetail : any;
+  childId:number
+  winTime:number;
+  playTime:number;
+  remainingTime:number;
+  winTimeDisplay : string;
+  playTimeDisplay : string;
+  remainingTimeDisplay : string;
   isRunning = false;
   temps: any;
   tempsVibration: any;
-  afficheTemps : any
+  afficheTemps : any;
+  name:string
 
   constructor(public navCtrl: NavController, 
               public navParams: NavParams,
-              private tts: TextToSpeech,
-              private vibration: Vibration  ) {
+              private dashboardProvider: DashboardProvider,
+              private childProvider: ChildProvider,
+              private vibration: Vibration,
+              public toastProvider : ToastProvider ) {
   }
   chrono:any;
 
   ionViewDidLoad = () => {
+    //******** Controle le paramtre childId */
+    console.clear();
     console.log('ionViewDidLoad ChronoPage');
-    this.temps = moment({hour: 0, minute: 5, seconds: 5}); 
-    this.afficheTemps = this.temps.format("HH:mm:ss"); 
-    this.tempsVibration =  moment({hour: 0, minute: 5, seconds: 0}); 
+    if(this.navParams.get('id')){
+      this.childId = this.navParams.get('id');
+      console.log("childId=" + this.childId);
+    }else{
+      console.log("il manque le parametre id enfant");
+      this.navCtrl.setRoot(FamillePage);
+    }  
+    
+    
+
+    this.getDetailChild();
+
+     
   }
 
+  // arrete le chrono si on quitte la page sans l'arreter
+  ionViewDidLeave(){
+    this.onStopChrono () 
+  }
   onStartChrono = () => {
-    this.tts.speak({text: 'Il te reste 5 minutes', locale: 'fr-FR'})
-      .then(() => console.log('Success'))
-      .catch((reason: any) => console.log(reason));
 
     this.isRunning = true;
     this.chrono = setInterval( () => {
-                                this.temps.subtract(1,'s');
-                                this.afficheTemps = this.temps.format("HH:mm:ss");
-                                  if( this.temps.diff(this.tempsVibration,'seconde')===0){
-                                    this.vibration.vibrate([2000,1000,2000]);
-                                  }
-                                },1000);
-  }
 
+                              this.remainingTime--;
+                              console.log(this.remainingTime);                             
+                              this.playTime++;
+                              this.playTimeDisplay = this.dashboardProvider.convertMinuteHeure(this.playTime);                              
+                              this.remainingTimeDisplay = this.dashboardProvider.convertMinuteHeure(this.remainingTime);
+                              if(this.remainingTime==0){
+                                this.onStopChrono();
+                              }
+                            },1000);
+  }
+  getDetailChild(){
+
+    this.childDetail= this.childProvider.getDetailChild(this.childId)
+      .subscribe((data:any) => {
+        if(data.success){ 
+          this.childDetail = data.result;
+          console.log(this.childDetail);
+          this.name = this.childProvider.getName( this.childDetail);
+          this.winTime = this.childDetail["0"].winTime;          
+          this.playTime= this.childDetail["0"].playTime;
+          this.winTime = this.childDetail["0"].winTime;
+          this.remainingTime = this.winTime - this.playTime ;
+
+          console.log("winTime=" + this.winTime + " playTime=" + this.playTime + " remainingTime=" + this.remainingTime)
+          //this.winTimeDisplay = this.dashboardProvider.convertMinuteHeure(this.winTime);
+          //this.playTimeDisplay = this.dashboardProvider.convertMinuteHeure(this.playTime);
+          this.remainingTimeDisplay = this.dashboardProvider.convertMinuteHeure(this.remainingTime);
+
+         //********* Controle qu'il reste du temps */
+          console.log("temps restant:" + this.remainingTime);
+          if(this.remainingTime<=0){
+            this.toastProvider.presentToast("Il ne reste plus de temps!!!");
+            this.navCtrl.setRoot(DashboardPage, {id: this.childId});
+          }
+       }else{  
+         console.log(data)
+          this.toastProvider.presentToast(data.message);
+       }
+      
+     }, (err: any) => {
+     
+      console.log(err)
+     }); 
+  }
   onStopChrono = () => {
     clearInterval(this.chrono);
     this.isRunning = false;
@@ -64,7 +127,7 @@ export class ChronoPage {
   }
 
   onLinkDashboard = () => {
-    this.navCtrl.setRoot(DashboardPage) ;
+    this.navCtrl.setRoot(DashboardPage,{id:this.childId}) ;
   }
 
   
