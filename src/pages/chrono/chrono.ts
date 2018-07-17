@@ -54,9 +54,7 @@ export class ChronoPage {
     }else{
       console.log("il manque le parametre id enfant");
       this.navCtrl.setRoot(FamillePage);
-    }  
-    
-    
+    } 
 
     this.getDetailChild();
 
@@ -97,7 +95,7 @@ export class ChronoPage {
 
           console.log("winTime=" + this.winTime + " playTime=" + this.playTime + " remainingTime=" + this.remainingTime)
           //this.winTimeDisplay = this.dashboardProvider.convertMinuteHeure(this.winTime);
-          //this.playTimeDisplay = this.dashboardProvider.convertMinuteHeure(this.playTime);
+          this.playTimeDisplay = this.dashboardProvider.convertMinuteHeure(this.playTime);
           this.remainingTimeDisplay = this.dashboardProvider.convertMinuteHeure(this.remainingTime);
 
          //********* Controle qu'il reste du temps */

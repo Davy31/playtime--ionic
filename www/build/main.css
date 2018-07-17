@@ -27997,6 +27997,18 @@ page-chrono .display-text {
   height: 200px;
 }
 
+page-chrono .colorVert {
+  color: green;
+}
+
+page-chrono .colorRouge {
+  color: red;
+}
+
+page-chrono .colorOrange {
+  color: #ffa600;
+}
+
 page-dashboard .select {
   max-width: 100%;
 }
