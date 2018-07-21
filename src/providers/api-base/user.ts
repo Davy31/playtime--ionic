@@ -14,8 +14,7 @@ export class UserProvider {
       postData.append('password' , password);
       postData.append('username' , username);
     const uri_api = 'https://davy3165.000webhostapp.com/user/user_add.php';
-    let tab_retour =  this.http.post(uri_api,postData);
-  
+    let tab_retour =  this.http.post(uri_api,postData);     
     return tab_retour;
   }
 

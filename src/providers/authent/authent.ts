@@ -6,10 +6,7 @@ import { ConnexionPage }  from '../../pages/connexion/connexion';
 
 
 /*
-  Generated class for the AuthentProvider provider.
-
-  See https://angular.io/guide/dependency-injection for more info on providers
-  and Angular DI.
+ ******* Regarde si l'ID de l'utilisateur est stocké dans le téléphone, sinon renvoi  à la page de connexion *****
 */
 @Injectable()
 export class AuthentProvider {

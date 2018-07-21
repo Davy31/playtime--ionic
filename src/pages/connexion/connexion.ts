@@ -100,10 +100,10 @@ export class ConnexionPage {
       .subscribe((data:any) => {
         console.log(data);
         if(data.success){
-          console.log(data.result[0].id + ' ' + data.result[0].username)
+          console.log('id =' +  data.result.id )
             // stocke les identifiants         
-          this.storage.set('playtime_user_id', data.result[0].id );
-          this.storage.set('playtime_user_username', data.result[0].username);
+          this.storage.set('playtime_user_id', data.result.id );
+          this.storage.set('playtime_user_username', data.result.username);
           this.storage.set('playtime_user_email', form.controls['email'].value);  
           this.toastProvider.presentToast('Vous êtes connecté');
 
