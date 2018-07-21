@@ -8,10 +8,8 @@ import { ChronoPage }  from '../../pages/chrono/chrono';
 import { AlertController } from 'ionic-angular';
 import * as moment from 'moment';
 /**
- * Generated class for the DashboardPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
+ * Page Dashboard de l'enfant liste des actiosn et calcule du temps gagné
+ 
  */
 
 
@@ -216,8 +214,6 @@ export class DashboardPage {
     console.log(err)
     }); 
   }
-
-
 
   changeRealisedAction = (action: string, action_id:number) =>{
     

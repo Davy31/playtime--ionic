@@ -33,7 +33,7 @@
                     <button  ion-fab [disabled]="remainingTime<=0" (click)="onStartChrono()" color="secondary"><ion-icon >START</ion-icon></button>
                 </ion-fab>
                 <ion-fab  center *ngIf="isRunning">
-                    <button  ion-fab  (click)="onStopChrono()" color="danger"><ion-icon >STOP</ion-icon></button>
+                    <button  ion-fab  (click)="onStopChrono(true)" color="danger"><ion-icon >STOP</ion-icon></button>
                 </ion-fab>
             </ion-col>
         </ion-row>

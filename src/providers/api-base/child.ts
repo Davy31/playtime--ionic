@@ -85,6 +85,13 @@ export class ChildProvider {
     return tab_retour;
   }
 
+  recordPlaytime = (child_id:number,playtime:number) => {
+    const uri_action = 'https://davy3165.000webhostapp.com/child/child_update_playtime.php?idChild=' + child_id + "&playtime=" + playtime;
+    let tab_retour =  this.http.get(uri_action);
+    console.log('provider - enregistre playtime : '+ uri_action);
+    return tab_retour;
+  }
+
   /**Return le surnom si existe sinon le prénom */
   getName = (detailsChild) =>{
     console.log(detailsChild);

@@ -57,46 +57,39 @@ export class DashboardProvider {
   }
 
   changeNbRealisedAction = (action: string, action_id: number) =>{
-
     const uri_action_list = 'https://davy3165.000webhostapp.com/dashboard/dashboard_change_nbRealised.php?action=' + action + '&id=' + action_id;
     let tab_retour =  this.http.get(uri_action_list);
     console.log('provider - ' + action + ' action : '+ uri_action_list);
     return tab_retour;
-
   }
+  
 
  convertMinuteHeure(minute: number){ 
-  let signe="";
-  let heure:any;
-  let min:any;
+    let signe="";
+    let heure:any;
+    let min:any;
 
-  if(minute<0){
-      minute = - minute;
-      console.log (minute);
-      signe="-";
+    if(minute<0){
+        minute = - minute;
+        console.log (minute);
+        signe="-";
+    }
+    let mm= minute % 60;
+    let h = (minute - mm) / 60;
+
+    if(h<10){
+      heure= "0" + h;
+    }else{
+      heure = h;
+    }
+
+    if(mm<10){
+      min= "0" + mm;
+    }else{
+      min = mm;
+    }
+    return (signe + heure + "H" + min);
   }
-  let mm= minute % 60;
-  let h = (minute - mm) / 60;
-
-  if(h<10){
-    heure= "0" + h;
-  }else{
-    heure = h;
-  }
-
-  if(mm<10){
-    min= "0" + mm;
-  }else{
-    min = mm;
-  }
-  return (signe + heure + "H" + min);
- }
-  
-
- 
-
-    
-  
 
 
 }

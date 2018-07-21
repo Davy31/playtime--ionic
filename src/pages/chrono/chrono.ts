@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
-import * as moment from 'moment';
-import { TextToSpeech } from '@ionic-native/text-to-speech';
 import { Vibration } from '@ionic-native/vibration';
 import { FamillePage }  from '../../pages/famille/famille';
 import { DashboardProvider} from '../../providers/api-base/dashboard';
@@ -57,14 +55,14 @@ export class ChronoPage {
     } 
 
     this.getDetailChild();
-
      
   }
 
-  // arrete le chrono si on quitte la page sans l'arreter
+  // arrete le chrono si on quitte la page sans l'arreter, on enregistre pas le temps joué
   ionViewDidLeave(){
-    this.onStopChrono () 
+    this.onStopChrono (false);
   }
+  
   onStartChrono = () => {
 
     this.isRunning = true;
@@ -76,7 +74,7 @@ export class ChronoPage {
                               this.playTimeDisplay = this.dashboardProvider.convertMinuteHeure(this.playTime);                              
                               this.remainingTimeDisplay = this.dashboardProvider.convertMinuteHeure(this.remainingTime);
                               if(this.remainingTime==0){
-                                this.onStopChrono();
+                                this.onStopChrono(true);
                               }
                             },1000);
   }
@@ -114,8 +112,41 @@ export class ChronoPage {
       console.log(err)
      }); 
   }
-  onStopChrono = () => {
+
+  //arrete le chrono et enregistre le temps joué si record est vrai
+  onStopChrono = (record:boolean) => {
     clearInterval(this.chrono);
+    console.log("Ennregisrte temps"); 
+
+    this.childProvider.recordPlaytime(this.childId,this.playTime)
+    .subscribe((data:any) => {
+      if(data.success){ 
+        console.log(data);
+      }else{  
+        console.log(data);    
+      }
+    
+    }, (err: any) => {
+    
+      console.log(err);
+    }); 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     this.isRunning = false;
 
   }
