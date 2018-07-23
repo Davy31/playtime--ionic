@@ -28027,6 +28027,13 @@ page-dashboard .select-card {
   background-color: white;
 }
 
+page-dashboard .ionItem {
+  height: 55px;
+  padding: 0;
+  margin: 0;
+  background-color: #ffffff;
+}
+
 page-dashboard .line-action {
   z-index: -10;
   display: -webkit-box;
@@ -28038,11 +28045,15 @@ page-dashboard .line-action {
   -ms-flex-align: center;
   align-items: center;
   z-index: 1000;
-  height: 100%;
+  margin: 0px;
+  background-color: white;
 }
 
 page-dashboard .line-action div {
-  margin: 5px;
+  margin-left: 5px;
+  margin-right: 5px;
+  margin-top: 0px;
+  margin-bottom: 0px;
 }
 
 page-dashboard .line-action .badge-time {
@@ -28054,7 +28065,9 @@ page-dashboard .line-action .badge-time {
   color: white;
   border-radius: 5px;
   padding: 2px;
-  width: 100px;
+  width: 50px;
+  height: 15px;
+  margin: 0px;
 }
 
 page-dashboard .line-action .text-action {
@@ -28065,18 +28078,11 @@ page-dashboard .line-action .text-action {
   text-align: left;
 }
 
-page-dashboard .line-action .badge-action-count {
-  -webkit-flex-basis: 10%;
-  -ms-flex-preferred-size: 10%;
-  flex-basis: 10%;
-  font-size: 10px;
-}
-
 page-dashboard .line-action .btn-plus {
   -webkit-flex-basis: 5%;
   -ms-flex-preferred-size: 5%;
   flex-basis: 5%;
-  font-size: 30px;
+  font-size: 40px;
   padding-right: 5px;
   padding-left: 5px;
 }
@@ -28098,11 +28104,12 @@ page-dashboard .badge-negative {
 
 page-dashboard .badge-title-time-recap {
   text-align: center;
-  font-size: 11px;
+  font-size: 14px;
 }
 
 page-dashboard .badge-time-recap {
   padding: 5px;
+  font-size: 15px;
 }
 
 page-dashboard .icon-add-action {
