@@ -27,8 +27,7 @@ export class DashboardPage {
   childId:number;
   actionsSelected = [];
   actionsNoSelected = [];
-  action:any;
-  timeWin = moment({year:0,month:0, day:0, hour:0, minute:0 }).format('HH:mm') ;
+  action:any; 
   name: string;
   childDetail:any;
   winTime:number;

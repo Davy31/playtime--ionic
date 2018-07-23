@@ -69,10 +69,10 @@ export class ChronoPage {
     this.chrono = setInterval( () => {
 
                               this.remainingTime--;
-                              console.log(this.remainingTime);                             
+                              console.log(this.playTime);                             
                               this.playTime++;
-                              this.playTimeDisplay = this.dashboardProvider.convertMinuteHeure(this.playTime);                              
-                              this.remainingTimeDisplay = this.dashboardProvider.convertMinuteHeure(this.remainingTime);
+                              this.playTimeDisplay = this.dashboardProvider.convertSecondeHeure(this.playTime);                              
+                              this.remainingTimeDisplay = this.dashboardProvider.convertSecondeHeure(this.remainingTime);
                               if(this.remainingTime==0){
                                 this.onStopChrono(true);
                               }
@@ -86,15 +86,14 @@ export class ChronoPage {
           this.childDetail = data.result;
           console.log(this.childDetail);
           this.name = this.childProvider.getName( this.childDetail);
-          this.winTime = this.childDetail["0"].winTime;          
-          this.playTime= this.childDetail["0"].playTime;
-          this.winTime = this.childDetail["0"].winTime;
+          this.playTime = this.childDetail["0"].playTime*60;
+          this.winTime = this.childDetail["0"].winTime*60;
+          
           this.remainingTime = this.winTime - this.playTime ;
 
           console.log("winTime=" + this.winTime + " playTime=" + this.playTime + " remainingTime=" + this.remainingTime)
-          //this.winTimeDisplay = this.dashboardProvider.convertMinuteHeure(this.winTime);
-          this.playTimeDisplay = this.dashboardProvider.convertMinuteHeure(this.playTime);
-          this.remainingTimeDisplay = this.dashboardProvider.convertMinuteHeure(this.remainingTime);
+          this.playTimeDisplay = this.dashboardProvider.convertSecondeHeure(this.playTime);
+          this.remainingTimeDisplay = this.dashboardProvider.convertSecondeHeure(this.remainingTime);
 
          //********* Controle qu'il reste du temps */
           console.log("temps restant:" + this.remainingTime);
@@ -116,9 +115,11 @@ export class ChronoPage {
   //arrete le chrono et enregistre le temps joué si record est vrai
   onStopChrono = (record:boolean) => {
     clearInterval(this.chrono);
-    console.log("Ennregisrte temps"); 
-
-    this.childProvider.recordPlaytime(this.childId,this.playTime)
+    console.log("Enregistre temps"); 
+    //Convertie en minutes par defaut
+    let playTimeSeconde = Math.trunc(this.playTime/60);
+    console.log("Minutes enregistrées :" + playTimeSeconde);
+    this.childProvider.recordPlaytime(this.childId,playTimeSeconde)
     .subscribe((data:any) => {
       if(data.success){ 
         console.log(data);

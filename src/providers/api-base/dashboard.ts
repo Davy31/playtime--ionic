@@ -91,6 +91,16 @@ export class DashboardProvider {
     return (signe + heure + "H" + min);
   }
 
+  convertSecondeHeure(seconde: number) {
+    var addZero = function(v) { return v<10 ? '0' + v : v; };
+    var d = new Date(seconde * 1000); // js fonctionne en milisecondes
+    var t = [];
+    t.push(addZero(d.getHours()-1));
+    t.push(addZero(d.getMinutes()));
+    t.push(addZero(d.getSeconds()));
+    return t.join(':');
+  } 
+
 
 }
 
