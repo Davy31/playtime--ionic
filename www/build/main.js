@@ -90,6 +90,15 @@ var DashboardProvider = /** @class */ (function () {
         }
         return (signe + heure + "H" + min);
     };
+    DashboardProvider.prototype.convertSecondeHeure = function (seconde) {
+        var addZero = function (v) { return v < 10 ? '0' + v : v; };
+        var d = new Date(seconde * 1000); // js fonctionne en milisecondes
+        var t = [];
+        t.push(addZero(d.getHours() - 1));
+        t.push(addZero(d.getMinutes()));
+        t.push(addZero(d.getSeconds()));
+        return t.join(':');
+    };
     DashboardProvider = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["A" /* Injectable */])(),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */]])
@@ -1523,7 +1532,7 @@ var DashboardPage = /** @class */ (function () {
     ], DashboardPage.prototype, "selectRef", void 0);
     DashboardPage = DashboardPage_1 = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-dashboard',template:/*ion-inline-start:"C:\Users\Aries\Desktop\ionic\playtime--ionic\src\pages\dashboard\dashboard.html"*/'\n\n<ion-header>\n\n  <ion-navbar>\n\n    <!-->\n\n    <button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n  -->\n\n    <ion-title text-left>\n\n        <img class="img-icon-header"  float-start src="assets/imgs/icon-tbb.png"  />\n\n        \n\n      <span>{{name}}</span>\n\n      <logout></logout>\n\n    </ion-title>\n\n\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n\n\n<ion-content no-padding>\n\n\n\n  <ion-grid class="select-card"> <!-- Bagdes recap-->\n\n    <ion-row>\n\n\n\n      <ion-col col-3 text-center >\n\n        <div class="badge-title-time-recap" >Gagné</div>\n\n        <ion-badge class="badge-time-recap">{{winTimeDisplay}}</ion-badge>\n\n      </ion-col>\n\n  \n\n      <ion-col col-3  text-center >\n\n        <div class="badge-title-time-recap" >Utilisé</div>\n\n        <ion-badge class="badge-time-recap">{{playTimeDisplay}}</ion-badge>\n\n      </ion-col>\n\n\n\n      <ion-col col-3 text-center >\n\n        <div class="badge-title-time-recap" >Restant</div>\n\n        <ion-badge class="badge-time-recap">{{remainingTimeDisplay}}</ion-badge>\n\n      </ion-col>\n\n\n\n      <ion-col col-3 text-center  >\n\n        <ion-icon class="icon-add-action" name="ios-list-box" (click)="onOpenSelectAction()"></ion-icon>\n\n      </ion-col>           \n\n      \n\n    </ion-row>   \n\n  </ion-grid>\n\n      \n\n  <ion-list>\n\n\n\n    <ion-item *ngFor="let actionSelected of actionsSelected" class="ionItem" >\n\n      <div class="line-action"> \n\n        <div class="div-badge" >\n\n          <div>\n\n            <ion-badge class="badge-time" [class.badge-positive]="actionSelected.positive==\'P\'" \n\n              [class.badge-negative]="actionSelected.positive==\'N\'">{{actionSelected.nbRealised}}</ion-badge>\n\n           </div>\n\n           <div>\n\n            <ion-badge class="badge-time"  [class.badge-positive]="actionSelected.positive==\'P\'" \n\n                                    [class.badge-negative]="actionSelected.positive==\'N\'">{{actionSelected.timep | slice:0:5}} mn</ion-badge>\n\n          </div> \n\n        </div> \n\n        <div class="text-action" text-wrap>{{actionSelected.label}}</div> \n\n        <ion-icon class="btn-plus"  name="add-circle"  (click)="onAddRealisedAction(actionSelected.id);"></ion-icon>\n\n        <ion-icon class="btn-minus"  name="remove-circle" (click)="onRemoveRealisedAction(actionSelected.id)"></ion-icon>\n\n      </div> \n\n    </ion-item>\n\n      \n\n  </ion-list>\n\n  \n\n\n\n  <!-- Liste des action cachée-->\n\n  <ion-item class="ion-select" >\n\n    <ion-select  #selectAction [(ngModel)]="action" (ionChange)="onAffectAction()" [selectOptions]="selectOptions"\n\n  multiple="true" cancelText="Annuler" okText="Ajouter">\n\n      <ion-option *ngFor="let actionNoSelected of actionsNoSelected" [value]="actionNoSelected.id">{{actionNoSelected.label}}</ion-option >\n\n    </ion-select> \n\n  </ion-item>\n\n\n\n\n\n\n\n</ion-content>\n\n\n\n<ion-footer>\n\n    <ion-toolbar>\n\n      <ion-grid>\n\n        <ion-row>\n\n            <ion-col col-3 text-center>\n\n                <img class="img-icon-footer" src="assets/imgs/icon-family.png" (click)="onLinkFamily()" />    \n\n            </ion-col>\n\n\n\n          <ion-col col-6 text-center>PLAYTIME</ion-col>\n\n\n\n            <ion-col col-3 text-center>\n\n                <img class="img-icon-footer" src="assets/imgs/icon-chrono.png" (click)="onLinkChrono()"  />\n\n            </ion-col>\n\n        </ion-row>\n\n    </ion-grid>\n\n    </ion-toolbar>            \n\n  </ion-footer>'/*ion-inline-end:"C:\Users\Aries\Desktop\ionic\playtime--ionic\src\pages\dashboard\dashboard.html"*/,
+            selector: 'page-dashboard',template:/*ion-inline-start:"C:\Users\Aries\Desktop\ionic\playtime--ionic\src\pages\dashboard\dashboard.html"*/'\n\n<ion-header>\n\n  <ion-navbar>\n\n    <!-->\n\n    <button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n  -->\n\n    <ion-title text-left>\n\n        <img class="img-icon-header"  float-start src="assets/imgs/icon-tbb.png"  />\n\n        \n\n      <span>{{name}}</span>\n\n      <logout></logout>\n\n    </ion-title>\n\n\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n\n\n<ion-content no-padding>\n\n\n\n  <ion-grid class="select-card"> <!-- Bagdes recap-->\n\n    <ion-row>\n\n\n\n      <ion-col col-3 text-center >\n\n        <div class="badge-title-time-recap" >Gagné</div>\n\n        <ion-badge class="badge-time-recap">{{winTimeDisplay}}</ion-badge>\n\n      </ion-col>\n\n  \n\n      <ion-col col-3  text-center >\n\n        <div class="badge-title-time-recap" >Utilisé</div>\n\n        <ion-badge class="badge-time-recap">{{playTimeDisplay}}</ion-badge>\n\n      </ion-col>\n\n\n\n      <ion-col col-3 text-center >\n\n        <div class="badge-title-time-recap" >Restant</div>\n\n        <ion-badge class="badge-time-recap">{{remainingTimeDisplay}}</ion-badge>\n\n      </ion-col>\n\n\n\n      <ion-col col-3 text-center  >\n\n        <ion-icon class="icon-add-action" name="ios-list-box" (click)="onOpenSelectAction()"></ion-icon>\n\n      </ion-col>           \n\n      \n\n    </ion-row>   \n\n  </ion-grid>\n\n      \n\n  <ion-list>\n\n\n\n    <ion-item *ngFor="let actionSelected of actionsSelected" class="ionItem" >\n\n      <div class="line-action"> \n\n        <div class="div-badge" >\n\n          <div>\n\n            <ion-badge class="badge-time"\n\n              [class.badge-positive]="actionSelected.positive==\'P\'" \n\n              [class.badge-negative]="actionSelected.positive==\'N\'">{{actionSelected.nbRealised}}</ion-badge>\n\n           </div>\n\n           <div>\n\n            <ion-badge class="badge-time"  \n\n              [class.badge-positive]="actionSelected.positive==\'P\'" \n\n              [class.badge-negative]="actionSelected.positive==\'N\'">{{actionSelected.timep | slice:0:5}} mn</ion-badge>\n\n          </div> \n\n        </div> \n\n        <div class="text-action" text-wrap>{{actionSelected.label}}</div> \n\n        <ion-icon class="btn-plus"  name="add-circle"  (click)="onAddRealisedAction(actionSelected.id);"\n\n              [class.icon-positive]="actionSelected.positive==\'P\'"\n\n              [class.icon-negative]="actionSelected.positive==\'N\'"  ></ion-icon>\n\n        <ion-icon class="btn-minus"  name="remove-circle" (click)="onRemoveRealisedAction(actionSelected.id)"></ion-icon>\n\n      </div> \n\n    </ion-item>\n\n      \n\n  </ion-list>\n\n  \n\n\n\n  <!-- Liste des action cachée-->\n\n  <ion-item class="ion-select" >\n\n    <ion-select  #selectAction [(ngModel)]="action" (ionChange)="onAffectAction()" [selectOptions]="selectOptions"\n\n  multiple="true" cancelText="Annuler" okText="Ajouter">\n\n      <ion-option *ngFor="let actionNoSelected of actionsNoSelected" [value]="actionNoSelected.id">{{actionNoSelected.label}}</ion-option >\n\n    </ion-select> \n\n  </ion-item>\n\n\n\n\n\n\n\n</ion-content>\n\n\n\n<ion-footer>\n\n    <ion-toolbar>\n\n      <ion-grid>\n\n        <ion-row>\n\n            <ion-col col-3 text-center>\n\n                <img class="img-icon-footer" src="assets/imgs/icon-family.png" (click)="onLinkFamily()" />    \n\n            </ion-col>\n\n\n\n          <ion-col col-6 text-center>PLAYTIME</ion-col>\n\n\n\n            <ion-col col-3 text-center>\n\n                <img class="img-icon-footer" src="assets/imgs/icon-chrono.png" (click)="onLinkChrono()"  />\n\n            </ion-col>\n\n        </ion-row>\n\n    </ion-grid>\n\n    </ion-toolbar>            \n\n  </ion-footer>'/*ion-inline-end:"C:\Users\Aries\Desktop\ionic\playtime--ionic\src\pages\dashboard\dashboard.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */],
@@ -1737,10 +1746,10 @@ var ChronoPage = /** @class */ (function () {
             _this.isRunning = true;
             _this.chrono = setInterval(function () {
                 _this.remainingTime--;
-                console.log(_this.remainingTime);
+                console.log(_this.playTime);
                 _this.playTime++;
-                _this.playTimeDisplay = _this.dashboardProvider.convertMinuteHeure(_this.playTime);
-                _this.remainingTimeDisplay = _this.dashboardProvider.convertMinuteHeure(_this.remainingTime);
+                _this.playTimeDisplay = _this.dashboardProvider.convertSecondeHeure(_this.playTime);
+                _this.remainingTimeDisplay = _this.dashboardProvider.convertSecondeHeure(_this.remainingTime);
                 if (_this.remainingTime == 0) {
                     _this.onStopChrono(true);
                 }
@@ -1749,8 +1758,11 @@ var ChronoPage = /** @class */ (function () {
         //arrete le chrono et enregistre le temps joué si record est vrai
         this.onStopChrono = function (record) {
             clearInterval(_this.chrono);
-            console.log("Ennregisrte temps");
-            _this.childProvider.recordPlaytime(_this.childId, _this.playTime)
+            console.log("Enregistre temps");
+            //Convertie en minutes par defaut
+            var playTimeSeconde = Math.trunc(_this.playTime / 60);
+            console.log("Minutes enregistrées :" + playTimeSeconde);
+            _this.childProvider.recordPlaytime(_this.childId, playTimeSeconde)
                 .subscribe(function (data) {
                 if (data.success) {
                     console.log(data);
@@ -1782,14 +1794,12 @@ var ChronoPage = /** @class */ (function () {
                 _this.childDetail = data.result;
                 console.log(_this.childDetail);
                 _this.name = _this.childProvider.getName(_this.childDetail);
-                _this.winTime = _this.childDetail["0"].winTime;
-                _this.playTime = _this.childDetail["0"].playTime;
+                _this.playTime = _this.childDetail["0"].playTime * 60;
                 _this.winTime = _this.childDetail["0"].winTime * 60;
                 _this.remainingTime = _this.winTime - _this.playTime;
                 console.log("winTime=" + _this.winTime + " playTime=" + _this.playTime + " remainingTime=" + _this.remainingTime);
-                //this.winTimeDisplay = this.dashboardProvider.convertMinuteHeure(this.winTime);
-                _this.playTimeDisplay = _this.dashboardProvider.convertMinuteHeure(_this.playTime);
-                _this.remainingTimeDisplay = _this.dashboardProvider.convertMinuteHeure(_this.remainingTime);
+                _this.playTimeDisplay = _this.dashboardProvider.convertSecondeHeure(_this.playTime);
+                _this.remainingTimeDisplay = _this.dashboardProvider.convertSecondeHeure(_this.remainingTime);
                 //********* Controle qu'il reste du temps */
                 console.log("temps restant:" + _this.remainingTime);
                 if (_this.remainingTime <= 0) {

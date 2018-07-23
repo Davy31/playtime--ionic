@@ -10,7 +10,6 @@ export class DashboardProvider {
   constructor(public http: HttpClient) {}
   
   getListActionByChild = (child_id: number) => {   
-
     const uri_action_list = 'https://davy3165.000webhostapp.com/dashboard/dashboard_action_child.php?id=' + child_id;
     let tab_retour =  this.http.get(uri_action_list);
     console.log(' provider -liste action par enfant  : '+ uri_action_list);
@@ -19,13 +18,11 @@ export class DashboardProvider {
   }
 
   getListActionsNoSelected = (child_id: number) => {   
-
     const uri_action_list = 'https://davy3165.000webhostapp.com/dashboard/dashboard_actions_child_noSelected.php?id=' + child_id;
     let tab_retour =  this.http.get(uri_action_list);
     console.log(' provider -actions non sélectionnées : '+ uri_action_list);
     //console.log(tab_retour);
-    return tab_retour;
-  
+    return tab_retour;  
   }
 
   affectActionChild = (child_id,actions:any) => {   
@@ -99,7 +96,7 @@ export class DashboardProvider {
     t.push(addZero(d.getMinutes()));
     t.push(addZero(d.getSeconds()));
     return t.join(':');
-  } 
+  }
 
 
 }

@@ -50,16 +50,20 @@
       <div class="line-action"> 
         <div class="div-badge" >
           <div>
-            <ion-badge class="badge-time" [class.badge-positive]="actionSelected.positive=='P'" 
+            <ion-badge class="badge-time"
+              [class.badge-positive]="actionSelected.positive=='P'" 
               [class.badge-negative]="actionSelected.positive=='N'">{{actionSelected.nbRealised}}</ion-badge>
            </div>
            <div>
-            <ion-badge class="badge-time"  [class.badge-positive]="actionSelected.positive=='P'" 
-                                    [class.badge-negative]="actionSelected.positive=='N'">{{actionSelected.timep | slice:0:5}} mn</ion-badge>
+            <ion-badge class="badge-time"  
+              [class.badge-positive]="actionSelected.positive=='P'" 
+              [class.badge-negative]="actionSelected.positive=='N'">{{actionSelected.timep | slice:0:5}} mn</ion-badge>
           </div> 
         </div> 
         <div class="text-action" text-wrap>{{actionSelected.label}}</div> 
-        <ion-icon class="btn-plus"  name="add-circle"  (click)="onAddRealisedAction(actionSelected.id);"></ion-icon>
+        <ion-icon class="btn-plus"  name="add-circle"  (click)="onAddRealisedAction(actionSelected.id);"
+              [class.icon-positive]="actionSelected.positive=='P'"
+              [class.icon-negative]="actionSelected.positive=='N'"  ></ion-icon>
         <ion-icon class="btn-minus"  name="remove-circle" (click)="onRemoveRealisedAction(actionSelected.id)"></ion-icon>
       </div> 
     </ion-item>

@@ -28102,6 +28102,14 @@ page-dashboard .badge-negative {
   background-color: red;
 }
 
+page-dashboard .icon-positive {
+  color: green;
+}
+
+page-dashboard .icon-negative {
+  color: red;
+}
+
 page-dashboard .badge-title-time-recap {
   text-align: center;
   font-size: 14px;
