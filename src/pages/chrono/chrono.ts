@@ -6,6 +6,7 @@ import { DashboardProvider} from '../../providers/api-base/dashboard';
 import { ToastProvider }  from '../../providers/toast/toast';
 import { DashboardPage }  from '../../pages/dashboard/dashboard';
 import { ChildProvider} from '../../providers/api-base/child';
+import { NativeAudio } from '@ionic-native/native-audio';
 
 /**
  * Generated class for the ChronoPage page.
@@ -24,13 +25,9 @@ export class ChronoPage {
   winTime:number;
   playTime:number;
   remainingTime:number;
-  winTimeDisplay : string;
   playTimeDisplay : string;
   remainingTimeDisplay : string;
   isRunning = false;
-  temps: any;
-  tempsVibration: any;
-  afficheTemps : any;
   name:string
 
   constructor(public navCtrl: NavController, 
@@ -38,7 +35,9 @@ export class ChronoPage {
               private dashboardProvider: DashboardProvider,
               private childProvider: ChildProvider,
               private vibration: Vibration,
-              public toastProvider : ToastProvider ) {
+              public toastProvider : ToastProvider,
+              private nativeAudio: NativeAudio
+              ) {
   }
   chrono:any;
 
@@ -55,6 +54,16 @@ export class ChronoPage {
     } 
 
     this.getDetailChild();
+
+    // initialise la sonnerie
+    /*
+    this.nativeAudio.preloadSimple('uniqueId1', 'audio/sound_end_play.mp3').then(() => {
+      console.log("initialisation sonnerie réussie");
+    })
+      ,( (err) => {
+      console.error("Erreur intitialisation sonnerie : " + err);
+    });
+    */
      
   }
 
@@ -73,8 +82,20 @@ export class ChronoPage {
                               this.playTime++;
                               this.playTimeDisplay = this.dashboardProvider.convertSecondeHeure(this.playTime);                              
                               this.remainingTimeDisplay = this.dashboardProvider.convertSecondeHeure(this.remainingTime);
-                              if(this.remainingTime==0){
+                              if(this.remainingTime==300){ // s'il ne reste plus que 5 minutes : Vibration
+                                this.vibration.vibrate([2000,1000,2000]);
+                              }
+                              if(this.remainingTime==0){ // Fin du temps : sonnerie  + arret du chrono
+                                /*
+                                this.nativeAudio.play('uniqueId1').then(() => {
+                                  console.log("Joue sonnerie");
+                                })
+                                ,( (err) => {
+                                  console.error("Erreur audio : " + err);
+                                });
+                                */
                                 this.onStopChrono(true);
+
                               }
                             },1000);
   }

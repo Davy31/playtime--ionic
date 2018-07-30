@@ -1,11 +1,10 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController } from 'ionic-angular';
 import { EnfantPage } from '../../pages/enfant/enfant';
 import { DashboardPage } from '../../pages/dashboard/dashboard';
 import { ToastProvider }  from '../../providers/toast/toast';
 import { ConnexionPage }  from '../../pages/connexion/connexion';
 import { ChronoPage }  from '../../pages/chrono/chrono';
-import { UserProvider} from '../../providers/api-base/user';
 import { ChildProvider} from '../../providers/api-base/child';
 import { Storage } from '@ionic/storage';
 
@@ -26,15 +25,11 @@ export class FamillePage {
   isAuth: boolean;
   user_id: number;
   user_username: string;
-  stateConnexion: string;
-  userPseudo: string;
   childs:any;
   
   constructor(
-              public navCtrl: NavController, 
-              public navParams: NavParams, 
+              public navCtrl: NavController,
               private toastProvider: ToastProvider,
-              private userProvider: UserProvider,
               private childProvider: ChildProvider,
               private storage: Storage
              
@@ -94,16 +89,16 @@ export class FamillePage {
 
 onLinkChrono = (childId:number) => {
   console.log('childId:' + childId);
-  this.navCtrl.setRoot(ChronoPage, {id: childId});
+  this.navCtrl.push(ChronoPage, {id: childId});
 }
 
 onLinkDashboardChild = (childId:number) => {
   console.log('Dashboard id:' + childId);
-  this.navCtrl.setRoot(DashboardPage, {id: childId});
+  this.navCtrl.push(DashboardPage, {id: childId});
 }
 
 onLinkFormChild = (param_childId:number) => {
-  this.navCtrl.setRoot(EnfantPage, {userId: this.user_id,childId: param_childId} );
+  this.navCtrl.push(EnfantPage, {userId: this.user_id,childId: param_childId} );
 }
 
   

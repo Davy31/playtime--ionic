@@ -6,7 +6,6 @@ import { ToastProvider }  from '../../providers/toast/toast';
 import { FamillePage }  from '../../pages/famille/famille';
 import { ChronoPage }  from '../../pages/chrono/chrono';
 import { AlertController } from 'ionic-angular';
-import * as moment from 'moment';
 /**
  * Page Dashboard de l'enfant liste des actiosn et calcule du temps gagné
  
@@ -21,9 +20,7 @@ export class DashboardPage {
 
   @ViewChild('selectAction') selectRef: Select;
 
-  isAuth: boolean;
-  userAuthId: string;
-  stateConnexion: string;
+
   childId:number;
   actionsSelected = [];
   actionsNoSelected = [];
@@ -38,7 +35,7 @@ export class DashboardPage {
   remainingTimeDisplay : string;
   
   selectOptions = {
-    title: 'Selectionner  des actions',
+    title: 'Sélectionnez  des actions',
     subTitle: '',
     mode: 'md'
   };
@@ -53,7 +50,7 @@ export class DashboardPage {
          public alertCtrl: AlertController
           ) {}
 
-
+        
   ionViewDidLoad() {
 
     console.clear();
@@ -72,18 +69,19 @@ export class DashboardPage {
     this.getListActionsNoSelected();
 
     this.getDetailChild();
-  
+
+
   }
+
   //----------------- Rècupere les actions affectés à l'enfant --------------------------*
   getListActionsByChild = () => {
-    this.dashboardProvider.getListActionByChild(this.childId)   
-    .subscribe((data:any) => {
-      if(data.success){       
-      this.actionsSelected =  data.result;  
-      console.log( this.actionsSelected);
-    }else{  
-      this.toastProvider.presentToast(data.message);
-    }
+      this.dashboardProvider.getListActionByChild(this.childId)   
+      .subscribe((data:any) => {
+        if(data.success){        
+        this.actionsSelected =  data.result;  
+      }else{  
+        this.toastProvider.presentToast(data.message);
+      }
     
     }, (err: any) => {
       
@@ -92,25 +90,19 @@ export class DashboardPage {
   } 
 
   getDetailChild(){
-
     this.childDetail= this.childProvider.getDetailChild(this.childId)
       .subscribe((data:any) => {
         if(data.success){ 
          // console.log(data.result);
           this.childDetail = data.result;
-        console.log(this.childDetail);
           this.name = this.childProvider.getName( this.childDetail);
           this.winTime = this.childDetail["0"].winTime;
           this.playTime= this.childDetail["0"].playTime;
-          this.winTime = this.childDetail["0"].winTime;
           this.remainingTime = this.winTime - this.playTime ;
           this.winTimeDisplay = this.dashboardProvider.convertMinuteHeure(this.winTime);
           this.playTimeDisplay = this.dashboardProvider.convertMinuteHeure(this.playTime);
-          this.remainingTimeDisplay = this.dashboardProvider.convertMinuteHeure(this.remainingTime);
-          console.log(data)
-          console.log('wintime='+ this.winTime);
-       }else{  
-         console.log(data)
+          this.remainingTimeDisplay = this.dashboardProvider.convertMinuteHeure(this.remainingTime);      
+       }else{          
           this.toastProvider.presentToast(data.message);
        }
       
@@ -124,17 +116,16 @@ export class DashboardPage {
       this.dashboardProvider.getListActionsNoSelected(this.childId)
     .subscribe((data:any) => {
       if(data.success){ 
-      this.actionsNoSelected = data.result;
-      //console.log( this.actionsNoSelected )
+        this.actionsNoSelected = data.result;     
       }else{  
       this.toastProvider.presentToast(data.message);
       }
     
     }, (err: any) => {
     console.log(err)
-    });   
+    });  
+     
   } 
-
   
   onOpenSelectAction = () => {
     this.selectRef.open();
@@ -160,10 +151,8 @@ export class DashboardPage {
   onAddRealisedAction = (action_id) => {
     // Ajout 1 à l'action
     let resultat = this.actionsSelected.find( action => action.id === action_id);
-    resultat.nbRealised ++;
-    
-    this.changeRealisedAction("add",action_id);  
-    
+    resultat.nbRealised ++;    
+    this.changeRealisedAction("add",action_id);      
   }
 
   onRemoveRealisedAction = (action_id) => {
@@ -196,9 +185,7 @@ export class DashboardPage {
     }    
   }
 
-
-  deleteAffectation = (action_id: number) => {
-    
+  deleteAffectation = (action_id: number) => {    
     this.dashboardProvider.deleteAffectation(action_id)
     .subscribe((data:any) => {
       console.log("succes:" + data.success);
@@ -214,8 +201,7 @@ export class DashboardPage {
     }); 
   }
 
-  changeRealisedAction = (action: string, action_id:number) =>{
-    
+  changeRealisedAction = (action: string, action_id:number) =>{    
     this.dashboardProvider.changeNbRealisedAction(action,action_id)
     .subscribe((data:any) => {
       console.log("succes" + action_id + " :" + data.success);

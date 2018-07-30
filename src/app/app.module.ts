@@ -3,15 +3,11 @@ import { ErrorHandler, NgModule } from '@angular/core';
 import { IonicApp, IonicErrorHandler, IonicModule } from 'ionic-angular';
 
 import { MyApp } from './app.component';
-import { HomePage } from '../pages/home/home';
-import { ListPage } from '../pages/list/list';
-import { RegisterPage } from '../pages/register/register';
 import { FamillePage } from '../pages/famille/famille';
 import { EnfantPage } from '../pages/enfant/enfant';
 import { ConnexionPage } from '../pages/connexion/connexion';
 import { DashboardPage } from '../pages/dashboard/dashboard';
 import { ChronoPage } from '../pages/chrono/chrono';
-import { ModalActionPage } from '../pages/modal-action/modal-action';
 import { LogoutComponent } from '../components/logout/logout';
 import { HttpClientModule} from '@angular/common/http';
 import { HttpModule } from '@angular/http'
@@ -26,20 +22,16 @@ import { ActionProvider} from '../providers/api-base/action';
 import { DashboardProvider} from '../providers/api-base/dashboard';
 import { TextToSpeech } from '@ionic-native/text-to-speech';
 import { Vibration } from '@ionic-native/vibration';
-import { AuthentProvider } from '../providers/authent/authent';
+import { NativeAudio } from '@ionic-native/native-audio';
 
 
 @NgModule({
   declarations: [
     MyApp,
-    HomePage,
-    ListPage,
-    RegisterPage,
     LogoutComponent,
     FamillePage,
     EnfantPage,
     DashboardPage,
-    ModalActionPage,
     ConnexionPage,
     ChronoPage
   ],
@@ -53,14 +45,10 @@ import { AuthentProvider } from '../providers/authent/authent';
   bootstrap: [IonicApp],
   entryComponents: [
     MyApp,
-    HomePage,
-    ListPage,
-    RegisterPage,
     LogoutComponent,
     FamillePage,
     EnfantPage,
     DashboardPage,
-    ModalActionPage,
     ConnexionPage,
     ChronoPage
   ],
@@ -75,7 +63,7 @@ import { AuthentProvider } from '../providers/authent/authent';
     DashboardProvider,
     TextToSpeech,
     Vibration,
-    AuthentProvider
+    NativeAudio
     
   ]
 })

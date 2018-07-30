@@ -3,7 +3,6 @@ import { NavController, NavParams } from 'ionic-angular';
 import { ToastProvider } from '../../providers/toast/toast';
 import { NgForm } from '@angular/forms';
 
-import { FamillePage } from '../famille/famille';
 
 /**
  * Generated class for the LoginPage page.
