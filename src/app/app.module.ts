@@ -25,6 +25,7 @@ import { Vibration } from '@ionic-native/vibration';
 import { NativeAudio } from '@ionic-native/native-audio';
 
 
+
 @NgModule({
   declarations: [
     MyApp,

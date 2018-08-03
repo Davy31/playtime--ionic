@@ -19,10 +19,10 @@
     <ion-grid>
 
         <ion-row>
-            <ion-col col-12 text-center col-top class="display-text colorVert"       
-            [class.colorOrange]="remainingTime < 10"    
-            [class.colorVert]="remainingTime>=10"            
-            [class.colorRouge]="remainingTime===0"
+            <ion-col col-12 text-center col-top class="display-text"
+            [class.colorOrange]="isColorOrange"
+            [class.colorGreen]="isColorGreen"
+            [class.colorRed]="isColorRed"
 
             > {{remainingTimeDisplay}}</ion-col>        
         </ion-row>

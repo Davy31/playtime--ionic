@@ -142,12 +142,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-/**
- * Generated class for the ChronoPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 var ChronoPage = /** @class */ (function () {
     function ChronoPage(navCtrl, navParams, dashboardProvider, childProvider, vibration, toastProvider, nativeAudio) {
         var _this = this;
@@ -159,6 +153,10 @@ var ChronoPage = /** @class */ (function () {
         this.toastProvider = toastProvider;
         this.nativeAudio = nativeAudio;
         this.isRunning = false;
+        //Gestion couleur chrono
+        this.isColorRed = false;
+        this.isColorOrange = false;
+        this.isColorGreen = true;
         this.ionViewDidLoad = function () {
             //******** Controle le paramtre childId */
             console.clear();
@@ -172,37 +170,46 @@ var ChronoPage = /** @class */ (function () {
                 _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_3__pages_famille_famille__["a" /* FamillePage */]);
             }
             _this.getDetailChild();
-            // initialise la sonnerie
             /*
-            this.nativeAudio.preloadSimple('uniqueId1', 'audio/sound_end_play.mp3').then(() => {
-              console.log("initialisation sonnerie réussie");
-            })
-              ,( (err) => {
-              console.error("Erreur intitialisation sonnerie : " + err);
-            });
-            */
+              // initialise la sonnerie
+              this.nativeAudio.preloadSimple('uniqueId1', 'audio/sound_end_play.mp3').then(() => {
+                console.log("initialisation sonnerie réussie");
+              })
+                ,( (err) => {
+                console.log("Erreur intitialisation sonnerie : " + err.messageerror);
+              });
+        
+          */
         };
         this.onStartChrono = function () {
             _this.isRunning = true;
             _this.chrono = setInterval(function () {
                 _this.remainingTime--;
-                console.log(_this.playTime);
                 _this.playTime++;
                 _this.playTimeDisplay = _this.dashboardProvider.convertSecondeHeure(_this.playTime);
                 _this.remainingTimeDisplay = _this.dashboardProvider.convertSecondeHeure(_this.remainingTime);
+                // s'il ne reste plus que 5 minutes : Vibrations  courtes et couleur orange
                 if (_this.remainingTime == 300) {
                     _this.vibration.vibrate([2000, 1000, 2000]);
                 }
+                //Gere couleur du chrono
+                if (_this.remainingTime < 300) {
+                    _this.isColorGreen = false;
+                    _this.isColorOrange = true;
+                    _this.isColorRed = false;
+                }
+                else {
+                    _this.isColorGreen = true;
+                    _this.isColorOrange = false;
+                    _this.isColorRed = false;
+                }
+                // Fin du temps : longue vibration  + arret du chrono + couleur rouge
                 if (_this.remainingTime == 0) {
-                    /*
-                    this.nativeAudio.play('uniqueId1').then(() => {
-                      console.log("Joue sonnerie");
-                    })
-                    ,( (err) => {
-                      console.error("Erreur audio : " + err);
-                    });
-                    */
+                    _this.isColorGreen = false;
+                    _this.isColorOrange = false;
+                    _this.isColorRed = true;
                     _this.onStopChrono(true);
+                    _this.vibration.vibrate([20000, 5000, 20000]);
                 }
             }, 1000);
         };
@@ -237,22 +244,20 @@ var ChronoPage = /** @class */ (function () {
     ChronoPage.prototype.ionViewDidLeave = function () {
         this.onStopChrono(false);
     };
+    // Recupère infos de l'enfant
     ChronoPage.prototype.getDetailChild = function () {
         var _this = this;
         this.childDetail = this.childProvider.getDetailChild(this.childId)
             .subscribe(function (data) {
             if (data.success) {
                 _this.childDetail = data.result;
-                console.log(_this.childDetail);
                 _this.name = _this.childProvider.getName(_this.childDetail);
                 _this.playTime = _this.childDetail["0"].playTime * 60;
                 _this.winTime = _this.childDetail["0"].winTime * 60;
                 _this.remainingTime = _this.winTime - _this.playTime;
-                console.log("winTime=" + _this.winTime + " playTime=" + _this.playTime + " remainingTime=" + _this.remainingTime);
                 _this.playTimeDisplay = _this.dashboardProvider.convertSecondeHeure(_this.playTime);
                 _this.remainingTimeDisplay = _this.dashboardProvider.convertSecondeHeure(_this.remainingTime);
                 //********* Controle qu'il reste du temps */
-                console.log("temps restant:" + _this.remainingTime);
                 if (_this.remainingTime <= 0) {
                     _this.toastProvider.presentToast("Il ne reste plus de temps!!!");
                     _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_6__pages_dashboard_dashboard__["a" /* DashboardPage */], { id: _this.childId });
@@ -268,7 +273,7 @@ var ChronoPage = /** @class */ (function () {
     };
     ChronoPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-chrono',template:/*ion-inline-start:"C:\Users\Aries\Desktop\ionic\playtime--ionic\src\pages\chrono\chrono.html"*/'<!--\n  Generated template for the ChronoPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar hideBackButton >\n    <ion-title >\n      <img class="img-icon-header" float-start src="assets/imgs/icon-chrono.png"  />\n      <span>{{name}}</span>\n      <logout></logout>\n    </ion-title>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content padding>\n    <ion-grid>\n\n        <ion-row>\n            <ion-col col-12 text-center col-top class="display-text colorVert"       \n            [class.colorOrange]="remainingTime < 10"    \n            [class.colorVert]="remainingTime>=10"            \n            [class.colorRouge]="remainingTime===0"\n\n            > {{remainingTimeDisplay}}</ion-col>        \n        </ion-row>\n\n       \n        <ion-row>\n            <ion-col co-12 col-bottom>\n                <ion-fab  center *ngIf="!isRunning">\n                    <button  ion-fab [disabled]="remainingTime<=0" (click)="onStartChrono()" color="secondary"><ion-icon >START</ion-icon></button>\n                </ion-fab>\n                <ion-fab  center *ngIf="isRunning">\n                    <button  ion-fab  (click)="onStopChrono(true)" color="danger"><ion-icon >STOP</ion-icon></button>\n                </ion-fab>\n            </ion-col>\n        </ion-row>\n        \n\n    </ion-grid>\n</ion-content>\n\n<ion-footer>\n    <ion-toolbar>\n      <ion-grid>\n        <ion-row>\n            <ion-col col-3 text-center>\n                <img class="img-icon-footer" src="assets/imgs/icon-family.png" (click)="onLinkFamily()" />    \n            </ion-col>\n\n          <ion-col col-6 text-center>playTime</ion-col>\n\n            <ion-col col-3 text-center>\n                <img class="img-icon-footer" src="assets/imgs/icon-tbb.png" (click)="onLinkDashboard()" />\n            </ion-col>\n        </ion-row>\n    </ion-grid>\n    </ion-toolbar>            \n  </ion-footer>\n'/*ion-inline-end:"C:\Users\Aries\Desktop\ionic\playtime--ionic\src\pages\chrono\chrono.html"*/,
+            selector: 'page-chrono',template:/*ion-inline-start:"C:\Users\Aries\Desktop\ionic\playtime--ionic\src\pages\chrono\chrono.html"*/'<!--\n  Generated template for the ChronoPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n  <ion-navbar hideBackButton >\n    <ion-title >\n      <img class="img-icon-header" float-start src="assets/imgs/icon-chrono.png"  />\n      <span>{{name}}</span>\n      <logout></logout>\n    </ion-title>\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content padding>\n    <ion-grid>\n\n        <ion-row>\n            <ion-col col-12 text-center col-top class="display-text"\n            [class.colorOrange]="isColorOrange"\n            [class.colorGreen]="isColorGreen"\n            [class.colorRed]="isColorRed"\n\n            > {{remainingTimeDisplay}}</ion-col>        \n        </ion-row>\n\n       \n        <ion-row>\n            <ion-col co-12 col-bottom>\n                <ion-fab  center *ngIf="!isRunning">\n                    <button  ion-fab [disabled]="remainingTime<=0" (click)="onStartChrono()" color="secondary"><ion-icon >START</ion-icon></button>\n                </ion-fab>\n                <ion-fab  center *ngIf="isRunning">\n                    <button  ion-fab  (click)="onStopChrono(true)" color="danger"><ion-icon >STOP</ion-icon></button>\n                </ion-fab>\n            </ion-col>\n        </ion-row>\n        \n\n    </ion-grid>\n</ion-content>\n\n<ion-footer>\n    <ion-toolbar>\n      <ion-grid>\n        <ion-row>\n            <ion-col col-3 text-center>\n                <img class="img-icon-footer" src="assets/imgs/icon-family.png" (click)="onLinkFamily()" />    \n            </ion-col>\n\n          <ion-col col-6 text-center>playTime</ion-col>\n\n            <ion-col col-3 text-center>\n                <img class="img-icon-footer" src="assets/imgs/icon-tbb.png" (click)="onLinkDashboard()" />\n            </ion-col>\n        </ion-row>\n    </ion-grid>\n    </ion-toolbar>            \n  </ion-footer>\n'/*ion-inline-end:"C:\Users\Aries\Desktop\ionic\playtime--ionic\src\pages\chrono\chrono.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */],
