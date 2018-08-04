@@ -6,7 +6,6 @@ import { DashboardProvider} from '../../providers/api-base/dashboard';
 import { ToastProvider }  from '../../providers/toast/toast';
 import { DashboardPage }  from '../../pages/dashboard/dashboard';
 import { ChildProvider} from '../../providers/api-base/child';
-import { NativeAudio } from '@ionic-native/native-audio';
 
 
 @Component({
@@ -27,7 +26,7 @@ export class ChronoPage {
   isColorRed  = false;
   isColorOrange  = false;
   isColorGreen  = true;
-
+  chrono:any;
 
 
   constructor(public navCtrl: NavController,
@@ -35,16 +34,13 @@ export class ChronoPage {
               private dashboardProvider: DashboardProvider,
               private childProvider: ChildProvider,
               private vibration: Vibration,
-              public toastProvider : ToastProvider,
-              private nativeAudio: NativeAudio
-  ) {
-  }
-  chrono:any;
+              public toastProvider : ToastProvider
+               ) { }
+
+
 
   ionViewDidLoad = () => {
     //******** Controle le paramtre childId */
-    console.clear();
-    console.log('ionViewDidLoad ChronoPage');
     if(this.navParams.get('id')){
       this.childId = this.navParams.get('id');
       console.log("childId=" + this.childId);
@@ -55,19 +51,9 @@ export class ChronoPage {
 
     this.getDetailChild();
 
-    /*
-      // initialise la sonnerie
-      this.nativeAudio.preloadSimple('uniqueId1', 'audio/sound_end_play.mp3').then(() => {
-        console.log("initialisation sonnerie réussie");
-      })
-        ,( (err) => {
-        console.log("Erreur intitialisation sonnerie : " + err.messageerror);
-      });
-
-  */
   }
 
-  // arrete le chrono si on quitte la page sans l'arreter, on enregistre pas le temps joué
+  // arrete le chrono si on quitte la page sans l'arreter, on n'enregistre pas le temps joué
   ionViewDidLeave(){
     this.onStopChrono (false);
   }
@@ -133,7 +119,6 @@ export class ChronoPage {
             this.navCtrl.setRoot(DashboardPage, {id: this.childId});
           }
         }else{
-          console.log(data)
           this.toastProvider.presentToast(data.message);
         }
 
@@ -145,44 +130,19 @@ export class ChronoPage {
 
   //arrete le chrono et enregistre le temps joué si record est vrai
   onStopChrono = (record:boolean) => {
+
     clearInterval(this.chrono);
-    console.log("Enregistre temps");
-    //Convertie en minutes par defaut
-    let playTimeSeconde = Math.trunc(this.playTime/60);
-    console.log("Minutes enregistrées :" + playTimeSeconde);
-    this.childProvider.recordPlaytime(this.childId,playTimeSeconde)
-      .subscribe((data:any) => {
-        if(data.success){
-          console.log(data);
-        }else{
-          console.log(data);
-        }
-
-      }, (err: any) => {
-
-        console.log(err);
-      });
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+    if(record) {
+      //Convertie en minutes par defaut
+      let playTimeMinute = Math.trunc(this.playTime / 60);
+      this.childProvider.recordPlaytime(this.childId, playTimeMinute)
+        .subscribe((data: any) => {}, (err: any) => { console.log(err); });
+    }
     this.isRunning = false;
-
   }
 
+
+  // *********** Boutons de navigation ********
   onLinkFamily = () => {
     this.navCtrl.setRoot(FamillePage) ;
   }
@@ -190,6 +150,5 @@ export class ChronoPage {
   onLinkDashboard = () => {
     this.navCtrl.setRoot(DashboardPage,{id:this.childId}) ;
   }
-
 
 }

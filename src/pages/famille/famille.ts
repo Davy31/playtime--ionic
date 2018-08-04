@@ -59,7 +59,6 @@ export class FamillePage {
 
      this.storage.get('playtime_user_username').then((val) =>{
       this.user_username= val
-      console.log(this.user_username) ;
      }).catch((err) =>{
        this.toastProvider.presentToast("Vous n'êtes pas connecté");
        this.navCtrl.setRoot( ConnexionPage);

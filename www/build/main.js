@@ -5,7 +5,7 @@ webpackJsonp([0],{
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DashboardProvider; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common_http__ = __webpack_require__(45);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common_http__ = __webpack_require__(44);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -62,6 +62,13 @@ var DashboardProvider = /** @class */ (function () {
             var uri_action_list = 'https://davy3165.000webhostapp.com/dashboard/dashboard_change_nbRealised.php?action=' + action + '&id=' + action_id;
             var tab_retour = _this.http.get(uri_action_list);
             console.log('provider - ' + action + ' action : ' + uri_action_list);
+            return tab_retour;
+        };
+        this.resetTimeAction = function (child_id) {
+            var uri_action_list = 'https://davy3165.000webhostapp.com/dashboard/dashboard_reset.php?id=' + child_id;
+            var tab_retour = _this.http.get(uri_action_list);
+            console.log(' provider -reset : ' + uri_action_list);
+            console.log(tab_retour);
             return tab_retour;
         };
     }
@@ -122,8 +129,7 @@ var DashboardProvider = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_api_base_dashboard__ = __webpack_require__(107);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_toast_toast__ = __webpack_require__(34);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_dashboard_dashboard__ = __webpack_require__(55);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__providers_api_base_child__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ionic_native_native_audio__ = __webpack_require__(207);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__providers_api_base_child__ = __webpack_require__(43);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -141,9 +147,8 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-
 var ChronoPage = /** @class */ (function () {
-    function ChronoPage(navCtrl, navParams, dashboardProvider, childProvider, vibration, toastProvider, nativeAudio) {
+    function ChronoPage(navCtrl, navParams, dashboardProvider, childProvider, vibration, toastProvider) {
         var _this = this;
         this.navCtrl = navCtrl;
         this.navParams = navParams;
@@ -151,7 +156,6 @@ var ChronoPage = /** @class */ (function () {
         this.childProvider = childProvider;
         this.vibration = vibration;
         this.toastProvider = toastProvider;
-        this.nativeAudio = nativeAudio;
         this.isRunning = false;
         //Gestion couleur chrono
         this.isColorRed = false;
@@ -159,8 +163,6 @@ var ChronoPage = /** @class */ (function () {
         this.isColorGreen = true;
         this.ionViewDidLoad = function () {
             //******** Controle le paramtre childId */
-            console.clear();
-            console.log('ionViewDidLoad ChronoPage');
             if (_this.navParams.get('id')) {
                 _this.childId = _this.navParams.get('id');
                 console.log("childId=" + _this.childId);
@@ -170,16 +172,6 @@ var ChronoPage = /** @class */ (function () {
                 _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_3__pages_famille_famille__["a" /* FamillePage */]);
             }
             _this.getDetailChild();
-            /*
-              // initialise la sonnerie
-              this.nativeAudio.preloadSimple('uniqueId1', 'audio/sound_end_play.mp3').then(() => {
-                console.log("initialisation sonnerie réussie");
-              })
-                ,( (err) => {
-                console.log("Erreur intitialisation sonnerie : " + err.messageerror);
-              });
-        
-          */
         };
         this.onStartChrono = function () {
             _this.isRunning = true;
@@ -216,23 +208,15 @@ var ChronoPage = /** @class */ (function () {
         //arrete le chrono et enregistre le temps joué si record est vrai
         this.onStopChrono = function (record) {
             clearInterval(_this.chrono);
-            console.log("Enregistre temps");
-            //Convertie en minutes par defaut
-            var playTimeSeconde = Math.trunc(_this.playTime / 60);
-            console.log("Minutes enregistrées :" + playTimeSeconde);
-            _this.childProvider.recordPlaytime(_this.childId, playTimeSeconde)
-                .subscribe(function (data) {
-                if (data.success) {
-                    console.log(data);
-                }
-                else {
-                    console.log(data);
-                }
-            }, function (err) {
-                console.log(err);
-            });
+            if (record) {
+                //Convertie en minutes par defaut
+                var playTimeMinute = Math.trunc(_this.playTime / 60);
+                _this.childProvider.recordPlaytime(_this.childId, playTimeMinute)
+                    .subscribe(function (data) { }, function (err) { console.log(err); });
+            }
             _this.isRunning = false;
         };
+        // *********** Boutons de navigation ********
         this.onLinkFamily = function () {
             _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_3__pages_famille_famille__["a" /* FamillePage */]);
         };
@@ -240,7 +224,7 @@ var ChronoPage = /** @class */ (function () {
             _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_6__pages_dashboard_dashboard__["a" /* DashboardPage */], { id: _this.childId });
         };
     }
-    // arrete le chrono si on quitte la page sans l'arreter, on enregistre pas le temps joué
+    // arrete le chrono si on quitte la page sans l'arreter, on n'enregistre pas le temps joué
     ChronoPage.prototype.ionViewDidLeave = function () {
         this.onStopChrono(false);
     };
@@ -264,7 +248,6 @@ var ChronoPage = /** @class */ (function () {
                 }
             }
             else {
-                console.log(data);
                 _this.toastProvider.presentToast(data.message);
             }
         }, function (err) {
@@ -280,8 +263,7 @@ var ChronoPage = /** @class */ (function () {
             __WEBPACK_IMPORTED_MODULE_4__providers_api_base_dashboard__["a" /* DashboardProvider */],
             __WEBPACK_IMPORTED_MODULE_7__providers_api_base_child__["a" /* ChildProvider */],
             __WEBPACK_IMPORTED_MODULE_2__ionic_native_vibration__["a" /* Vibration */],
-            __WEBPACK_IMPORTED_MODULE_5__providers_toast_toast__["a" /* ToastProvider */],
-            __WEBPACK_IMPORTED_MODULE_8__ionic_native_native_audio__["a" /* NativeAudio */]])
+            __WEBPACK_IMPORTED_MODULE_5__providers_toast_toast__["a" /* ToastProvider */]])
     ], ChronoPage);
     return ChronoPage;
 }());
@@ -298,7 +280,7 @@ var ChronoPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_toast_toast__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_api_base_user__ = __webpack_require__(208);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_api_base_user__ = __webpack_require__(207);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__famille_famille__ = __webpack_require__(33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_storage__ = __webpack_require__(56);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -465,7 +447,7 @@ webpackEmptyAsyncContext.id = 162;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_toast_toast__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_api_base_child__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_api_base_child__ = __webpack_require__(43);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__famille_famille__ = __webpack_require__(33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_dashboard_dashboard__ = __webpack_require__(55);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
@@ -632,12 +614,12 @@ var EnfantPage = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 208:
+/***/ 207:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return UserProvider; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common_http__ = __webpack_require__(45);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common_http__ = __webpack_require__(44);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -685,13 +667,13 @@ var UserProvider = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 209:
+/***/ 208:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(210);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(230);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__ = __webpack_require__(209);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__app_module__ = __webpack_require__(229);
 
 
 Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* platformBrowserDynamic */])().bootstrapModule(__WEBPACK_IMPORTED_MODULE_1__app_module__["a" /* AppModule */]);
@@ -699,7 +681,7 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 
 /***/ }),
 
-/***/ 230:
+/***/ 229:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -707,33 +689,31 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_platform_browser__ = __webpack_require__(27);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2_ionic_angular__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_component__ = __webpack_require__(272);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__app_component__ = __webpack_require__(271);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_famille_famille__ = __webpack_require__(33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_enfant_enfant__ = __webpack_require__(205);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_connexion_connexion__ = __webpack_require__(109);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_dashboard_dashboard__ = __webpack_require__(55);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_chrono_chrono__ = __webpack_require__(108);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_logout_logout__ = __webpack_require__(289);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__angular_common_http__ = __webpack_require__(45);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__angular_http__ = __webpack_require__(290);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_logout_logout__ = __webpack_require__(288);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__angular_common_http__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__angular_http__ = __webpack_require__(289);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_native_status_bar__ = __webpack_require__(202);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__ionic_native_splash_screen__ = __webpack_require__(204);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__ionic_storage__ = __webpack_require__(56);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__providers_toast_toast__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__providers_api_base_user__ = __webpack_require__(208);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__providers_api_base_child__ = __webpack_require__(44);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__providers_api_base_action__ = __webpack_require__(291);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__providers_api_base_user__ = __webpack_require__(207);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__providers_api_base_child__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_18__providers_api_base_action__ = __webpack_require__(290);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_19__providers_api_base_dashboard__ = __webpack_require__(107);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__ionic_native_text_to_speech__ = __webpack_require__(292);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_20__ionic_native_text_to_speech__ = __webpack_require__(291);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_21__ionic_native_vibration__ = __webpack_require__(206);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_22__ionic_native_native_audio__ = __webpack_require__(207);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
     else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
     return c > 3 && r && Object.defineProperty(target, key, r), r;
 };
-
 
 
 
@@ -800,7 +780,6 @@ var AppModule = /** @class */ (function () {
                 __WEBPACK_IMPORTED_MODULE_19__providers_api_base_dashboard__["a" /* DashboardProvider */],
                 __WEBPACK_IMPORTED_MODULE_20__ionic_native_text_to_speech__["a" /* TextToSpeech */],
                 __WEBPACK_IMPORTED_MODULE_21__ionic_native_vibration__["a" /* Vibration */],
-                __WEBPACK_IMPORTED_MODULE_22__ionic_native_native_audio__["a" /* NativeAudio */]
             ]
         })
     ], AppModule);
@@ -811,7 +790,7 @@ var AppModule = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 272:
+/***/ 271:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -874,7 +853,7 @@ var MyApp = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 289:
+/***/ 288:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
@@ -952,12 +931,12 @@ var LogoutComponent = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 291:
+/***/ 290:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ActionProvider; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common_http__ = __webpack_require__(45);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common_http__ = __webpack_require__(44);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1005,7 +984,7 @@ var ActionProvider = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_toast_toast__ = __webpack_require__(34);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_connexion_connexion__ = __webpack_require__(109);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_chrono_chrono__ = __webpack_require__(108);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__providers_api_base_child__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__providers_api_base_child__ = __webpack_require__(43);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ionic_storage__ = __webpack_require__(56);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1088,7 +1067,6 @@ var FamillePage = /** @class */ (function () {
         });
         this.storage.get('playtime_user_username').then(function (val) {
             _this.user_username = val;
-            console.log(_this.user_username);
         }).catch(function (err) {
             _this.toastProvider.presentToast("Vous n'êtes pas connecté");
             _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_5__pages_connexion_connexion__["a" /* ConnexionPage */]);
@@ -1207,12 +1185,12 @@ var ToastProvider = /** @class */ (function () {
 
 /***/ }),
 
-/***/ 44:
+/***/ 43:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return ChildProvider; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common_http__ = __webpack_require__(45);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_common_http__ = __webpack_require__(44);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1__angular_core__ = __webpack_require__(0);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -1332,7 +1310,7 @@ var ChildProvider = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_api_base_dashboard__ = __webpack_require__(107);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_api_base_child__ = __webpack_require__(44);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_api_base_child__ = __webpack_require__(43);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_toast_toast__ = __webpack_require__(34);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_famille_famille__ = __webpack_require__(33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_chrono_chrono__ = __webpack_require__(108);
@@ -1355,7 +1333,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 /**
  * Page Dashboard de l'enfant liste des actiosn et calcule du temps gagné
- 
+
  */
 var DashboardPage = /** @class */ (function () {
     function DashboardPage(navCtrl, navParams, toastProvider, dashboardProvider, childProvider, alertCtrl) {
@@ -1368,17 +1346,26 @@ var DashboardPage = /** @class */ (function () {
         this.alertCtrl = alertCtrl;
         this.actionsSelected = [];
         this.actionsNoSelected = [];
+        this.isAction = true;
+        this.displayBtnReset = true;
+        this.isListActionsNotSelectedReady = false;
         this.selectOptions = {
             title: 'Sélectionnez  des actions',
             subTitle: '',
             mode: 'md'
         };
-        //----------------- Rècupere les actions affectés à l'enfant --------------------------*
+        // ******* Rècupere les actions affectés à l'enfant *******
         this.getListActionsByChild = function () {
             _this.dashboardProvider.getListActionByChild(_this.childId)
                 .subscribe(function (data) {
                 if (data.success) {
                     _this.actionsSelected = data.result;
+                    if (data.result.length > 0) {
+                        _this.isAction = true;
+                    }
+                    else {
+                        _this.isAction = false;
+                    }
                 }
                 else {
                     _this.toastProvider.presentToast(data.message);
@@ -1387,12 +1374,14 @@ var DashboardPage = /** @class */ (function () {
                 console.log(err);
             });
         };
-        //-----------------Récupère la liste des actions non affectées
+        // *******Récupère la liste des actions non affectées ************
         this.getListActionsNoSelected = function () {
             _this.dashboardProvider.getListActionsNoSelected(_this.childId)
                 .subscribe(function (data) {
                 if (data.success) {
                     _this.actionsNoSelected = data.result;
+                    _this.isListActionsNotSelectedReady = true;
+                    _this.manageDisplay();
                 }
                 else {
                     _this.toastProvider.presentToast(data.message);
@@ -1401,15 +1390,25 @@ var DashboardPage = /** @class */ (function () {
                 console.log(err);
             });
         };
+        // ******* gere l'affiche des elements ******
+        this.manageDisplay = function () {
+            // Affichage du bouton reset
+            if (_this.isAction || _this.playTime != 0) {
+                _this.displayBtnReset = true;
+            }
+            else {
+                _this.displayBtnReset = false;
+            }
+        };
+        // ******* Ouvre la liste des actions *******
         this.onOpenSelectAction = function () {
             _this.selectRef.open();
         };
+        // ******* affecte  les actions *******
         this.onAffectAction = function () {
             _this.dashboardProvider.affectActionChild(_this.childId, _this.action)
                 .subscribe(function (data) {
                 if (data.success) {
-                    console.log("Affectations faites");
-                    console.log(data.message);
                     _this.navCtrl.setRoot(DashboardPage_1, { id: _this.childId });
                 }
                 else {
@@ -1418,24 +1417,27 @@ var DashboardPage = /** @class */ (function () {
             }, function (err) {
                 console.log(err);
             });
+            _this.manageDisplay();
         };
+        // ******* ajoute  1 au compteur d'une action *******
         this.onAddRealisedAction = function (action_id) {
             // Ajout 1 à l'action
             var resultat = _this.actionsSelected.find(function (action) { return action.id === action_id; });
             resultat.nbRealised++;
             _this.changeRealisedAction("add", action_id);
+            _this.manageDisplay();
         };
+        // ******* Controle le compteur si demande d'enlever 1 *******
         this.onRemoveRealisedAction = function (action_id) {
             var resultat = _this.actionsSelected.find(function (action) { return action.id === action_id; });
+            // ******* si 0, demande confirmation d'enlever l'action *******
             if (resultat.nbRealised < 1) {
-                console.log("ATTENTION");
                 var confirm_1 = _this.alertCtrl.create({
                     title: 'Voulez-vous vraiment enlever cettte  action du  dashboard de l\'enfant ?',
                     buttons: [
                         {
                             text: 'Annuler',
                             handler: function () {
-                                console.log('Annuler');
                             }
                         },
                         {
@@ -1451,13 +1453,13 @@ var DashboardPage = /** @class */ (function () {
             else {
                 _this.changeRealisedAction("sub", action_id);
             }
+            _this.manageDisplay();
         };
+        // ***** enleve l'action ********
         this.deleteAffectation = function (action_id) {
             _this.dashboardProvider.deleteAffectation(action_id)
                 .subscribe(function (data) {
-                console.log("succes:" + data.success);
                 if (data.success) {
-                    console.log(data.message);
                     _this.navCtrl.setRoot(DashboardPage_1, { id: _this.childId });
                 }
                 else {
@@ -1466,13 +1468,13 @@ var DashboardPage = /** @class */ (function () {
             }, function (err) {
                 console.log(err);
             });
+            _this.manageDisplay();
         };
+        // ********* modifie le compteur d'une action *******
         this.changeRealisedAction = function (action, action_id) {
             _this.dashboardProvider.changeNbRealisedAction(action, action_id)
                 .subscribe(function (data) {
-                console.log("succes" + action_id + " :" + data.success);
                 if (data.success) {
-                    console.log(data.message);
                     _this.navCtrl.setRoot(DashboardPage_1, { id: _this.childId });
                 }
                 else {
@@ -1481,7 +1483,41 @@ var DashboardPage = /** @class */ (function () {
             }, function (err) {
                 console.log(err);
             });
+            _this.manageDisplay();
         };
+        // **** reinitialise le temsp et les compteurs action apres confirmation
+        this.onReset = function () {
+            console.clear();
+            var confirm = _this.alertCtrl.create({
+                title: 'Voulez-vous vraiment mettre le temps et les actions à 0 ?',
+                buttons: [
+                    {
+                        text: 'Annuler',
+                        handler: function () { }
+                    },
+                    {
+                        text: 'OUI',
+                        handler: function () {
+                            _this.dashboardProvider.resetTimeAction(_this.childId)
+                                .subscribe(function (data) {
+                                if (data.success) {
+                                    console.log(data.message);
+                                    _this.toastProvider.presentToast("Les actions et le temps ont étés remis à 0");
+                                    _this.navCtrl.setRoot(DashboardPage_1, { id: _this.childId });
+                                }
+                                else {
+                                    _this.toastProvider.presentToast(data.message);
+                                }
+                            }, function (err) {
+                                console.log(err);
+                            });
+                        }
+                    }
+                ]
+            });
+            confirm.present();
+        };
+        // *********** Boutons de navigations ********
         this.onLinkFamily = function () {
             _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_5__pages_famille_famille__["a" /* FamillePage */]);
         };
@@ -1491,11 +1527,9 @@ var DashboardPage = /** @class */ (function () {
     }
     DashboardPage_1 = DashboardPage;
     DashboardPage.prototype.ionViewDidLoad = function () {
-        console.clear();
-        console.log('Page dashboard');
+        // ******* Contrôle si que l'identifiant enfant est bien envoyé *******
         if (this.navParams.get('id')) {
             this.childId = this.navParams.get('id');
-            console.log("childId=" + this.childId);
         }
         else {
             console.log("il manque le parametre id enfant");
@@ -1504,13 +1538,14 @@ var DashboardPage = /** @class */ (function () {
         this.getListActionsByChild();
         this.getListActionsNoSelected();
         this.getDetailChild();
+        this.manageDisplay();
     };
+    // ******* Rècupere les infos de l'enfant *******
     DashboardPage.prototype.getDetailChild = function () {
         var _this = this;
         this.childDetail = this.childProvider.getDetailChild(this.childId)
             .subscribe(function (data) {
             if (data.success) {
-                // console.log(data.result);
                 _this.childDetail = data.result;
                 _this.name = _this.childProvider.getName(_this.childDetail);
                 _this.winTime = _this.childDetail["0"].winTime;
@@ -1519,6 +1554,7 @@ var DashboardPage = /** @class */ (function () {
                 _this.winTimeDisplay = _this.dashboardProvider.convertMinuteHeure(_this.winTime);
                 _this.playTimeDisplay = _this.dashboardProvider.convertMinuteHeure(_this.playTime);
                 _this.remainingTimeDisplay = _this.dashboardProvider.convertMinuteHeure(_this.remainingTime);
+                _this.manageDisplay();
             }
             else {
                 _this.toastProvider.presentToast(data.message);
@@ -1526,6 +1562,7 @@ var DashboardPage = /** @class */ (function () {
         }, function (err) {
             console.log(err);
         });
+        this.manageDisplay();
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_8" /* ViewChild */])('selectAction'),
@@ -1533,7 +1570,7 @@ var DashboardPage = /** @class */ (function () {
     ], DashboardPage.prototype, "selectRef", void 0);
     DashboardPage = DashboardPage_1 = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-dashboard',template:/*ion-inline-start:"C:\Users\Aries\Desktop\ionic\playtime--ionic\src\pages\dashboard\dashboard.html"*/'\n<ion-header>\n  <ion-navbar hideBackButton>\n    <!-->\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n  -->\n    <ion-title text-left>\n        <img class="img-icon-header"  float-start src="assets/imgs/icon-tbb.png"  />\n        \n      <span>{{name}}</span>\n      <logout></logout>\n    </ion-title>\n\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content no-padding>\n\n  <ion-grid class="select-card"> <!-- Bagdes recap-->\n    <ion-row>\n\n      <ion-col col-3 text-center >\n        <div class="badge-title-time-recap" >Gagné</div>\n        <ion-badge class="badge-time-recap">{{winTimeDisplay}}</ion-badge>\n      </ion-col>\n  \n      <ion-col col-3  text-center >\n        <div class="badge-title-time-recap" >Utilisé</div>\n        <ion-badge class="badge-time-recap">{{playTimeDisplay}}</ion-badge>\n      </ion-col>\n\n      <ion-col col-3 text-center >\n        <div class="badge-title-time-recap" >Restant</div>\n        <ion-badge class="badge-time-recap">{{remainingTimeDisplay}}</ion-badge>\n      </ion-col>\n\n      <ion-col col-3 text-center  >\n        <ion-icon class="icon-add-action" name="ios-list-box" (click)="onOpenSelectAction()"></ion-icon>\n      </ion-col>           \n      \n    </ion-row>   \n  </ion-grid>\n      \n  <ion-list>\n\n    <ion-item *ngFor="let actionSelected of actionsSelected" class="ionItem" >\n      <div class="line-action"> \n        <div class="div-badge" >\n          <div>\n            <ion-badge class="badge-time"\n              [class.badge-positive]="actionSelected.positive==\'P\'" \n              [class.badge-negative]="actionSelected.positive==\'N\'">{{actionSelected.nbRealised}}</ion-badge>\n           </div>\n           <div>\n            <ion-badge class="badge-time"  \n              [class.badge-positive]="actionSelected.positive==\'P\'" \n              [class.badge-negative]="actionSelected.positive==\'N\'">{{actionSelected.timep | slice:0:5}} mn</ion-badge>\n          </div> \n        </div> \n        <div class="text-action" text-wrap>{{actionSelected.label}}</div> \n        <ion-icon class="btn-plus"  name="add-circle"  (click)="onAddRealisedAction(actionSelected.id);"\n              [class.icon-positive]="actionSelected.positive==\'P\'"\n              [class.icon-negative]="actionSelected.positive==\'N\'"  ></ion-icon>\n        <ion-icon class="btn-minus"  name="remove-circle" (click)="onRemoveRealisedAction(actionSelected.id)"></ion-icon>\n      </div> \n    </ion-item>\n      \n  </ion-list>\n  \n\n  <!-- Liste des action cachée-->\n  <ion-item class="ion-select" >\n    <ion-select  #selectAction [(ngModel)]="action" (ionChange)="onAffectAction()" [selectOptions]="selectOptions"\n  multiple="true" cancelText="Annuler" okText="Ajouter">\n      <ion-option *ngFor="let actionNoSelected of actionsNoSelected" [value]="actionNoSelected.id">{{actionNoSelected.label}}</ion-option >\n    </ion-select> \n  </ion-item>\n\n\n\n</ion-content>\n\n<ion-footer>\n    <ion-toolbar>\n      <ion-grid>\n        <ion-row>\n            <ion-col col-3 text-center>\n                <img class="img-icon-footer" src="assets/imgs/icon-family.png" (click)="onLinkFamily()" />    \n            </ion-col>\n\n          <ion-col col-6 text-center>playTime</ion-col>\n\n            <ion-col col-3 text-center>\n                <img class="img-icon-footer" src="assets/imgs/icon-chrono.png" (click)="onLinkChrono()"  />\n            </ion-col>\n        </ion-row>\n    </ion-grid>\n    </ion-toolbar>            \n  </ion-footer>\n'/*ion-inline-end:"C:\Users\Aries\Desktop\ionic\playtime--ionic\src\pages\dashboard\dashboard.html"*/,
+            selector: 'page-dashboard',template:/*ion-inline-start:"C:\Users\Aries\Desktop\ionic\playtime--ionic\src\pages\dashboard\dashboard.html"*/'\n<ion-header>\n  <ion-navbar hideBackButton>\n    <!-->\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n  -->\n    <ion-title text-left>\n        <img class="img-icon-header"  float-start src="assets/imgs/icon-tbb.png"  />\n        \n      <span>{{name}}</span>\n      <logout></logout>\n    </ion-title>\n\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content no-padding>\n\n  <ion-grid class="select-card"> <!-- Bagdes recap-->\n    <ion-row>\n\n      <ion-col col-3 text-center >\n        <div class="badge-title-time-recap" >Gagné</div>\n        <ion-badge class="badge-time-recap">{{winTimeDisplay}}</ion-badge>\n      </ion-col>\n  \n      <ion-col col-3  text-center >\n        <div class="badge-title-time-recap" >Utilisé</div>\n        <ion-badge class="badge-time-recap">{{playTimeDisplay}}</ion-badge>\n      </ion-col>\n\n      <ion-col col-3 text-center >\n        <div class="badge-title-time-recap" >Restant</div>\n        <ion-badge class="badge-time-recap">{{remainingTimeDisplay}}</ion-badge>\n      </ion-col>\n\n      <ion-col col-3 text-center  >\n        <ion-icon class="icon-add-action" name="ios-list-box" (click)="onOpenSelectAction()"></ion-icon>\n      </ion-col>           \n      \n    </ion-row>   \n  </ion-grid>\n      \n  <ion-list>\n\n    <ion-item *ngFor="let actionSelected of actionsSelected" class="ionItem" >\n      <div class="line-action"> \n        <div class="div-badge" >\n          <div>\n            <ion-badge class="badge-time"\n              [class.badge-positive]="actionSelected.positive==\'P\'" \n              [class.badge-negative]="actionSelected.positive==\'N\'">{{actionSelected.nbRealised}}</ion-badge>\n           </div>\n           <div>\n            <ion-badge class="badge-time"  \n              [class.badge-positive]="actionSelected.positive==\'P\'" \n              [class.badge-negative]="actionSelected.positive==\'N\'">{{actionSelected.timep | slice:0:5}} mn</ion-badge>\n          </div> \n        </div> \n        <div class="text-action" text-wrap>{{actionSelected.label}}</div> \n        <ion-icon class="btn-plus"  name="add-circle"  (click)="onAddRealisedAction(actionSelected.id);"\n              [class.icon-positive]="actionSelected.positive==\'P\'"\n              [class.icon-negative]="actionSelected.positive==\'N\'"  ></ion-icon>\n        <ion-icon class="btn-minus"  name="remove-circle" (click)="onRemoveRealisedAction(actionSelected.id)"></ion-icon>\n      </div> \n    </ion-item>\n      \n  </ion-list>\n\n  <ion-list>\n    <ion-item>\n      <button  *ngIf="displayBtnReset" ion-button full (click)="onReset()">Mettre le temps et les actions à 0</button>\n    </ion-item>\n  </ion-list>\n  \n\n  <!-- Liste des actions cachées-->\n  <ion-item class="ion-select" >\n    <ion-select  #selectAction [(ngModel)]="action" (ionChange)="onAffectAction()" [selectOptions]="selectOptions"\n  multiple="true" cancelText="Annuler" okText="Ajouter">\n      <ion-option *ngFor="let actionNoSelected of actionsNoSelected" [value]="actionNoSelected.id">{{actionNoSelected.label}}</ion-option >\n    </ion-select> \n  </ion-item>\n\n\n\n</ion-content>\n\n<ion-footer>\n    <ion-toolbar>\n      <ion-grid>\n        <ion-row>\n            <ion-col col-3 text-center>\n                <img class="img-icon-footer" src="assets/imgs/icon-family.png" (click)="onLinkFamily()" />    \n            </ion-col>\n\n          <ion-col col-6 text-center>playTime</ion-col>\n\n            <ion-col col-3 text-center>\n                <img class="img-icon-footer" src="assets/imgs/icon-chrono.png" (click)="onLinkChrono()"  />\n            </ion-col>\n        </ion-row>\n    </ion-grid>\n    </ion-toolbar>            \n  </ion-footer>\n'/*ion-inline-end:"C:\Users\Aries\Desktop\ionic\playtime--ionic\src\pages\dashboard\dashboard.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */],
@@ -1550,5 +1587,5 @@ var DashboardPage = /** @class */ (function () {
 
 /***/ })
 
-},[209]);
+},[208]);
 //# sourceMappingURL=main.js.map

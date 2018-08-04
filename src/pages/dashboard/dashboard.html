@@ -69,9 +69,15 @@
     </ion-item>
       
   </ion-list>
+
+  <ion-list>
+    <ion-item>
+      <button  *ngIf="displayBtnReset" ion-button full (click)="onReset()">Mettre le temps et les actions à 0</button>
+    </ion-item>
+  </ion-list>
   
 
-  <!-- Liste des action cachée-->
+  <!-- Liste des actions cachées-->
   <ion-item class="ion-select" >
     <ion-select  #selectAction [(ngModel)]="action" (ionChange)="onAffectAction()" [selectOptions]="selectOptions"
   multiple="true" cancelText="Annuler" okText="Ajouter">

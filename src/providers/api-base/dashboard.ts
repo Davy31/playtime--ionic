@@ -59,6 +59,15 @@ export class DashboardProvider {
     console.log('provider - ' + action + ' action : '+ uri_action_list);
     return tab_retour;
   }
+
+
+  resetTimeAction = (child_id: number) => {
+    const uri_action_list = 'https://davy3165.000webhostapp.com/dashboard/dashboard_reset.php?id=' + child_id;
+    let tab_retour =  this.http.get(uri_action_list);
+    console.log(' provider -reset : '+ uri_action_list);
+    console.log(tab_retour);
+    return tab_retour;
+  }
   
 
  convertMinuteHeure(minute: number){ 

@@ -22,7 +22,6 @@ import { ActionProvider} from '../providers/api-base/action';
 import { DashboardProvider} from '../providers/api-base/dashboard';
 import { TextToSpeech } from '@ionic-native/text-to-speech';
 import { Vibration } from '@ionic-native/vibration';
-import { NativeAudio } from '@ionic-native/native-audio';
 
 
 
@@ -64,7 +63,6 @@ import { NativeAudio } from '@ionic-native/native-audio';
     DashboardProvider,
     TextToSpeech,
     Vibration,
-    NativeAudio
     
   ]
 })
