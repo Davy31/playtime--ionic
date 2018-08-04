@@ -61,10 +61,12 @@
           </div> 
         </div> 
         <div class="text-action" text-wrap>{{actionSelected.label}}</div> 
-        <ion-icon class="btn-plus"  name="add-circle"  (click)="onAddRealisedAction(actionSelected.id);"
+        <ion-icon class="btn-plus" *ngIf="displayBtn" name="add-circle"  (click)="onAddRealisedAction(actionSelected.id);"
               [class.icon-positive]="actionSelected.positive=='P'"
-              [class.icon-negative]="actionSelected.positive=='N'"  ></ion-icon>
-        <ion-icon class="btn-minus"  name="remove-circle" (click)="onRemoveRealisedAction(actionSelected.id)"></ion-icon>
+              [class.icon-negative]="actionSelected.positive=='N'"
+
+        ></ion-icon>
+        <ion-icon class="btn-minus"  *ngIf="displayBtn" name="remove-circle" (click)="onRemoveRealisedAction(actionSelected.id)"></ion-icon>
       </div> 
     </ion-item>
       

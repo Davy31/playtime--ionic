@@ -36,6 +36,7 @@ export class DashboardPage {
   isAction  = true;
   displayBtnReset = true;
   isListActionsNotSelectedReady = false;
+  displayBtn = true ;
 
   selectOptions = {
     title: 'Sélectionnez  des actions',
@@ -176,6 +177,7 @@ export class DashboardPage {
 
 // ******* ajoute  1 au compteur d'une action *******
   onAddRealisedAction = (action_id) => {
+
     // Ajout 1 à l'action
     let resultat = this.actionsSelected.find( action => action.id === action_id);
     resultat.nbRealised ++;
@@ -190,7 +192,7 @@ export class DashboardPage {
     // ******* si 0, demande confirmation d'enlever l'action *******
     if(resultat.nbRealised<1){
       const confirm = this.alertCtrl.create({
-        title: 'Voulez-vous vraiment enlever cettte  action du  dashboard de l\'enfant ?',
+        title: 'Voulez-vous vraiment enlever cettte  action du  tableau de bord de l\'enfant ?',
         buttons: [
           {
             text: 'Annuler',
@@ -200,6 +202,7 @@ export class DashboardPage {
           {
             text: 'OUI',
             handler: () => {
+
               this.deleteAffectation(action_id);
             }
 
@@ -210,6 +213,8 @@ export class DashboardPage {
 
     }else{
       this.changeRealisedAction("sub",action_id);
+      // enleve 1 à l'action
+      resultat.nbRealised --;
     }
     this.manageDisplay();
   }
@@ -232,10 +237,14 @@ export class DashboardPage {
 
   // ********* modifie le compteur d'une action *******
   changeRealisedAction = (action: string, action_id:number) =>{
+
+    //cache les boutons
+    this.displayBtn = false;
     this.dashboardProvider.changeNbRealisedAction(action,action_id)
       .subscribe((data:any) => {
+        this.displayBtn = true;
         if(data.success){
-          this.navCtrl.setRoot(DashboardPage, {id: this.childId});
+         // this.navCtrl.setRoot(DashboardPage, {id: this.childId});
         }else{
           this.toastProvider.presentToast(data.message);
         }
