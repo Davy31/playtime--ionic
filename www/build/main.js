@@ -1004,12 +1004,6 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-/**
- * Generated class for the FamillePage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
 var FamillePage = /** @class */ (function () {
     function FamillePage(navCtrl, toastProvider, childProvider, storage) {
         var _this = this;
@@ -1033,6 +1027,7 @@ var FamillePage = /** @class */ (function () {
                 console.log(err);
             });
         };
+        /********** Boutons de navigations ******** */
         this.onLinkChrono = function (childId) {
             console.log('childId:' + childId);
             _this.navCtrl.push(__WEBPACK_IMPORTED_MODULE_6__pages_chrono_chrono__["a" /* ChronoPage */], { id: childId });
@@ -1047,8 +1042,7 @@ var FamillePage = /** @class */ (function () {
     }
     FamillePage.prototype.ionViewDidLoad = function () {
         var _this = this;
-        console.clear();
-        console.log("famille");
+        /**** Recupere l'id user stocké dans le téléphone si absent => page connexion */
         this.storage.get('playtime_user_id').then(function (val) {
             if ((val == null)) {
                 _this.toastProvider.presentToast("Vous n'êtes pas connecté");
@@ -1065,6 +1059,7 @@ var FamillePage = /** @class */ (function () {
             _this.toastProvider.presentToast("Vous n'êtes pas connecté");
             _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_5__pages_connexion_connexion__["a" /* ConnexionPage */]);
         });
+        /** ************** récupere l'username    ************** */
         this.storage.get('playtime_user_username').then(function (val) {
             _this.user_username = val;
         }).catch(function (err) {
@@ -1074,14 +1069,12 @@ var FamillePage = /** @class */ (function () {
     };
     FamillePage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-famille',template:/*ion-inline-start:"C:\Users\Aries\Desktop\ionic\playtime--ionic\src\pages\famille\famille.html"*/'<ion-header>\n\n  <ion-navbar>\n\n    <!-->\n\n    <button ion-button menuToggle>\n\n      <ion-icon name="menu"></ion-icon>\n\n    </button>\n\n  -->\n\n    <ion-title text-left>\n\n        <img class="img-icon-header" float-start src="assets/imgs/icon-family.png"  />\n\n      <span>Famille</span>\n\n      <logout></logout>\n\n    </ion-title>\n\n\n\n  </ion-navbar>\n\n</ion-header>\n\n\n\n<ion-content no-padding> \n\n    <ion-list >\n\n      <ion-col no-padding col-12 *ngFor="let child of childs">\n\n        <ion-item>\n\n            <ion-card color="card-color">\n\n\n\n                <ion-card-content no-padding>\n\n          <ion-grid no-padding>\n\n            <ion-row>\n\n                <ion-col col-4>\n\n                      <img class="img-family-child" src="assets/imgs/boy.png" *ngIf="child.gender==\'M\'" />\n\n                      <img class="img-family-child" src="assets/imgs/girl.png" *ngIf="child.gender==\'F\'" />                    \n\n              </ion-col>\n\n              <ion-col col-8>\n\n                  <ion-grid>\n\n                      <ion-row>\n\n                          <ion-col col-12>\n\n                              <ion-card-title class="ion-card-title" no-padding text-center text-wrap *ngIf="!child.nickname">\n\n                                  {{child.firstname }}\n\n                                </ion-card-title>\n\n                                <ion-card-title class="ion-card-title" no-padding text-center *ngIf="child.nickname">\n\n                                  {{child.nickname }}\n\n                                </ion-card-title>\n\n                            </ion-col>\n\n                      </ion-row>\n\n                    <ion-row>\n\n                      <ion-col col-3>\n\n                        <img class="img-icon" src="assets/imgs/icon-tbb.png" (click)="onLinkDashboardChild(child.id)"  />\n\n                      </ion-col>\n\n                      <ion-col col-3 class="vertical-align">                   \n\n                         \n\n                      </ion-col>                   \n\n                      <ion-col col-3>   \n\n                        <img class="img-icon" src="assets/imgs/icon-chrono.png" (click)="onLinkChrono(child.id)" /> \n\n                      </ion-col>\n\n                      <ion-col col-3 col-bottom> \n\n                          <ion-icon name="person" float-end (click)="onLinkFormChild(child.id)"></ion-icon>  \n\n                          <!--<img class="img-icon" src="assets/imgs/icon-modif.png" (click)="onLinkChronoChild(childs.id)" /> -->\n\n                        </ion-col>\n\n                    </ion-row>\n\n                </ion-grid>\n\n              </ion-col>\n\n            </ion-row>\n\n        </ion-grid>\n\n        </ion-card-content>\n\n        </ion-card>\n\n       </ion-item>\n\n      </ion-col> \n\n    </ion-list>\n\n    \n\n  <button ion-button full (click)="onLinkFormChild(0)">Ajouter un enfant</button>\n\n</ion-content>  \n\n  \n\n    \n\n  \n\n    \n\n  \n\n  \n\n  \n\n  \n\n  '/*ion-inline-end:"C:\Users\Aries\Desktop\ionic\playtime--ionic\src\pages\famille\famille.html"*/,
+            selector: 'page-famille',template:/*ion-inline-start:"C:\Users\Aries\Desktop\ionic\playtime--ionic\src\pages\famille\famille.html"*/'<ion-header>\n  <ion-navbar>\n    <!-->\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n  -->\n    <ion-title text-left>\n        <img class="img-icon-header" float-start src="assets/imgs/icon-family.png"  />\n      <span>Famille {{user_username}}</span>\n      <logout></logout>\n    </ion-title>\n\n  </ion-navbar>\n</ion-header>\n\n<ion-content no-padding> \n    <ion-list >\n      <ion-col no-padding col-12 *ngFor="let child of childs">\n        <ion-item>\n            <ion-card color="card-color">\n\n                <ion-card-content no-padding>\n          <ion-grid no-padding>\n            <ion-row>\n                <ion-col col-4>\n                      <img class="img-family-child" src="assets/imgs/boy.png" *ngIf="child.gender==\'M\'" />\n                      <img class="img-family-child" src="assets/imgs/girl.png" *ngIf="child.gender==\'F\'" />                    \n              </ion-col>\n              <ion-col col-8>\n                  <ion-grid>\n                      <ion-row>\n                          <ion-col col-12>\n                              <ion-card-title class="ion-card-title" no-padding text-center text-wrap *ngIf="!child.nickname">\n                                  {{child.firstname }}\n                                </ion-card-title>\n                                <ion-card-title class="ion-card-title" no-padding text-center *ngIf="child.nickname">\n                                  {{child.nickname }}\n                                </ion-card-title>\n                            </ion-col>\n                      </ion-row>\n                    <ion-row>\n                      <ion-col col-3>\n                        <img class="img-icon" src="assets/imgs/icon-tbb.png" (click)="onLinkDashboardChild(child.id)"  />\n                      </ion-col>\n                      <ion-col col-3 class="vertical-align">                   \n                         \n                      </ion-col>                   \n                      <ion-col col-3>   \n                        <img class="img-icon" src="assets/imgs/icon-chrono.png" (click)="onLinkChrono(child.id)" /> \n                      </ion-col>\n                      <ion-col col-3 col-bottom> \n                          <ion-icon name="person" float-end (click)="onLinkFormChild(child.id)"></ion-icon>  \n                          <!--<img class="img-icon" src="assets/imgs/icon-modif.png" (click)="onLinkChronoChild(childs.id)" /> -->\n                        </ion-col>\n                    </ion-row>\n                </ion-grid>\n              </ion-col>\n            </ion-row>\n        </ion-grid>\n        </ion-card-content>\n        </ion-card>\n       </ion-item>\n      </ion-col> \n    </ion-list>\n    \n  <button ion-button full (click)="onLinkFormChild(0)">Ajouter un enfant</button>\n</ion-content>  \n  \n    \n  \n    \n  \n  \n  \n  \n'/*ion-inline-end:"C:\Users\Aries\Desktop\ionic\playtime--ionic\src\pages\famille\famille.html"*/,
         }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_4__providers_toast_toast__["a" /* ToastProvider */],
-            __WEBPACK_IMPORTED_MODULE_7__providers_api_base_child__["a" /* ChildProvider */],
-            __WEBPACK_IMPORTED_MODULE_8__ionic_storage__["b" /* Storage */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_4__providers_toast_toast__["a" /* ToastProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__providers_toast_toast__["a" /* ToastProvider */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_7__providers_api_base_child__["a" /* ChildProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__providers_api_base_child__["a" /* ChildProvider */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_8__ionic_storage__["b" /* Storage */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_8__ionic_storage__["b" /* Storage */]) === "function" && _d || Object])
     ], FamillePage);
     return FamillePage;
+    var _a, _b, _c, _d;
 }());
 
 //# sourceMappingURL=famille.js.map
