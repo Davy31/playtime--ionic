@@ -58,8 +58,8 @@ var DashboardProvider = /** @class */ (function () {
             console.log('provider - désaffectation : ' + uri_action_list);
             return tab_retour;
         };
-        this.changeNbRealisedAction = function (action, action_id) {
-            var uri_action_list = 'https://davy3165.000webhostapp.com/dashboard/dashboard_change_nbRealised.php?action=' + action + '&id=' + action_id;
+        this.changeNbRealisedAction = function (action, action_id, childId) {
+            var uri_action_list = 'https://davy3165.000webhostapp.com/dashboard/dashboard_change_nbRealised.php?action=' + action + '&id=' + action_id + '&childId=' + childId;
             var tab_retour = _this.http.get(uri_action_list);
             console.log('provider - ' + action + ' action : ' + uri_action_list);
             return tab_retour;
@@ -1433,13 +1433,12 @@ var DashboardPage = /** @class */ (function () {
             var resultat = _this.actionsSelected.find(function (action) { return action.id === action_id; });
             // ******* si 0, demande confirmation d'enlever l'action *******
             if (resultat.nbRealised < 1) {
-                var confirm = _this.alertCtrl.create({
+                var confirm_1 = _this.alertCtrl.create({
                     title: 'Voulez-vous vraiment enlever cettte  action du  tableau de bord de l\'enfant ?',
                     buttons: [
                         {
                             text: 'Annuler',
-                            handler: function () {
-                            }
+                            handler: function () { }
                         },
                         {
                             text: 'OUI',
@@ -1449,7 +1448,7 @@ var DashboardPage = /** @class */ (function () {
                         }
                     ]
                 });
-                confirm.present();
+                confirm_1.present();
             }
             else {
                 _this.changeRealisedAction("sub", action_id);
@@ -1475,13 +1474,18 @@ var DashboardPage = /** @class */ (function () {
         };
         // ********* modifie le compteur d'une action *******
         this.changeRealisedAction = function (action, action_id) {
-            //cache les boutons
+            //****** cache les boutons**********
             _this.displayBtn = false;
-            _this.dashboardProvider.changeNbRealisedAction(action, action_id)
+            _this.dashboardProvider.changeNbRealisedAction(action, action_id, _this.childId)
                 .subscribe(function (data) {
                 _this.displayBtn = true;
                 if (data.success) {
-                    // this.navCtrl.setRoot(DashboardPage, {id: this.childId});
+                    console.log(data.result.winTime);
+                    _this.winTime = data.result.winTime;
+                    _this.remainingTime = _this.winTime - _this.playTime;
+                    _this.winTimeDisplay = _this.dashboardProvider.convertMinuteHeure(_this.winTime);
+                    _this.playTimeDisplay = _this.dashboardProvider.convertMinuteHeure(_this.playTime);
+                    _this.remainingTimeDisplay = _this.dashboardProvider.convertMinuteHeure(_this.remainingTime);
                 }
                 else {
                     _this.toastProvider.presentToast(data.message);
@@ -1572,16 +1576,21 @@ var DashboardPage = /** @class */ (function () {
     };
     __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_8" /* ViewChild */])('selectAction'),
-        __metadata("design:type", typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* Select */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* Select */]) === "function" && _a || Object)
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* Select */])
     ], DashboardPage.prototype, "selectRef", void 0);
     DashboardPage = DashboardPage_1 = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-dashboard',template:/*ion-inline-start:"C:\Users\Aries\Desktop\ionic\playtime--ionic\src\pages\dashboard\dashboard.html"*/'\n<ion-header>\n  <ion-navbar hideBackButton>\n    <!-->\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n  -->\n    <ion-title text-left>\n        <img class="img-icon-header"  float-start src="assets/imgs/icon-tbb.png"  />\n        \n      <span>{{name}}</span>\n      <logout></logout>\n    </ion-title>\n\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content no-padding>\n\n  <ion-grid class="select-card"> <!-- Bagdes recap-->\n    <ion-row>\n\n      <ion-col col-3 text-center >\n        <div class="badge-title-time-recap" >Gagné</div>\n        <ion-badge class="badge-time-recap">{{winTimeDisplay}}</ion-badge>\n      </ion-col>\n  \n      <ion-col col-3  text-center >\n        <div class="badge-title-time-recap" >Utilisé</div>\n        <ion-badge class="badge-time-recap">{{playTimeDisplay}}</ion-badge>\n      </ion-col>\n\n      <ion-col col-3 text-center >\n        <div class="badge-title-time-recap" >Restant</div>\n        <ion-badge class="badge-time-recap">{{remainingTimeDisplay}}</ion-badge>\n      </ion-col>\n\n      <ion-col col-3 text-center  >\n        <ion-icon class="icon-add-action" name="ios-list-box" (click)="onOpenSelectAction()"></ion-icon>\n      </ion-col>           \n      \n    </ion-row>   \n  </ion-grid>\n      \n  <ion-list>\n\n    <ion-item *ngFor="let actionSelected of actionsSelected" class="ionItem" >\n      <div class="line-action"> \n        <div class="div-badge" >\n          <div>\n            <ion-badge class="badge-time"\n              [class.badge-positive]="actionSelected.positive==\'P\'" \n              [class.badge-negative]="actionSelected.positive==\'N\'">{{actionSelected.nbRealised}}</ion-badge>\n           </div>\n           <div>\n            <ion-badge class="badge-time"  \n              [class.badge-positive]="actionSelected.positive==\'P\'" \n              [class.badge-negative]="actionSelected.positive==\'N\'">{{actionSelected.timep | slice:0:5}} mn</ion-badge>\n          </div> \n        </div> \n        <div class="text-action" text-wrap>{{actionSelected.label}}</div> \n        <ion-icon class="btn-plus" *ngIf="displayBtn" name="add-circle"  (click)="onAddRealisedAction(actionSelected.id);"\n              [class.icon-positive]="actionSelected.positive==\'P\'"\n              [class.icon-negative]="actionSelected.positive==\'N\'"\n\n        ></ion-icon>\n        <ion-icon class="btn-minus"  *ngIf="displayBtn" name="remove-circle" (click)="onRemoveRealisedAction(actionSelected.id)"></ion-icon>\n      </div> \n    </ion-item>\n      \n  </ion-list>\n\n  <ion-list>\n    <ion-item>\n      <button  *ngIf="displayBtnReset" ion-button full (click)="onReset()">Mettre le temps et les actions à 0</button>\n    </ion-item>\n  </ion-list>\n  \n\n  <!-- Liste des actions cachées-->\n  <ion-item class="ion-select" >\n    <ion-select  #selectAction [(ngModel)]="action" (ionChange)="onAffectAction()" [selectOptions]="selectOptions"\n  multiple="true" cancelText="Annuler" okText="Ajouter">\n      <ion-option *ngFor="let actionNoSelected of actionsNoSelected" [value]="actionNoSelected.id">{{actionNoSelected.label}}</ion-option >\n    </ion-select> \n  </ion-item>\n\n\n\n</ion-content>\n\n<ion-footer>\n    <ion-toolbar>\n      <ion-grid>\n        <ion-row>\n            <ion-col col-3 text-center>\n                <img class="img-icon-footer" src="assets/imgs/icon-family.png" (click)="onLinkFamily()" />    \n            </ion-col>\n\n          <ion-col col-6 text-center>playTime</ion-col>\n\n            <ion-col col-3 text-center>\n                <img class="img-icon-footer" src="assets/imgs/icon-chrono.png" (click)="onLinkChrono()"  />\n            </ion-col>\n        </ion-row>\n    </ion-grid>\n    </ion-toolbar>            \n  </ion-footer>\n'/*ion-inline-end:"C:\Users\Aries\Desktop\ionic\playtime--ionic\src\pages\dashboard\dashboard.html"*/,
         }),
-        __metadata("design:paramtypes", [typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_4__providers_toast_toast__["a" /* ToastProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__providers_toast_toast__["a" /* ToastProvider */]) === "function" && _d || Object, typeof (_e = typeof __WEBPACK_IMPORTED_MODULE_2__providers_api_base_dashboard__["a" /* DashboardProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_2__providers_api_base_dashboard__["a" /* DashboardProvider */]) === "function" && _e || Object, typeof (_f = typeof __WEBPACK_IMPORTED_MODULE_3__providers_api_base_child__["a" /* ChildProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_3__providers_api_base_child__["a" /* ChildProvider */]) === "function" && _f || Object, typeof (_g = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]) === "function" && _g || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_4__providers_toast_toast__["a" /* ToastProvider */],
+            __WEBPACK_IMPORTED_MODULE_2__providers_api_base_dashboard__["a" /* DashboardProvider */],
+            __WEBPACK_IMPORTED_MODULE_3__providers_api_base_child__["a" /* ChildProvider */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]])
     ], DashboardPage);
     return DashboardPage;
-    var DashboardPage_1, _a, _b, _c, _d, _e, _f, _g;
+    var DashboardPage_1;
 }());
 
 //# sourceMappingURL=dashboard.js.map

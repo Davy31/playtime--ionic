@@ -196,16 +196,12 @@ export class DashboardPage {
         buttons: [
           {
             text: 'Annuler',
-            handler: () => {
-            }
-          },
+            handler: () => {} },
           {
             text: 'OUI',
             handler: () => {
-
               this.deleteAffectation(action_id);
             }
-
           }
         ]
       });
@@ -238,13 +234,19 @@ export class DashboardPage {
   // ********* modifie le compteur d'une action *******
   changeRealisedAction = (action: string, action_id:number) =>{
 
-    //cache les boutons
+    //****** cache les boutons**********
     this.displayBtn = false;
-    this.dashboardProvider.changeNbRealisedAction(action,action_id)
+
+    this.dashboardProvider.changeNbRealisedAction(action,action_id,this.childId)
       .subscribe((data:any) => {
         this.displayBtn = true;
         if(data.success){
-         // this.navCtrl.setRoot(DashboardPage, {id: this.childId});
+          console.log(data.result.winTime);
+          this.winTime = data.result.winTime;
+          this.remainingTime = this.winTime - this.playTime ;
+          this.winTimeDisplay = this.dashboardProvider.convertMinuteHeure(this.winTime);
+          this.playTimeDisplay = this.dashboardProvider.convertMinuteHeure(this.playTime);
+          this.remainingTimeDisplay = this.dashboardProvider.convertMinuteHeure(this.remainingTime);
         }else{
           this.toastProvider.presentToast(data.message);
         }
