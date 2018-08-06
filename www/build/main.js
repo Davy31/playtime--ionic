@@ -1,5 +1,300 @@
 webpackJsonp([0],{
 
+/***/ 106:
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DashboardPage; });
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_api_base_dashboard__ = __webpack_require__(107);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_api_base_child__ = __webpack_require__(43);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_toast_toast__ = __webpack_require__(34);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_famille_famille__ = __webpack_require__(33);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_chrono_chrono__ = __webpack_require__(108);
+var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
+    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
+    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
+    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
+    return c > 3 && r && Object.defineProperty(target, key, r), r;
+};
+var __metadata = (this && this.__metadata) || function (k, v) {
+    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
+};
+
+
+
+
+
+
+
+
+/**
+ * Page Dashboard de l'enfant liste des actiosn et calcule du temps gagné
+
+ */
+var DashboardPage = /** @class */ (function () {
+    function DashboardPage(navCtrl, navParams, toastProvider, dashboardProvider, childProvider, alertCtrl) {
+        var _this = this;
+        this.navCtrl = navCtrl;
+        this.navParams = navParams;
+        this.toastProvider = toastProvider;
+        this.dashboardProvider = dashboardProvider;
+        this.childProvider = childProvider;
+        this.alertCtrl = alertCtrl;
+        this.actionsSelected = [];
+        this.actionsNoSelected = [];
+        this.isAction = true;
+        this.displayBtnReset = true;
+        this.isListActionsNotSelectedReady = false;
+        this.displayBtn = true;
+        this.selectOptions = {
+            title: 'Sélectionnez  des actions',
+            subTitle: '',
+            mode: 'md'
+        };
+        /** ****** Rècupere les actions affectés à l'enfant *******/
+        this.getListActionsByChild = function () {
+            _this.dashboardProvider.getListActionByChild(_this.childId)
+                .subscribe(function (data) {
+                if (data.success) {
+                    _this.actionsSelected = data.result;
+                    if (data.result.length > 0) {
+                        _this.isAction = true;
+                    }
+                    else {
+                        _this.isAction = false;
+                    }
+                }
+                else {
+                    _this.toastProvider.presentToast(data.message);
+                }
+            }, function (err) {
+                console.log(err);
+            });
+        };
+        // *******Récupère la liste des actions non affectées ************
+        this.getListActionsNoSelected = function () {
+            _this.dashboardProvider.getListActionsNoSelected(_this.childId)
+                .subscribe(function (data) {
+                if (data.success) {
+                    _this.actionsNoSelected = data.result;
+                    _this.isListActionsNotSelectedReady = true;
+                    _this.manageDisplay();
+                }
+                else {
+                    _this.toastProvider.presentToast(data.message);
+                }
+            }, function (err) {
+                console.log(err);
+            });
+        };
+        /**  ******* gere l'affiche des elements ****** */
+        this.manageDisplay = function () {
+            // Affichage du bouton reset
+            if (_this.isAction || _this.playTime != 0) {
+                _this.displayBtnReset = true;
+            }
+            else {
+                _this.displayBtnReset = false;
+            }
+        };
+        /**  ******* Ouvre la liste des actions ******* */
+        this.onOpenSelectAction = function () {
+            _this.selectRef.open();
+        };
+        /** *********** affecte  les actions ******* */
+        this.onAffectAction = function () {
+            _this.dashboardProvider.affectActionChild(_this.childId, _this.action)
+                .subscribe(function (data) {
+                if (data.success) {
+                    _this.navCtrl.setRoot(DashboardPage_1, { id: _this.childId });
+                }
+                else {
+                    _this.toastProvider.presentToast(data.message);
+                }
+            }, function (err) {
+                console.log(err);
+            });
+            _this.manageDisplay();
+        };
+        /******** ajoute  1 au compteur d'une action ******* */
+        this.onAddRealisedAction = function (action_id) {
+            // Ajout 1 à l'action
+            var resultat = _this.actionsSelected.find(function (action) { return action.id === action_id; });
+            resultat.nbRealised++;
+            _this.changeRealisedAction("add", action_id);
+            _this.manageDisplay();
+        };
+        /** ****** Controle le compteur si demande d'enlever 1 ******* */
+        this.onRemoveRealisedAction = function (action_id) {
+            var resultat = _this.actionsSelected.find(function (action) { return action.id === action_id; });
+            // ******* si 0, demande confirmation d'enlever l'action *******
+            if (resultat.nbRealised < 1) {
+                var confirm_1 = _this.alertCtrl.create({
+                    title: 'Voulez-vous vraiment enlever cettte  action du  tableau de bord de l\'enfant ?',
+                    buttons: [
+                        {
+                            text: 'Annuler',
+                            handler: function () { }
+                        },
+                        {
+                            text: 'OUI',
+                            handler: function () {
+                                _this.deleteAffectation(action_id);
+                            }
+                        }
+                    ]
+                });
+                confirm_1.present();
+            }
+            else {
+                _this.changeRealisedAction("sub", action_id);
+                // enleve 1 à l'action
+                resultat.nbRealised--;
+            }
+            _this.manageDisplay();
+        };
+        /** ********* enleve l'action ******** */
+        this.deleteAffectation = function (action_id) {
+            _this.dashboardProvider.deleteAffectation(action_id)
+                .subscribe(function (data) {
+                if (data.success) {
+                    _this.navCtrl.setRoot(DashboardPage_1, { id: _this.childId });
+                }
+                else {
+                    _this.toastProvider.presentToast(data.message);
+                }
+            }, function (err) {
+                console.log(err);
+            });
+            _this.manageDisplay();
+        };
+        /**  ******** modifie le compteur d'une action ******* */
+        this.changeRealisedAction = function (action, action_id) {
+            //****** cache les boutons**********
+            _this.displayBtn = false;
+            _this.dashboardProvider.changeNbRealisedAction(action, action_id, _this.childId)
+                .subscribe(function (data) {
+                _this.displayBtn = true;
+                if (data.success) {
+                    console.log(data.result.winTime);
+                    _this.winTime = data.result.winTime;
+                    _this.remainingTime = _this.winTime - _this.playTime;
+                    _this.winTimeDisplay = _this.dashboardProvider.convertMinuteHeure(_this.winTime);
+                    _this.playTimeDisplay = _this.dashboardProvider.convertMinuteHeure(_this.playTime);
+                    _this.remainingTimeDisplay = _this.dashboardProvider.convertMinuteHeure(_this.remainingTime);
+                }
+                else {
+                    _this.toastProvider.presentToast(data.message);
+                }
+            }, function (err) {
+                console.log(err);
+            });
+            _this.manageDisplay();
+        };
+        /** ******** reinitialise le temsp et les compteurs action apres confirmation *****/
+        this.onReset = function () {
+            console.clear();
+            var confirm = _this.alertCtrl.create({
+                title: 'Voulez-vous vraiment mettre le temps et les actions à 0 ?',
+                buttons: [
+                    {
+                        text: 'Annuler',
+                        handler: function () { }
+                    },
+                    {
+                        text: 'OUI',
+                        handler: function () {
+                            _this.dashboardProvider.resetTimeAction(_this.childId)
+                                .subscribe(function (data) {
+                                if (data.success) {
+                                    console.log(data.message);
+                                    _this.toastProvider.presentToast("Les actions et le temps ont étés remis à 0");
+                                    _this.navCtrl.setRoot(DashboardPage_1, { id: _this.childId });
+                                }
+                                else {
+                                    _this.toastProvider.presentToast(data.message);
+                                }
+                            }, function (err) {
+                                console.log(err);
+                            });
+                        }
+                    }
+                ]
+            });
+            confirm.present();
+        };
+        /** ********* Boutons de navigations ******** */
+        this.onLinkFamily = function () {
+            _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_5__pages_famille_famille__["a" /* FamillePage */]);
+        };
+        this.onLinkChrono = function () {
+            _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_6__pages_chrono_chrono__["a" /* ChronoPage */], { id: _this.childId });
+        };
+    }
+    DashboardPage_1 = DashboardPage;
+    DashboardPage.prototype.ionViewDidLoad = function () {
+        // ******* Contrôle si que l'identifiant enfant est bien envoyé *******
+        if (this.navParams.get('id')) {
+            this.childId = this.navParams.get('id');
+        }
+        else {
+            console.log("il manque le parametre id enfant");
+            this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_5__pages_famille_famille__["a" /* FamillePage */]);
+        }
+        this.getListActionsByChild();
+        this.getListActionsNoSelected();
+        this.getDetailChild();
+        this.manageDisplay();
+    };
+    /** ****** Rècupere les infos de l'enfant ****** */
+    DashboardPage.prototype.getDetailChild = function () {
+        var _this = this;
+        this.childDetail = this.childProvider.getDetailChild(this.childId)
+            .subscribe(function (data) {
+            if (data.success) {
+                _this.childDetail = data.result;
+                _this.name = _this.childProvider.getName(_this.childDetail);
+                _this.winTime = _this.childDetail["0"].winTime;
+                _this.playTime = _this.childDetail["0"].playTime;
+                _this.remainingTime = _this.winTime - _this.playTime;
+                _this.winTimeDisplay = _this.dashboardProvider.convertMinuteHeure(_this.winTime);
+                _this.playTimeDisplay = _this.dashboardProvider.convertMinuteHeure(_this.playTime);
+                _this.remainingTimeDisplay = _this.dashboardProvider.convertMinuteHeure(_this.remainingTime);
+                _this.manageDisplay();
+            }
+            else {
+                _this.toastProvider.presentToast(data.message);
+            }
+        }, function (err) {
+            console.log(err);
+        });
+        this.manageDisplay();
+    };
+    __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_8" /* ViewChild */])('selectAction'),
+        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* Select */])
+    ], DashboardPage.prototype, "selectRef", void 0);
+    DashboardPage = DashboardPage_1 = __decorate([
+        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
+            selector: 'page-dashboard',template:/*ion-inline-start:"C:\Users\Aries\Desktop\ionic\playtime--ionic\src\pages\dashboard\dashboard.html"*/'\n<ion-header>\n  <ion-navbar hideBackButton>\n    <!-->\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n  -->\n    <ion-title text-left>\n        <img class="img-icon-header"  float-start src="assets/imgs/icon-tbb.png"  />\n        \n      <span>{{name}}</span>\n      <logout></logout>\n    </ion-title>\n\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content no-padding>\n\n  <ion-grid class="select-card"> <!-- Bagdes recap-->\n    <ion-row>\n\n      <ion-col col-3 text-center >\n        <div class="badge-title-time-recap" >Gagné</div>\n        <ion-badge class="badge-time-recap">{{winTimeDisplay}}</ion-badge>\n      </ion-col>\n  \n      <ion-col col-3  text-center >\n        <div class="badge-title-time-recap" >Utilisé</div>\n        <ion-badge class="badge-time-recap">{{playTimeDisplay}}</ion-badge>\n      </ion-col>\n\n      <ion-col col-3 text-center >\n        <div class="badge-title-time-recap" >Restant</div>\n        <ion-badge class="badge-time-recap">{{remainingTimeDisplay}}</ion-badge>\n      </ion-col>\n\n      <ion-col col-3 text-center  >\n        <ion-icon class="icon-add-action" name="ios-list-box" (click)="onOpenSelectAction()"></ion-icon>\n      </ion-col>           \n      \n    </ion-row>   \n  </ion-grid>\n      \n  <ion-list>\n\n    <ion-item *ngFor="let actionSelected of actionsSelected" class="ionItem" >\n      <div class="line-action"> \n        <div class="div-badge" >\n          <div>\n            <ion-badge class="badge-time"\n              [class.badge-positive]="actionSelected.positive==\'P\'" \n              [class.badge-negative]="actionSelected.positive==\'N\'">{{actionSelected.nbRealised}}</ion-badge>\n           </div>\n           <div>\n            <ion-badge class="badge-time"  \n              [class.badge-positive]="actionSelected.positive==\'P\'" \n              [class.badge-negative]="actionSelected.positive==\'N\'">{{actionSelected.timep | slice:0:5}} mn</ion-badge>\n          </div> \n        </div> \n        <div class="text-action" text-wrap>{{actionSelected.label}}</div> \n        <ion-icon class="btn-plus" *ngIf="displayBtn" name="add-circle"  (click)="onAddRealisedAction(actionSelected.id);"\n              [class.icon-positive]="actionSelected.positive==\'P\'"\n              [class.icon-negative]="actionSelected.positive==\'N\'"\n\n        ></ion-icon>\n        <ion-icon class="btn-minus"  *ngIf="displayBtn" name="remove-circle" (click)="onRemoveRealisedAction(actionSelected.id)"></ion-icon>\n      </div> \n    </ion-item>\n      \n  </ion-list>\n\n  <ion-list>\n    <ion-item>\n      <button  *ngIf="displayBtnReset" ion-button full (click)="onReset()">Mettre le temps et les actions à 0</button>\n    </ion-item>\n  </ion-list>\n  \n\n  <!-- Liste des actions cachées-->\n  <ion-item class="ion-select" >\n    <ion-select  #selectAction [(ngModel)]="action" (ionChange)="onAffectAction()" [selectOptions]="selectOptions"\n  multiple="true" cancelText="Annuler" okText="Ajouter">\n      <ion-option *ngFor="let actionNoSelected of actionsNoSelected" [value]="actionNoSelected.id">{{actionNoSelected.label}}</ion-option >\n    </ion-select> \n  </ion-item>\n\n\n\n</ion-content>\n\n<ion-footer>\n    <ion-toolbar>\n      <ion-grid>\n        <ion-row>\n            <ion-col col-3 text-center>\n                <img class="img-icon-footer" src="assets/imgs/icon-family.png" (click)="onLinkFamily()" />    \n            </ion-col>\n\n          <ion-col col-6 text-center>playTime</ion-col>\n\n            <ion-col col-3 text-center>\n                <img class="img-icon-footer" src="assets/imgs/icon-chrono.png" (click)="onLinkChrono()"  />\n            </ion-col>\n        </ion-row>\n    </ion-grid>\n    </ion-toolbar>            \n  </ion-footer>\n'/*ion-inline-end:"C:\Users\Aries\Desktop\ionic\playtime--ionic\src\pages\dashboard\dashboard.html"*/,
+        }),
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */],
+            __WEBPACK_IMPORTED_MODULE_4__providers_toast_toast__["a" /* ToastProvider */],
+            __WEBPACK_IMPORTED_MODULE_2__providers_api_base_dashboard__["a" /* DashboardProvider */],
+            __WEBPACK_IMPORTED_MODULE_3__providers_api_base_child__["a" /* ChildProvider */],
+            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]])
+    ], DashboardPage);
+    return DashboardPage;
+    var DashboardPage_1;
+}());
+
+//# sourceMappingURL=dashboard.js.map
+
+/***/ }),
+
 /***/ 107:
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
@@ -99,7 +394,7 @@ var DashboardProvider = /** @class */ (function () {
     };
     DashboardProvider.prototype.convertSecondeHeure = function (seconde) {
         var addZero = function (v) { return v < 10 ? '0' + v : v; };
-        var d = new Date(seconde * 1000); // js fonctionne en milisecondes
+        var d = new Date(seconde * 1000); /** js fonctionne en milisecondes **/
         var t = [];
         t.push(addZero(d.getHours() - 1));
         t.push(addZero(d.getMinutes()));
@@ -128,7 +423,7 @@ var DashboardProvider = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pages_famille_famille__ = __webpack_require__(33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_api_base_dashboard__ = __webpack_require__(107);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__providers_toast_toast__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_dashboard_dashboard__ = __webpack_require__(55);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_dashboard_dashboard__ = __webpack_require__(106);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__providers_api_base_child__ = __webpack_require__(43);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -157,12 +452,12 @@ var ChronoPage = /** @class */ (function () {
         this.vibration = vibration;
         this.toastProvider = toastProvider;
         this.isRunning = false;
-        //Gestion couleur chrono
+        /** gestion couleur chrono  */
         this.isColorRed = false;
         this.isColorOrange = false;
         this.isColorGreen = true;
         this.ionViewDidLoad = function () {
-            //******** Controle le paramtre childId */
+            /**   ***** Controle le paramtre childId *****/
             if (_this.navParams.get('id')) {
                 _this.childId = _this.navParams.get('id');
                 console.log("childId=" + _this.childId);
@@ -180,11 +475,11 @@ var ChronoPage = /** @class */ (function () {
                 _this.playTime++;
                 _this.playTimeDisplay = _this.dashboardProvider.convertSecondeHeure(_this.playTime);
                 _this.remainingTimeDisplay = _this.dashboardProvider.convertSecondeHeure(_this.remainingTime);
-                // s'il ne reste plus que 5 minutes : Vibrations  courtes et couleur orange
+                /** ** s'il ne reste plus que 5 minutes : Vibrations  courtes et couleur orange **/
                 if (_this.remainingTime == 300) {
                     _this.vibration.vibrate([2000, 1000, 2000]);
                 }
-                //Gere couleur du chrono
+                /** **********Gere couleur du chrono ************* */
                 if (_this.remainingTime < 300) {
                     _this.isColorGreen = false;
                     _this.isColorOrange = true;
@@ -195,7 +490,7 @@ var ChronoPage = /** @class */ (function () {
                     _this.isColorOrange = false;
                     _this.isColorRed = false;
                 }
-                // Fin du temps : longue vibration  + arret du chrono + couleur rouge
+                /** Fin du temps : longue vibration  + arret du chrono + couleur rouge **/
                 if (_this.remainingTime == 0) {
                     _this.isColorGreen = false;
                     _this.isColorOrange = false;
@@ -205,7 +500,7 @@ var ChronoPage = /** @class */ (function () {
                 }
             }, 1000);
         };
-        //arrete le chrono et enregistre le temps joué si record est vrai
+        /** arrete le chrono et enregistre le temps joué si record est vrai **/
         this.onStopChrono = function (record) {
             clearInterval(_this.chrono);
             if (record) {
@@ -216,7 +511,7 @@ var ChronoPage = /** @class */ (function () {
             }
             _this.isRunning = false;
         };
-        // *********** Boutons de navigation ********
+        /************* Boutons de navigation ********/
         this.onLinkFamily = function () {
             _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_3__pages_famille_famille__["a" /* FamillePage */]);
         };
@@ -224,11 +519,11 @@ var ChronoPage = /** @class */ (function () {
             _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_6__pages_dashboard_dashboard__["a" /* DashboardPage */], { id: _this.childId });
         };
     }
-    // arrete le chrono si on quitte la page sans l'arreter, on n'enregistre pas le temps joué
+    /** ***** arrete le chrono si on quitte la page sans l'arreter, et SAUVEGARDE le temps joué */
     ChronoPage.prototype.ionViewDidLeave = function () {
-        this.onStopChrono(false);
+        this.onStopChrono(true);
     };
-    // Recupère infos de l'enfant
+    /** ********** Recupère infos de l'enfant ******/
     ChronoPage.prototype.getDetailChild = function () {
         var _this = this;
         this.childDetail = this.childProvider.getDetailChild(this.childId)
@@ -282,7 +577,7 @@ var ChronoPage = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_toast_toast__ = __webpack_require__(34);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_api_base_user__ = __webpack_require__(207);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__famille_famille__ = __webpack_require__(33);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_storage__ = __webpack_require__(56);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__ionic_storage__ = __webpack_require__(55);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -299,21 +594,18 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 /**
- * Generated class for the ConnexionPage page.
  *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
+ * Connexion ou inscription
  */
 var ConnexionPage = /** @class */ (function () {
-    function ConnexionPage(navCtrl, navParams, toastProvider, userProvider, storage) {
+    function ConnexionPage(navCtrl, toastProvider, userProvider, storage) {
         var _this = this;
         this.navCtrl = navCtrl;
-        this.navParams = navParams;
         this.toastProvider = toastProvider;
         this.userProvider = userProvider;
         this.storage = storage;
         this.onSubmit = function (form) {
-            // si formulaire invalide affiche la première erreur
+            /** *** si formulaire invalide affiche la première erreur */
             if (form.controls['email'].invalid) {
                 _this.toastProvider.presentToast('L\'adresse email est invalide !!!');
                 return;
@@ -376,24 +668,12 @@ var ConnexionPage = /** @class */ (function () {
             }
         };
     }
-    ConnexionPage.prototype.ionViewDidLoad = function () {
-        var _this = this;
-        console.clear();
-        this.storage.get('playtime_user_id')
-            .then(function (val) {
-            console.log('id =' + val);
-        })
-            .catch(function (err) {
-            _this.toastProvider.presentToast("Vous n'êtes pas connecté");
-            // this.navCtrl.setRoot( ConnexionPage);
-        });
-    };
+    ConnexionPage.prototype.ionViewDidLoad = function () { };
     ConnexionPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-connexion',template:/*ion-inline-start:"C:\Users\Aries\Desktop\ionic\playtime--ionic\src\pages\connexion\connexion.html"*/'<!--\n\n  Generated template for the ConnexionPage page.\n\n\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n\n  Ionic pages and navigation.\n\n-->\n\n<ion-header>\n\n\n\n  <ion-navbar>\n\n    <ion-title>LOGIN</ion-title>\n\n  </ion-navbar>\n\n\n\n</ion-header>\n\n\n\n<ion-content padding>\n\n\n\n  \n\n\n\n  <form (ngSubmit)="onSubmit(formLogin)" #formLogin="ngForm">\n\n\n\n    <ion-list>\n\n      \n\n        <ion-item>\n\n            <ion-label stacked>E-mail</ion-label>\n\n            <ion-input type="email" required email=true ngModel name="email" ></ion-input>\n\n          </ion-item>\n\n        \n\n          <ion-item>\n\n            <ion-label stacked>Mot de passe</ion-label>\n\n            <ion-input type="password" required minlength="6" ngModel name="password" ></ion-input>\n\n          </ion-item>   \n\n    \n\n    </ion-list>\n\n  \n\n    <button ion-button full type="submit">Connexion</button>\n\n    \n\n    </form>\n\n\n\n\n\n    <form (ngSubmit)="onSubmit(formRegister)" #formRegister="ngForm">\n\n  \n\n      <ion-list>    \n\n    \n\n        <ion-item>\n\n          <ion-label stacked>E-mail</ion-label>\n\n          <ion-input type="email" required email=true [(ngModel)]="email" name="email" ></ion-input>\n\n        </ion-item>\n\n      \n\n        <ion-item>\n\n          <ion-label stacked>Mot de passe</ion-label>\n\n          <ion-input type="password" required minlength="6" [(ngModel)]="password" name="password" ></ion-input>\n\n        </ion-item>\n\n    \n\n        <ion-item>\n\n          <ion-label stacked>Confirmation mot de passe</ion-label>\n\n          <ion-input type="password"  name="passwordCopie" [(ngModel)]="password"  ></ion-input>\n\n        </ion-item>\n\n    \n\n        <ion-item>\n\n            <ion-label stacked>Nom Utilisateur</ion-label>\n\n            <ion-input type="text" required minlength="3" maxlength="50" name="username" [(ngModel)]="username" ></ion-input>\n\n          </ion-item>\n\n      \n\n      </ion-list>\n\n    \n\n      <button ion-button full type="submit">Inscription</button>\n\n    \n\n    </form>\n\n\n\n  </ion-content>\n\n  \n\n'/*ion-inline-end:"C:\Users\Aries\Desktop\ionic\playtime--ionic\src\pages\connexion\connexion.html"*/,
+            selector: 'page-connexion',template:/*ion-inline-start:"C:\Users\Aries\Desktop\ionic\playtime--ionic\src\pages\connexion\connexion.html"*/'<!--\n  Generated template for the ConnexionPage page.\n\n  See http://ionicframework.com/docs/components/#navigation for more info on\n  Ionic pages and navigation.\n-->\n<ion-header>\n\n  <ion-navbar>\n    <ion-title>LOGIN</ion-title>\n  </ion-navbar>\n\n</ion-header>\n\n<ion-content padding>\n\n\n\n  <form (ngSubmit)="onSubmit(formLogin)" #formLogin="ngForm">\n\n    <ion-list>\n\n      <ion-item class="item_libelle_utilisateur">Déjà inscrit</ion-item>\n\n      <ion-item>\n        <ion-label stacked>E-mail <span class="span_obligatoire">*</span></ion-label>\n        <ion-input type="email" required email=true ngModel name="email" ></ion-input>\n      </ion-item>\n\n      <ion-item>\n        <ion-label stacked>Mot de passe <span class="span_obligatoire">*</span></ion-label>\n        <ion-input type="password" required minlength="6" ngModel name="password" ></ion-input>\n      </ion-item>\n\n    </ion-list>\n\n    <button ion-button full type="submit">Connexion</button>\n\n  </form>\n\n\n  <form (ngSubmit)="onSubmit(formRegister)" #formRegister="ngForm">\n\n    <ion-list>\n\n      <ion-item class="item_libelle_utilisateur">Nouvel utilisateur</ion-item>\n\n      <ion-item>\n        <ion-label stacked>E-mail <span class="span_obligatoire">*</span></ion-label>\n        <ion-input type="email" required email=true [(ngModel)]="email" name="email" ></ion-input>\n      </ion-item>\n\n      <ion-item>\n        <ion-label stacked>Mot de passe <span class="span_obligatoire">*</span></ion-label>\n        <ion-input type="password" required minlength="6" [(ngModel)]="password" name="password" ></ion-input>\n      </ion-item>\n\n      <ion-item>\n        <ion-label stacked>Confirmation mot de passe <span class="span_obligatoire">*</span></ion-label>\n        <ion-input type="password"  name="passwordCopie" [(ngModel)]="passwordCopie"  ></ion-input>\n      </ion-item>\n\n      <ion-item>\n        <ion-label stacked>Nom Utilisateur <span class="span_obligatoire">*</span></ion-label>\n        <ion-input type="text" required minlength="3" maxlength="50" name="username" [(ngModel)]="username" ></ion-input>\n      </ion-item>\n\n    </ion-list>\n\n    <button ion-button full type="submit">Inscription</button>\n\n  </form>\n\n</ion-content>\n  \n'/*ion-inline-end:"C:\Users\Aries\Desktop\ionic\playtime--ionic\src\pages\connexion\connexion.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */],
             __WEBPACK_IMPORTED_MODULE_2__providers_toast_toast__["a" /* ToastProvider */],
             __WEBPACK_IMPORTED_MODULE_3__providers_api_base_user__["a" /* UserProvider */],
             __WEBPACK_IMPORTED_MODULE_5__ionic_storage__["b" /* Storage */]])
@@ -449,7 +729,6 @@ webpackEmptyAsyncContext.id = 162;
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_toast_toast__ = __webpack_require__(34);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_api_base_child__ = __webpack_require__(43);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__famille_famille__ = __webpack_require__(33);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_dashboard_dashboard__ = __webpack_require__(55);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -465,13 +744,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 
-
-/**
- * Generated class for the EnfantPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+/** ***************Formulaire enfant *************   **/
 var EnfantPage = /** @class */ (function () {
     function EnfantPage(navCtrl, navParams, toastProvider, childProvider, alertCtrl) {
         var _this = this;
@@ -484,7 +757,7 @@ var EnfantPage = /** @class */ (function () {
         this.onSubmit = function (form) {
             // Teste le prénom
             if (form.controls['firstname'].invalid) {
-                _this.toastProvider.presentToast('Le prénom doit être renseigné !!!');
+                _this.toastProvider.presentToast('Le prénom doit comporté au moins 3 caractères !!!');
                 return;
             }
             if (_this.child_id === 0) {
@@ -522,7 +795,7 @@ var EnfantPage = /** @class */ (function () {
         };
         this.onChildDelete = function () {
             var confirm = _this.alertCtrl.create({
-                title: 'Voulez-vous vraiment vous vraiment enlever  ' + _this.firstname + ' de \'application ?',
+                title: 'Voulez-vous vraiment vous vraiment enlever  ' + _this.firstname + ' de l\'application ?',
                 buttons: [
                     {
                         text: 'Annuler',
@@ -556,13 +829,6 @@ var EnfantPage = /** @class */ (function () {
         this.onLinkCancel = function () {
             _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_4__famille_famille__["a" /* FamillePage */]);
         };
-        this.onLinkDashboard = function () {
-            console.log('Dashboard id:' + _this.child_id);
-            _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_5__pages_dashboard_dashboard__["a" /* DashboardPage */], { id: _this.child_id });
-        };
-        this.onLinkFamily = function () {
-            _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_4__famille_famille__["a" /* FamillePage */]);
-        };
     }
     EnfantPage.prototype.ionViewDidLoad = function () {
         var _this = this;
@@ -570,7 +836,7 @@ var EnfantPage = /** @class */ (function () {
         console.log('ionViewDidLoad EnfantPage');
         console.log(this.navParams.get('childId'));
         console.log(this.navParams.get('userId'));
-        // initialise le formulaire
+        /** ********** initialise le formulaire  *******/
         this.child_id = this.navParams.get('childId');
         this.user_id = this.navParams.get('userId');
         if (this.child_id === 0) {
@@ -599,7 +865,7 @@ var EnfantPage = /** @class */ (function () {
     };
     EnfantPage = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-enfant',template:/*ion-inline-start:"C:\Users\Aries\Desktop\ionic\playtime--ionic\src\pages\enfant\enfant.html"*/'<ion-header>\n  <ion-navbar hideBackButton>\n    <ion-title text-left>\n      <img class="img-icon-header" float-start src="assets/imgs/icon-child.png"  />\n    <span>Enfant</span>\n    <logout></logout>\n  </ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n\n  <form (ngSubmit)="onSubmit(form)" #form="ngForm">\n\n    <ion-list>\n\n      <ion-item>\n        <ion-label stacked>Prénom </ion-label>\n        <ion-input type="text" required  [(ngModel)]=\'firstname\' name="firstname" minlength="3" maxlength="100" ></ion-input>\n      </ion-item>\n  \n      <ion-item>\n        <ion-label stacked>Surnom (non obligatoire)</ion-label>\n        <ion-input type="text" [(ngModel)]=\'nickname\' name="nickname" ngModel  minlength="3" maxlength="100"></ion-input>\n      </ion-item>\n\n      <ion-list radio-group [(ngModel)]="sexe" name=sexe>\n        <ion-label>Sexe</ion-label>\n        <ion-item>\n          <ion-label>Fille</ion-label>\n          <ion-radio value=\'F\'></ion-radio>\n        </ion-item>\n        <ion-item>\n          <ion-label>Garçon</ion-label>\n          <ion-radio value=\'M\' ></ion-radio>\n        </ion-item>     \n      </ion-list> \n\n    </ion-list>\n\n    <ion-grid>\n      <ion-row>\n        <ion-col col-4 text-center>\n          <button ion-button  text-center class="btn-form" type="submit" float-start  >Validation</button>\n        </ion-col>\n        <ion-col col-4 text-center>\n          <button ion-button text-center class="btn-form"type="button" float-start (click)="onChildDelete()" color=danger >Suppression</button>\n        </ion-col>\n        <ion-col col-4 text-center>  \n          <button ion-button text-center class="btn-form" type="button" float-end  (click)="onLinkCancel()">Annuler  </button>\n        </ion-col>\n      </ion-row>\n    </ion-grid>  \n  </form>\n\n\n  <!--\n  <ion-footer>\n    <ion-toolbar>\n      <ion-grid>\n        <ion-row>\n            <ion-col col-3 text-center>\n                <img class="img-icon-footer" src="assets/imgs/icon-family.png" (click)="onLinkFamily()" />    \n            </ion-col>\n\n          <ion-col col-6 text-center>playTime</ion-col>\n\n            <ion-col col-3 text-center>\n                <img class="img-icon-footer" src="assets/imgs/icon-tbb.png" (click)="onLinkDashboard()" />\n            </ion-col>\n        </ion-row>\n    </ion-grid>\n    </ion-toolbar>            \n  </ion-footer>\n-->\n\n</ion-content>\n'/*ion-inline-end:"C:\Users\Aries\Desktop\ionic\playtime--ionic\src\pages\enfant\enfant.html"*/,
+            selector: 'page-enfant',template:/*ion-inline-start:"C:\Users\Aries\Desktop\ionic\playtime--ionic\src\pages\enfant\enfant.html"*/'<ion-header>\n  <ion-navbar hideBackButton>\n    <ion-title text-left>\n      <img class="img-icon-header" float-start src="assets/imgs/icon-child.png"  />\n      <span>Enfant</span>\n      <logout></logout>\n    </ion-title>\n  </ion-navbar>\n</ion-header>\n\n<ion-content padding>\n\n  <form (ngSubmit)="onSubmit(form)" #form="ngForm">\n\n    <ion-list>\n\n      <ion-item>\n        <ion-label stacked>Prénom <span class="span_obligatoire">*</span></ion-label>\n        <ion-input type="text" required  [(ngModel)]=\'firstname\' name="firstname" minlength="3" maxlength="100" ></ion-input>\n      </ion-item>\n\n      <ion-item>\n        <ion-label stacked>Surnom (non obligatoire)</ion-label>\n        <ion-input type="text" [(ngModel)]=\'nickname\' name="nickname" ngModel  minlength="3" maxlength="100"></ion-input>\n      </ion-item>\n\n      <ion-list radio-group [(ngModel)]="sexe" name=sexe>\n        <ion-label>Sexe <span class="span_obligatoire">*</span></ion-label>\n        <ion-item>\n          <ion-label>Fille</ion-label>\n          <ion-radio value=\'F\'></ion-radio>\n        </ion-item>\n        <ion-item>\n          <ion-label>Garçon</ion-label>\n          <ion-radio value=\'M\' ></ion-radio>\n        </ion-item>\n      </ion-list>\n\n    </ion-list>\n\n    <ion-grid>\n      <ion-row>\n        <ion-col col-4 text-center>\n          <button ion-button  text-center class="btn-form" type="submit" float-start  >Validation</button>\n        </ion-col>\n        <ion-col col-4 text-center>\n          <button ion-button text-center class="btn-form"type="button" float-start (click)="onChildDelete()" color=danger >Suppression</button>\n        </ion-col>\n        <ion-col col-4 text-center>\n          <button ion-button text-center class="btn-form" type="button" float-end  (click)="onLinkCancel()">Annuler  </button>\n        </ion-col>\n      </ion-row>\n    </ion-grid>\n  </form>\n\n\n  <!--\n  <ion-footer>\n    <ion-toolbar>\n      <ion-grid>\n        <ion-row>\n            <ion-col col-3 text-center>\n                <img class="img-icon-footer" src="assets/imgs/icon-family.png" (click)="onLinkFamily()" />    \n            </ion-col>\n\n          <ion-col col-6 text-center>playTime</ion-col>\n\n            <ion-col col-3 text-center>\n                <img class="img-icon-footer" src="assets/imgs/icon-tbb.png" (click)="onLinkDashboard()" />\n            </ion-col>\n        </ion-row>\n    </ion-grid>\n    </ion-toolbar>            \n  </ion-footer>\n-->\n\n</ion-content>\n'/*ion-inline-end:"C:\Users\Aries\Desktop\ionic\playtime--ionic\src\pages\enfant\enfant.html"*/,
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */],
@@ -636,6 +902,7 @@ var UserProvider = /** @class */ (function () {
     function UserProvider(http) {
         var _this = this;
         this.http = http;
+        /** ******* Inscription  *****************/
         this.register = function (email, password, username) {
             var postData = new FormData();
             postData.append('email', email);
@@ -645,6 +912,7 @@ var UserProvider = /** @class */ (function () {
             var tab_retour = _this.http.post(uri_api, postData);
             return tab_retour;
         };
+        /******** Connexion  ************* */
         this.login = function (email, password) {
             console.log("login");
             var postData = new FormData();
@@ -693,14 +961,14 @@ Object(__WEBPACK_IMPORTED_MODULE_0__angular_platform_browser_dynamic__["a" /* pl
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__pages_famille_famille__ = __webpack_require__(33);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_enfant_enfant__ = __webpack_require__(205);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_connexion_connexion__ = __webpack_require__(109);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_dashboard_dashboard__ = __webpack_require__(55);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__pages_dashboard_dashboard__ = __webpack_require__(106);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__pages_chrono_chrono__ = __webpack_require__(108);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_9__components_logout_logout__ = __webpack_require__(288);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_10__angular_common_http__ = __webpack_require__(44);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_11__angular_http__ = __webpack_require__(289);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_12__ionic_native_status_bar__ = __webpack_require__(202);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_13__ionic_native_splash_screen__ = __webpack_require__(204);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__ionic_storage__ = __webpack_require__(56);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_14__ionic_storage__ = __webpack_require__(55);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_15__providers_toast_toast__ = __webpack_require__(34);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_16__providers_api_base_user__ = __webpack_require__(207);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_17__providers_api_base_child__ = __webpack_require__(43);
@@ -860,7 +1128,7 @@ var MyApp = /** @class */ (function () {
 /* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return LogoutComponent; });
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_storage__ = __webpack_require__(56);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__ionic_storage__ = __webpack_require__(55);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pages_connexion_connexion__ = __webpack_require__(109);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
@@ -877,15 +1145,11 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 
 
 /**
- * Generated class for the LogoutComponent component.
- *
- * See https://angular.io/api/core/Component for more info on Angular
- * Components.
+ * ************* Déconnexion **************
  */
 var LogoutComponent = /** @class */ (function () {
-    function LogoutComponent(navCtrl, navParams, storage, alertCtrl) {
+    function LogoutComponent(navCtrl, storage, alertCtrl) {
         this.navCtrl = navCtrl;
-        this.navParams = navParams;
         this.storage = storage;
         this.alertCtrl = alertCtrl;
     }
@@ -903,7 +1167,7 @@ var LogoutComponent = /** @class */ (function () {
                 {
                     text: 'OUI',
                     handler: function () {
-                        // vide les varirables locales et renvoi à la page de connexion
+                        /** **********vide les varirables locales et renvoi à la page de connexion */
                         _this.storage.remove('playtime_user_id');
                         _this.storage.remove('playtime_user_username');
                         _this.storage.remove('playtime_user_email');
@@ -920,7 +1184,6 @@ var LogoutComponent = /** @class */ (function () {
             selector: 'logout',template:/*ion-inline-start:"C:\Users\Aries\Desktop\ionic\playtime--ionic\src\components\logout\logout.html"*/'<!-- Generated template for the LogoutComponent component -->\n\n\n\n<ion-icon float-end color=\'danger\' name="close-circle" (click)="onSigneOut()"></ion-icon> \n\n'/*ion-inline-end:"C:\Users\Aries\Desktop\ionic\playtime--ionic\src\components\logout\logout.html"*/
         }),
         __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */],
             __WEBPACK_IMPORTED_MODULE_2__ionic_storage__["b" /* Storage */],
             __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]])
     ], LogoutComponent);
@@ -980,12 +1243,12 @@ var ActionProvider = /** @class */ (function () {
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__pages_enfant_enfant__ = __webpack_require__(205);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pages_dashboard_dashboard__ = __webpack_require__(55);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__pages_dashboard_dashboard__ = __webpack_require__(106);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_toast_toast__ = __webpack_require__(34);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_connexion_connexion__ = __webpack_require__(109);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_chrono_chrono__ = __webpack_require__(108);
 /* harmony import */ var __WEBPACK_IMPORTED_MODULE_7__providers_api_base_child__ = __webpack_require__(43);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ionic_storage__ = __webpack_require__(56);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_8__ionic_storage__ = __webpack_require__(55);
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -1071,10 +1334,12 @@ var FamillePage = /** @class */ (function () {
         Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
             selector: 'page-famille',template:/*ion-inline-start:"C:\Users\Aries\Desktop\ionic\playtime--ionic\src\pages\famille\famille.html"*/'<ion-header>\n  <ion-navbar>\n    <!-->\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n  -->\n    <ion-title text-left>\n        <img class="img-icon-header" float-start src="assets/imgs/icon-family.png"  />\n      <span>Famille {{user_username}}</span>\n      <logout></logout>\n    </ion-title>\n\n  </ion-navbar>\n</ion-header>\n\n<ion-content no-padding> \n    <ion-list >\n      <ion-col no-padding col-12 *ngFor="let child of childs">\n        <ion-item>\n            <ion-card color="card-color">\n\n                <ion-card-content no-padding>\n          <ion-grid no-padding>\n            <ion-row>\n                <ion-col col-4>\n                      <img class="img-family-child" src="assets/imgs/boy.png" *ngIf="child.gender==\'M\'" />\n                      <img class="img-family-child" src="assets/imgs/girl.png" *ngIf="child.gender==\'F\'" />                    \n              </ion-col>\n              <ion-col col-8>\n                  <ion-grid>\n                      <ion-row>\n                          <ion-col col-12>\n                              <ion-card-title class="ion-card-title" no-padding text-center text-wrap *ngIf="!child.nickname">\n                                  {{child.firstname }}\n                                </ion-card-title>\n                                <ion-card-title class="ion-card-title" no-padding text-center *ngIf="child.nickname">\n                                  {{child.nickname }}\n                                </ion-card-title>\n                            </ion-col>\n                      </ion-row>\n                    <ion-row>\n                      <ion-col col-3>\n                        <img class="img-icon" src="assets/imgs/icon-tbb.png" (click)="onLinkDashboardChild(child.id)"  />\n                      </ion-col>\n                      <ion-col col-3 class="vertical-align">                   \n                         \n                      </ion-col>                   \n                      <ion-col col-3>   \n                        <img class="img-icon" src="assets/imgs/icon-chrono.png" (click)="onLinkChrono(child.id)" /> \n                      </ion-col>\n                      <ion-col col-3 col-bottom> \n                          <ion-icon name="person" float-end (click)="onLinkFormChild(child.id)"></ion-icon>  \n                          <!--<img class="img-icon" src="assets/imgs/icon-modif.png" (click)="onLinkChronoChild(childs.id)" /> -->\n                        </ion-col>\n                    </ion-row>\n                </ion-grid>\n              </ion-col>\n            </ion-row>\n        </ion-grid>\n        </ion-card-content>\n        </ion-card>\n       </ion-item>\n      </ion-col> \n    </ion-list>\n    \n  <button ion-button full (click)="onLinkFormChild(0)">Ajouter un enfant</button>\n</ion-content>  \n  \n    \n  \n    \n  \n  \n  \n  \n'/*ion-inline-end:"C:\Users\Aries\Desktop\ionic\playtime--ionic\src\pages\famille\famille.html"*/,
         }),
-        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */]) === "function" && _a || Object, typeof (_b = typeof __WEBPACK_IMPORTED_MODULE_4__providers_toast_toast__["a" /* ToastProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_4__providers_toast_toast__["a" /* ToastProvider */]) === "function" && _b || Object, typeof (_c = typeof __WEBPACK_IMPORTED_MODULE_7__providers_api_base_child__["a" /* ChildProvider */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_7__providers_api_base_child__["a" /* ChildProvider */]) === "function" && _c || Object, typeof (_d = typeof __WEBPACK_IMPORTED_MODULE_8__ionic_storage__["b" /* Storage */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_8__ionic_storage__["b" /* Storage */]) === "function" && _d || Object])
+        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */],
+            __WEBPACK_IMPORTED_MODULE_4__providers_toast_toast__["a" /* ToastProvider */],
+            __WEBPACK_IMPORTED_MODULE_7__providers_api_base_child__["a" /* ChildProvider */],
+            __WEBPACK_IMPORTED_MODULE_8__ionic_storage__["b" /* Storage */]])
     ], FamillePage);
     return FamillePage;
-    var _a, _b, _c, _d;
 }());
 
 //# sourceMappingURL=famille.js.map
@@ -1292,301 +1557,6 @@ var ChildProvider = /** @class */ (function () {
 }());
 
 //# sourceMappingURL=child.js.map
-
-/***/ }),
-
-/***/ 55:
-/***/ (function(module, __webpack_exports__, __webpack_require__) {
-
-"use strict";
-/* harmony export (binding) */ __webpack_require__.d(__webpack_exports__, "a", function() { return DashboardPage; });
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__angular_core__ = __webpack_require__(0);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_1_ionic_angular__ = __webpack_require__(12);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_2__providers_api_base_dashboard__ = __webpack_require__(107);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_3__providers_api_base_child__ = __webpack_require__(43);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_4__providers_toast_toast__ = __webpack_require__(34);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_5__pages_famille_famille__ = __webpack_require__(33);
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_6__pages_chrono_chrono__ = __webpack_require__(108);
-var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
-    var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
-    if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
-    else for (var i = decorators.length - 1; i >= 0; i--) if (d = decorators[i]) r = (c < 3 ? d(r) : c > 3 ? d(target, key, r) : d(target, key)) || r;
-    return c > 3 && r && Object.defineProperty(target, key, r), r;
-};
-var __metadata = (this && this.__metadata) || function (k, v) {
-    if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
-};
-
-
-
-
-
-
-
-
-/**
- * Page Dashboard de l'enfant liste des actiosn et calcule du temps gagné
-
- */
-var DashboardPage = /** @class */ (function () {
-    function DashboardPage(navCtrl, navParams, toastProvider, dashboardProvider, childProvider, alertCtrl) {
-        var _this = this;
-        this.navCtrl = navCtrl;
-        this.navParams = navParams;
-        this.toastProvider = toastProvider;
-        this.dashboardProvider = dashboardProvider;
-        this.childProvider = childProvider;
-        this.alertCtrl = alertCtrl;
-        this.actionsSelected = [];
-        this.actionsNoSelected = [];
-        this.isAction = true;
-        this.displayBtnReset = true;
-        this.isListActionsNotSelectedReady = false;
-        this.displayBtn = true;
-        this.selectOptions = {
-            title: 'Sélectionnez  des actions',
-            subTitle: '',
-            mode: 'md'
-        };
-        // ******* Rècupere les actions affectés à l'enfant *******
-        this.getListActionsByChild = function () {
-            _this.dashboardProvider.getListActionByChild(_this.childId)
-                .subscribe(function (data) {
-                if (data.success) {
-                    _this.actionsSelected = data.result;
-                    if (data.result.length > 0) {
-                        _this.isAction = true;
-                    }
-                    else {
-                        _this.isAction = false;
-                    }
-                }
-                else {
-                    _this.toastProvider.presentToast(data.message);
-                }
-            }, function (err) {
-                console.log(err);
-            });
-        };
-        // *******Récupère la liste des actions non affectées ************
-        this.getListActionsNoSelected = function () {
-            _this.dashboardProvider.getListActionsNoSelected(_this.childId)
-                .subscribe(function (data) {
-                if (data.success) {
-                    _this.actionsNoSelected = data.result;
-                    _this.isListActionsNotSelectedReady = true;
-                    _this.manageDisplay();
-                }
-                else {
-                    _this.toastProvider.presentToast(data.message);
-                }
-            }, function (err) {
-                console.log(err);
-            });
-        };
-        // ******* gere l'affiche des elements ******
-        this.manageDisplay = function () {
-            // Affichage du bouton reset
-            if (_this.isAction || _this.playTime != 0) {
-                _this.displayBtnReset = true;
-            }
-            else {
-                _this.displayBtnReset = false;
-            }
-        };
-        // ******* Ouvre la liste des actions *******
-        this.onOpenSelectAction = function () {
-            _this.selectRef.open();
-        };
-        // ******* affecte  les actions *******
-        this.onAffectAction = function () {
-            _this.dashboardProvider.affectActionChild(_this.childId, _this.action)
-                .subscribe(function (data) {
-                if (data.success) {
-                    _this.navCtrl.setRoot(DashboardPage_1, { id: _this.childId });
-                }
-                else {
-                    _this.toastProvider.presentToast(data.message);
-                }
-            }, function (err) {
-                console.log(err);
-            });
-            _this.manageDisplay();
-        };
-        // ******* ajoute  1 au compteur d'une action *******
-        this.onAddRealisedAction = function (action_id) {
-            // Ajout 1 à l'action
-            var resultat = _this.actionsSelected.find(function (action) { return action.id === action_id; });
-            resultat.nbRealised++;
-            _this.changeRealisedAction("add", action_id);
-            _this.manageDisplay();
-        };
-        // ******* Controle le compteur si demande d'enlever 1 *******
-        this.onRemoveRealisedAction = function (action_id) {
-            var resultat = _this.actionsSelected.find(function (action) { return action.id === action_id; });
-            // ******* si 0, demande confirmation d'enlever l'action *******
-            if (resultat.nbRealised < 1) {
-                var confirm_1 = _this.alertCtrl.create({
-                    title: 'Voulez-vous vraiment enlever cettte  action du  tableau de bord de l\'enfant ?',
-                    buttons: [
-                        {
-                            text: 'Annuler',
-                            handler: function () { }
-                        },
-                        {
-                            text: 'OUI',
-                            handler: function () {
-                                _this.deleteAffectation(action_id);
-                            }
-                        }
-                    ]
-                });
-                confirm_1.present();
-            }
-            else {
-                _this.changeRealisedAction("sub", action_id);
-                // enleve 1 à l'action
-                resultat.nbRealised--;
-            }
-            _this.manageDisplay();
-        };
-        // ***** enleve l'action ********
-        this.deleteAffectation = function (action_id) {
-            _this.dashboardProvider.deleteAffectation(action_id)
-                .subscribe(function (data) {
-                if (data.success) {
-                    _this.navCtrl.setRoot(DashboardPage_1, { id: _this.childId });
-                }
-                else {
-                    _this.toastProvider.presentToast(data.message);
-                }
-            }, function (err) {
-                console.log(err);
-            });
-            _this.manageDisplay();
-        };
-        // ********* modifie le compteur d'une action *******
-        this.changeRealisedAction = function (action, action_id) {
-            //****** cache les boutons**********
-            _this.displayBtn = false;
-            _this.dashboardProvider.changeNbRealisedAction(action, action_id, _this.childId)
-                .subscribe(function (data) {
-                _this.displayBtn = true;
-                if (data.success) {
-                    console.log(data.result.winTime);
-                    _this.winTime = data.result.winTime;
-                    _this.remainingTime = _this.winTime - _this.playTime;
-                    _this.winTimeDisplay = _this.dashboardProvider.convertMinuteHeure(_this.winTime);
-                    _this.playTimeDisplay = _this.dashboardProvider.convertMinuteHeure(_this.playTime);
-                    _this.remainingTimeDisplay = _this.dashboardProvider.convertMinuteHeure(_this.remainingTime);
-                }
-                else {
-                    _this.toastProvider.presentToast(data.message);
-                }
-            }, function (err) {
-                console.log(err);
-            });
-            _this.manageDisplay();
-        };
-        // **** reinitialise le temsp et les compteurs action apres confirmation
-        this.onReset = function () {
-            console.clear();
-            var confirm = _this.alertCtrl.create({
-                title: 'Voulez-vous vraiment mettre le temps et les actions à 0 ?',
-                buttons: [
-                    {
-                        text: 'Annuler',
-                        handler: function () { }
-                    },
-                    {
-                        text: 'OUI',
-                        handler: function () {
-                            _this.dashboardProvider.resetTimeAction(_this.childId)
-                                .subscribe(function (data) {
-                                if (data.success) {
-                                    console.log(data.message);
-                                    _this.toastProvider.presentToast("Les actions et le temps ont étés remis à 0");
-                                    _this.navCtrl.setRoot(DashboardPage_1, { id: _this.childId });
-                                }
-                                else {
-                                    _this.toastProvider.presentToast(data.message);
-                                }
-                            }, function (err) {
-                                console.log(err);
-                            });
-                        }
-                    }
-                ]
-            });
-            confirm.present();
-        };
-        // *********** Boutons de navigations ********
-        this.onLinkFamily = function () {
-            _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_5__pages_famille_famille__["a" /* FamillePage */]);
-        };
-        this.onLinkChrono = function () {
-            _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_6__pages_chrono_chrono__["a" /* ChronoPage */], { id: _this.childId });
-        };
-    }
-    DashboardPage_1 = DashboardPage;
-    DashboardPage.prototype.ionViewDidLoad = function () {
-        // ******* Contrôle si que l'identifiant enfant est bien envoyé *******
-        if (this.navParams.get('id')) {
-            this.childId = this.navParams.get('id');
-        }
-        else {
-            console.log("il manque le parametre id enfant");
-            this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_5__pages_famille_famille__["a" /* FamillePage */]);
-        }
-        this.getListActionsByChild();
-        this.getListActionsNoSelected();
-        this.getDetailChild();
-        this.manageDisplay();
-    };
-    // ******* Rècupere les infos de l'enfant *******
-    DashboardPage.prototype.getDetailChild = function () {
-        var _this = this;
-        this.childDetail = this.childProvider.getDetailChild(this.childId)
-            .subscribe(function (data) {
-            if (data.success) {
-                _this.childDetail = data.result;
-                _this.name = _this.childProvider.getName(_this.childDetail);
-                _this.winTime = _this.childDetail["0"].winTime;
-                _this.playTime = _this.childDetail["0"].playTime;
-                _this.remainingTime = _this.winTime - _this.playTime;
-                _this.winTimeDisplay = _this.dashboardProvider.convertMinuteHeure(_this.winTime);
-                _this.playTimeDisplay = _this.dashboardProvider.convertMinuteHeure(_this.playTime);
-                _this.remainingTimeDisplay = _this.dashboardProvider.convertMinuteHeure(_this.remainingTime);
-                _this.manageDisplay();
-            }
-            else {
-                _this.toastProvider.presentToast(data.message);
-            }
-        }, function (err) {
-            console.log(err);
-        });
-        this.manageDisplay();
-    };
-    __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["_8" /* ViewChild */])('selectAction'),
-        __metadata("design:type", __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["i" /* Select */])
-    ], DashboardPage.prototype, "selectRef", void 0);
-    DashboardPage = DashboardPage_1 = __decorate([
-        Object(__WEBPACK_IMPORTED_MODULE_0__angular_core__["m" /* Component */])({
-            selector: 'page-dashboard',template:/*ion-inline-start:"C:\Users\Aries\Desktop\ionic\playtime--ionic\src\pages\dashboard\dashboard.html"*/'\n<ion-header>\n  <ion-navbar hideBackButton>\n    <!-->\n    <button ion-button menuToggle>\n      <ion-icon name="menu"></ion-icon>\n    </button>\n  -->\n    <ion-title text-left>\n        <img class="img-icon-header"  float-start src="assets/imgs/icon-tbb.png"  />\n        \n      <span>{{name}}</span>\n      <logout></logout>\n    </ion-title>\n\n  </ion-navbar>\n</ion-header>\n\n\n<ion-content no-padding>\n\n  <ion-grid class="select-card"> <!-- Bagdes recap-->\n    <ion-row>\n\n      <ion-col col-3 text-center >\n        <div class="badge-title-time-recap" >Gagné</div>\n        <ion-badge class="badge-time-recap">{{winTimeDisplay}}</ion-badge>\n      </ion-col>\n  \n      <ion-col col-3  text-center >\n        <div class="badge-title-time-recap" >Utilisé</div>\n        <ion-badge class="badge-time-recap">{{playTimeDisplay}}</ion-badge>\n      </ion-col>\n\n      <ion-col col-3 text-center >\n        <div class="badge-title-time-recap" >Restant</div>\n        <ion-badge class="badge-time-recap">{{remainingTimeDisplay}}</ion-badge>\n      </ion-col>\n\n      <ion-col col-3 text-center  >\n        <ion-icon class="icon-add-action" name="ios-list-box" (click)="onOpenSelectAction()"></ion-icon>\n      </ion-col>           \n      \n    </ion-row>   \n  </ion-grid>\n      \n  <ion-list>\n\n    <ion-item *ngFor="let actionSelected of actionsSelected" class="ionItem" >\n      <div class="line-action"> \n        <div class="div-badge" >\n          <div>\n            <ion-badge class="badge-time"\n              [class.badge-positive]="actionSelected.positive==\'P\'" \n              [class.badge-negative]="actionSelected.positive==\'N\'">{{actionSelected.nbRealised}}</ion-badge>\n           </div>\n           <div>\n            <ion-badge class="badge-time"  \n              [class.badge-positive]="actionSelected.positive==\'P\'" \n              [class.badge-negative]="actionSelected.positive==\'N\'">{{actionSelected.timep | slice:0:5}} mn</ion-badge>\n          </div> \n        </div> \n        <div class="text-action" text-wrap>{{actionSelected.label}}</div> \n        <ion-icon class="btn-plus" *ngIf="displayBtn" name="add-circle"  (click)="onAddRealisedAction(actionSelected.id);"\n              [class.icon-positive]="actionSelected.positive==\'P\'"\n              [class.icon-negative]="actionSelected.positive==\'N\'"\n\n        ></ion-icon>\n        <ion-icon class="btn-minus"  *ngIf="displayBtn" name="remove-circle" (click)="onRemoveRealisedAction(actionSelected.id)"></ion-icon>\n      </div> \n    </ion-item>\n      \n  </ion-list>\n\n  <ion-list>\n    <ion-item>\n      <button  *ngIf="displayBtnReset" ion-button full (click)="onReset()">Mettre le temps et les actions à 0</button>\n    </ion-item>\n  </ion-list>\n  \n\n  <!-- Liste des actions cachées-->\n  <ion-item class="ion-select" >\n    <ion-select  #selectAction [(ngModel)]="action" (ionChange)="onAffectAction()" [selectOptions]="selectOptions"\n  multiple="true" cancelText="Annuler" okText="Ajouter">\n      <ion-option *ngFor="let actionNoSelected of actionsNoSelected" [value]="actionNoSelected.id">{{actionNoSelected.label}}</ion-option >\n    </ion-select> \n  </ion-item>\n\n\n\n</ion-content>\n\n<ion-footer>\n    <ion-toolbar>\n      <ion-grid>\n        <ion-row>\n            <ion-col col-3 text-center>\n                <img class="img-icon-footer" src="assets/imgs/icon-family.png" (click)="onLinkFamily()" />    \n            </ion-col>\n\n          <ion-col col-6 text-center>playTime</ion-col>\n\n            <ion-col col-3 text-center>\n                <img class="img-icon-footer" src="assets/imgs/icon-chrono.png" (click)="onLinkChrono()"  />\n            </ion-col>\n        </ion-row>\n    </ion-grid>\n    </ion-toolbar>            \n  </ion-footer>\n'/*ion-inline-end:"C:\Users\Aries\Desktop\ionic\playtime--ionic\src\pages\dashboard\dashboard.html"*/,
-        }),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_1_ionic_angular__["f" /* NavController */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["g" /* NavParams */],
-            __WEBPACK_IMPORTED_MODULE_4__providers_toast_toast__["a" /* ToastProvider */],
-            __WEBPACK_IMPORTED_MODULE_2__providers_api_base_dashboard__["a" /* DashboardProvider */],
-            __WEBPACK_IMPORTED_MODULE_3__providers_api_base_child__["a" /* ChildProvider */],
-            __WEBPACK_IMPORTED_MODULE_1_ionic_angular__["a" /* AlertController */]])
-    ], DashboardPage);
-    return DashboardPage;
-    var DashboardPage_1;
-}());
-
-//# sourceMappingURL=dashboard.js.map
 
 /***/ })
 

@@ -4,8 +4,6 @@ import { Injectable } from '@angular/core';
 @Injectable()
 
 export class DashboardProvider {
-
-   
   
   constructor(public http: HttpClient) {}
   
@@ -99,7 +97,7 @@ export class DashboardProvider {
 
   convertSecondeHeure(seconde: number) {
     var addZero = function(v) { return v<10 ? '0' + v : v; };
-    var d = new Date(seconde * 1000); // js fonctionne en milisecondes
+    var d = new Date(seconde * 1000); /** js fonctionne en milisecondes **/
     var t = [];
     t.push(addZero(d.getHours()-1));
     t.push(addZero(d.getMinutes()));

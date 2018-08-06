@@ -5,13 +5,9 @@ import { NgForm } from '@angular/forms';
 import { ChildProvider} from '../../providers/api-base/child';
 import { FamillePage } from '../famille/famille';
 import { AlertController } from 'ionic-angular';
-import { DashboardPage } from '../../pages/dashboard/dashboard';
-/**
- * Generated class for the EnfantPage page.
- *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
- */
+
+
+/** ***************Formulaire enfant *************   **/
 
 @Component({
   selector: 'page-enfant',
@@ -21,13 +17,11 @@ export class EnfantPage {
 
   
   user_id: number;
-  stateConnexion: string;
   child_id:number;  
   firstname:string; 
   nickname:string;
   sexe:string ;
   childDetail: any;
-  api_result: any;
 
   constructor(public navCtrl: NavController,
     public navParams: NavParams,
@@ -43,7 +37,7 @@ export class EnfantPage {
     console.log(this.navParams.get('childId'));
     console.log(this.navParams.get('userId'));
 
-    // initialise le formulaire
+    /** ********** initialise le formulaire  *******/
     this.child_id = this.navParams.get('childId');
     this.user_id = this.navParams.get('userId');
 
@@ -78,7 +72,7 @@ export class EnfantPage {
     
     // Teste le prénom
     if(form.controls['firstname'].invalid){
-      this.toastProvider.presentToast('Le prénom doit être renseigné !!!');
+      this.toastProvider.presentToast('Le prénom doit comporté au moins 3 caractères !!!');
       return;
     }
 
@@ -120,7 +114,7 @@ export class EnfantPage {
 
   onChildDelete = () => { 
      const confirm = this.alertCtrl.create({
-    title: 'Voulez-vous vraiment vous vraiment enlever  ' + this.firstname + ' de \'application ?',
+    title: 'Voulez-vous vraiment vous vraiment enlever  ' + this.firstname + ' de l\'application ?',
     buttons: [
       {
         text: 'Annuler',
@@ -156,13 +150,6 @@ export class EnfantPage {
   this.navCtrl.setRoot(FamillePage);
    }
 
-   onLinkDashboard = () => {
-    console.log('Dashboard id:' + this.child_id);
-    this.navCtrl.setRoot(DashboardPage, {id: this.child_id});
-  }
 
-  onLinkFamily = () => {
-    this.navCtrl.setRoot(FamillePage);
-  }
 }
 

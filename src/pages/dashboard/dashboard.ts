@@ -6,6 +6,7 @@ import { ToastProvider }  from '../../providers/toast/toast';
 import { FamillePage }  from '../../pages/famille/famille';
 import { ChronoPage }  from '../../pages/chrono/chrono';
 import { AlertController } from 'ionic-angular';
+
 /**
  * Page Dashboard de l'enfant liste des actiosn et calcule du temps gagné
 
@@ -76,7 +77,7 @@ export class DashboardPage {
 
   }
 
-  // ******* Rècupere les actions affectés à l'enfant *******
+  /** ****** Rècupere les actions affectés à l'enfant *******/
   getListActionsByChild = () => {
     this.dashboardProvider.getListActionByChild(this.childId)
       .subscribe((data:any) => {
@@ -98,7 +99,7 @@ export class DashboardPage {
       });
   }
 
-  // ******* Rècupere les infos de l'enfant *******
+  /** ****** Rècupere les infos de l'enfant ****** */
   getDetailChild(){
     this.childDetail= this.childProvider.getDetailChild(this.childId)
       .subscribe((data:any) => {
@@ -122,7 +123,7 @@ export class DashboardPage {
       });
     this.manageDisplay();
   }
-  // *******Récupère la liste des actions non affectées ************
+  /** *****Récupère la liste des actions non affectées ************/
   getListActionsNoSelected = () => {
     this.dashboardProvider.getListActionsNoSelected(this.childId)
       .subscribe((data:any) => {
@@ -140,8 +141,7 @@ export class DashboardPage {
 
   }
 
-
-  // ******* gere l'affiche des elements ******
+  /**  ******* gere l'affiche des elements ****** */
   manageDisplay = () => {
 
     // Affichage du bouton reset
@@ -153,13 +153,12 @@ export class DashboardPage {
 
   }
 
-
-  // ******* Ouvre la liste des actions *******
+  /**  ******* Ouvre la liste des actions ******* */
   onOpenSelectAction = () => {
     this.selectRef.open();
   }
 
-  // ******* affecte  les actions *******
+  /** *********** affecte  les actions ******* */
   onAffectAction = () =>{
     this.dashboardProvider.affectActionChild(this.childId,this.action)
       .subscribe((data:any) => {
@@ -175,17 +174,17 @@ export class DashboardPage {
     this.manageDisplay();
   }
 
-// ******* ajoute  1 au compteur d'une action *******
+  /******** ajoute  1 au compteur d'une action ******* */
   onAddRealisedAction = (action_id) => {
 
-    // Ajout 1 à l'action
+    /**Ajout 1 à l'action **/
     let resultat = this.actionsSelected.find( action => action.id === action_id);
     resultat.nbRealised ++;
     this.changeRealisedAction("add",action_id);
     this.manageDisplay();
   }
 
-  // ******* Controle le compteur si demande d'enlever 1 *******
+  /** ****** Controle le compteur si demande d'enlever 1 ******* */
   onRemoveRealisedAction = (action_id) => {
     let resultat = this.actionsSelected.find( action => action.id === action_id);
 
@@ -209,13 +208,13 @@ export class DashboardPage {
 
     }else{
       this.changeRealisedAction("sub",action_id);
-      // enleve 1 à l'action
+      /** enleve 1 à l'action **/
       resultat.nbRealised --;
     }
     this.manageDisplay();
   }
 
-  // ***** enleve l'action ********
+  /** ********* enleve l'action ******** */
   deleteAffectation = (action_id: number) => {
     this.dashboardProvider.deleteAffectation(action_id)
       .subscribe((data:any) => {
@@ -231,10 +230,10 @@ export class DashboardPage {
     this.manageDisplay();
   }
 
-  // ********* modifie le compteur d'une action *******
+  /**  ******** modifie le compteur d'une action ******* */
   changeRealisedAction = (action: string, action_id:number) =>{
 
-    //****** cache les boutons**********
+    /***** cache les boutons**********/
     this.displayBtn = false;
 
     this.dashboardProvider.changeNbRealisedAction(action,action_id,this.childId)
@@ -258,7 +257,7 @@ export class DashboardPage {
   }
 
 
-  // **** reinitialise le temsp et les compteurs action apres confirmation
+  /** ******** reinitialise le temsp et les compteurs action apres confirmation *****/
   onReset = () => {
     console.clear();
     const confirm = this.alertCtrl.create({
@@ -293,7 +292,7 @@ export class DashboardPage {
 
 
 
-  // *********** Boutons de navigations ********
+  /** ********* Boutons de navigations ******** */
   onLinkFamily = () => {
     this.navCtrl.setRoot(FamillePage);
   }

@@ -6,7 +6,7 @@ export class UserProvider {
   
   constructor(public http: HttpClient) {}
 
-
+  /** ******* Inscription  *****************/
   register = (email:string,password:string,username:string) => {
     
     let postData = new FormData();
@@ -18,7 +18,7 @@ export class UserProvider {
     return tab_retour;
   }
 
-
+  /******** Connexion  ************* */
   login = (email:string,password:string) => {
     console.log("login");
     let postData = new FormData();

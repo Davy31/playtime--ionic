@@ -2,9 +2,9 @@
   <ion-navbar hideBackButton>
     <ion-title text-left>
       <img class="img-icon-header" float-start src="assets/imgs/icon-child.png"  />
-    <span>Enfant</span>
-    <logout></logout>
-  </ion-title>
+      <span>Enfant</span>
+      <logout></logout>
+    </ion-title>
   </ion-navbar>
 </ion-header>
 
@@ -15,17 +15,17 @@
     <ion-list>
 
       <ion-item>
-        <ion-label stacked>Prénom </ion-label>
+        <ion-label stacked>Prénom <span class="span_obligatoire">*</span></ion-label>
         <ion-input type="text" required  [(ngModel)]='firstname' name="firstname" minlength="3" maxlength="100" ></ion-input>
       </ion-item>
-  
+
       <ion-item>
         <ion-label stacked>Surnom (non obligatoire)</ion-label>
         <ion-input type="text" [(ngModel)]='nickname' name="nickname" ngModel  minlength="3" maxlength="100"></ion-input>
       </ion-item>
 
       <ion-list radio-group [(ngModel)]="sexe" name=sexe>
-        <ion-label>Sexe</ion-label>
+        <ion-label>Sexe <span class="span_obligatoire">*</span></ion-label>
         <ion-item>
           <ion-label>Fille</ion-label>
           <ion-radio value='F'></ion-radio>
@@ -33,8 +33,8 @@
         <ion-item>
           <ion-label>Garçon</ion-label>
           <ion-radio value='M' ></ion-radio>
-        </ion-item>     
-      </ion-list> 
+        </ion-item>
+      </ion-list>
 
     </ion-list>
 
@@ -46,11 +46,11 @@
         <ion-col col-4 text-center>
           <button ion-button text-center class="btn-form"type="button" float-start (click)="onChildDelete()" color=danger >Suppression</button>
         </ion-col>
-        <ion-col col-4 text-center>  
+        <ion-col col-4 text-center>
           <button ion-button text-center class="btn-form" type="button" float-end  (click)="onLinkCancel()">Annuler  </button>
         </ion-col>
       </ion-row>
-    </ion-grid>  
+    </ion-grid>
   </form>
 
 

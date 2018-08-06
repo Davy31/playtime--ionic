@@ -27981,6 +27981,10 @@ ion-navbar.toolbar {
   background-color: #adbdca;
 }
 
+.span_obligatoire {
+  color: red;
+}
+
 /***************** header  ****************************/
 .img-icon-header {
   width: 30px;
@@ -28007,6 +28011,11 @@ page-chrono .colorRed {
 
 page-chrono .colorOrange {
   color: #ffa600;
+}
+
+page-connexion .item_libelle_utilisateur {
+  text-align: center;
+  font-weight: 900;
 }
 
 page-dashboard .select {

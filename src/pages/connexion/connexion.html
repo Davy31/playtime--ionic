@@ -14,58 +14,62 @@
 
 <ion-content padding>
 
-  
+
 
   <form (ngSubmit)="onSubmit(formLogin)" #formLogin="ngForm">
 
     <ion-list>
-      
-        <ion-item>
-            <ion-label stacked>E-mail</ion-label>
-            <ion-input type="email" required email=true ngModel name="email" ></ion-input>
-          </ion-item>
-        
-          <ion-item>
-            <ion-label stacked>Mot de passe</ion-label>
-            <ion-input type="password" required minlength="6" ngModel name="password" ></ion-input>
-          </ion-item>   
-    
+
+      <ion-item class="item_libelle_utilisateur">Déjà inscrit</ion-item>
+
+      <ion-item>
+        <ion-label stacked>E-mail <span class="span_obligatoire">*</span></ion-label>
+        <ion-input type="email" required email=true ngModel name="email" ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label stacked>Mot de passe <span class="span_obligatoire">*</span></ion-label>
+        <ion-input type="password" required minlength="6" ngModel name="password" ></ion-input>
+      </ion-item>
+
     </ion-list>
-  
+
     <button ion-button full type="submit">Connexion</button>
-    
-    </form>
+
+  </form>
 
 
-    <form (ngSubmit)="onSubmit(formRegister)" #formRegister="ngForm">
-  
-      <ion-list>    
-    
-        <ion-item>
-          <ion-label stacked>E-mail</ion-label>
-          <ion-input type="email" required email=true [(ngModel)]="email" name="email" ></ion-input>
-        </ion-item>
-      
-        <ion-item>
-          <ion-label stacked>Mot de passe</ion-label>
-          <ion-input type="password" required minlength="6" [(ngModel)]="password" name="password" ></ion-input>
-        </ion-item>
-    
-        <ion-item>
-          <ion-label stacked>Confirmation mot de passe</ion-label>
-          <ion-input type="password"  name="passwordCopie" [(ngModel)]="password"  ></ion-input>
-        </ion-item>
-    
-        <ion-item>
-            <ion-label stacked>Nom Utilisateur</ion-label>
-            <ion-input type="text" required minlength="3" maxlength="50" name="username" [(ngModel)]="username" ></ion-input>
-          </ion-item>
-      
-      </ion-list>
-    
-      <button ion-button full type="submit">Inscription</button>
-    
-    </form>
+  <form (ngSubmit)="onSubmit(formRegister)" #formRegister="ngForm">
 
-  </ion-content>
+    <ion-list>
+
+      <ion-item class="item_libelle_utilisateur">Nouvel utilisateur</ion-item>
+
+      <ion-item>
+        <ion-label stacked>E-mail <span class="span_obligatoire">*</span></ion-label>
+        <ion-input type="email" required email=true [(ngModel)]="email" name="email" ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label stacked>Mot de passe <span class="span_obligatoire">*</span></ion-label>
+        <ion-input type="password" required minlength="6" [(ngModel)]="password" name="password" ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label stacked>Confirmation mot de passe <span class="span_obligatoire">*</span></ion-label>
+        <ion-input type="password"  name="passwordCopie" [(ngModel)]="passwordCopie"  ></ion-input>
+      </ion-item>
+
+      <ion-item>
+        <ion-label stacked>Nom Utilisateur <span class="span_obligatoire">*</span></ion-label>
+        <ion-input type="text" required minlength="3" maxlength="50" name="username" [(ngModel)]="username" ></ion-input>
+      </ion-item>
+
+    </ion-list>
+
+    <button ion-button full type="submit">Inscription</button>
+
+  </form>
+
+</ion-content>
   

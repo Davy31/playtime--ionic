@@ -1,16 +1,13 @@
 import { Component } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
-
+import { NavController } from 'ionic-angular';
 import { ToastProvider }  from '../../providers/toast/toast';
 import { UserProvider} from '../../providers/api-base/user';
 import { FamillePage } from '../famille/famille';
 import { NgForm } from '@angular/forms';
 import { Storage } from '@ionic/storage';
 /**
- * Generated class for the ConnexionPage page.
  *
- * See https://ionicframework.com/docs/components/#navigation for more info on
- * Ionic pages and navigation.
+ * Connexion ou inscription
  */
 
 @Component({
@@ -18,36 +15,19 @@ import { Storage } from '@ionic/storage';
   templateUrl: 'connexion.html',
 })
 export class ConnexionPage {
-
-  api_result:any;
-
-  messageToast:string;
   
 
   constructor( public navCtrl: NavController,
-               public navParams: NavParams,
                private toastProvider: ToastProvider,
                private userProvider: UserProvider,
                private  storage: Storage
                ) {}
-
-
   
-  ionViewDidLoad() {
-    console.clear();
-    this.storage.get('playtime_user_id')
-    .then((val) =>{    
-      console.log('id =' +  val);
-      })
-    .catch((err) =>{
-      this.toastProvider.presentToast("Vous n'êtes pas connecté");
-    // this.navCtrl.setRoot( ConnexionPage);
-     })
-  }
+  ionViewDidLoad() {}
 
   onSubmit = (form:NgForm) => {
     
-     // si formulaire invalide affiche la première erreur
+     /** *** si formulaire invalide affiche la première erreur */
      if(form.controls['email'].invalid){
       this.toastProvider.presentToast('L\'adresse email est invalide !!!');
       return;
@@ -119,8 +99,5 @@ export class ConnexionPage {
        console.log(err)
       });
     }
-
-
-   
   }
 }
