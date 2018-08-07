@@ -55,7 +55,7 @@ export class ConnexionPage {
      .subscribe((data:any) => {
        if(data.success){ 
          /******************** Inscription validée*********** */          
-           // stocke les identifiants        
+           /** stocke les identifiants   sur le téléphone  */
             this.storage.set('playtime_user_id', data.result.userId);
             this.storage.set('playtime_user_username', form.controls['username'].value);
             this.storage.set('playtime_user_email', form.controls['email'].value);  
@@ -80,8 +80,7 @@ export class ConnexionPage {
       .subscribe((data:any) => {
         console.log(data);
         if(data.success){
-          console.log('id =' +  data.result.id )
-            // stocke les identifiants         
+            /**  stocke les identifiants      **/
           this.storage.set('playtime_user_id', data.result.id );
           this.storage.set('playtime_user_username', data.result.username);
           this.storage.set('playtime_user_email', form.controls['email'].value);  
@@ -90,7 +89,6 @@ export class ConnexionPage {
           this.navCtrl.setRoot(FamillePage);
  
         }else{
-          console.log("pas succes");
          this.toastProvider.presentToast(data.message);
         }
        

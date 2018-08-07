@@ -73,7 +73,7 @@ var DashboardPage = /** @class */ (function () {
                 console.log(err);
             });
         };
-        // *******Récupère la liste des actions non affectées ************
+        /** *****Récupère la liste des actions non affectées ************/
         this.getListActionsNoSelected = function () {
             _this.dashboardProvider.getListActionsNoSelected(_this.childId)
                 .subscribe(function (data) {
@@ -120,7 +120,7 @@ var DashboardPage = /** @class */ (function () {
         };
         /******** ajoute  1 au compteur d'une action ******* */
         this.onAddRealisedAction = function (action_id) {
-            // Ajout 1 à l'action
+            /**Ajout 1 à l'action **/
             var resultat = _this.actionsSelected.find(function (action) { return action.id === action_id; });
             resultat.nbRealised++;
             _this.changeRealisedAction("add", action_id);
@@ -150,7 +150,7 @@ var DashboardPage = /** @class */ (function () {
             }
             else {
                 _this.changeRealisedAction("sub", action_id);
-                // enleve 1 à l'action
+                /** enleve 1 à l'action **/
                 resultat.nbRealised--;
             }
             _this.manageDisplay();
@@ -172,7 +172,7 @@ var DashboardPage = /** @class */ (function () {
         };
         /**  ******** modifie le compteur d'une action ******* */
         this.changeRealisedAction = function (action, action_id) {
-            //****** cache les boutons**********
+            /***** cache les boutons**********/
             _this.displayBtn = false;
             _this.dashboardProvider.changeNbRealisedAction(action, action_id, _this.childId)
                 .subscribe(function (data) {
@@ -195,7 +195,6 @@ var DashboardPage = /** @class */ (function () {
         };
         /** ******** reinitialise le temsp et les compteurs action apres confirmation *****/
         this.onReset = function () {
-            console.clear();
             var confirm = _this.alertCtrl.create({
                 title: 'Voulez-vous vraiment mettre le temps et les actions à 0 ?',
                 buttons: [
@@ -504,7 +503,7 @@ var ChronoPage = /** @class */ (function () {
         this.onStopChrono = function (record) {
             clearInterval(_this.chrono);
             if (record) {
-                //Convertie en minutes par defaut
+                //Convertie en minutes par défaut
                 var playTimeMinute = Math.trunc(_this.playTime / 60);
                 _this.childProvider.recordPlaytime(_this.childId, playTimeMinute)
                     .subscribe(function (data) { }, function (err) { console.log(err); });
@@ -628,7 +627,7 @@ var ConnexionPage = /** @class */ (function () {
                     .subscribe(function (data) {
                     if (data.success) {
                         /******************** Inscription validée*********** */
-                        // stocke les identifiants        
+                        /** stocke les identifiants   sur le téléphone  */
                         _this.storage.set('playtime_user_id', data.result.userId);
                         _this.storage.set('playtime_user_username', form.controls['username'].value);
                         _this.storage.set('playtime_user_email', form.controls['email'].value);
@@ -649,8 +648,7 @@ var ConnexionPage = /** @class */ (function () {
                     .subscribe(function (data) {
                     console.log(data);
                     if (data.success) {
-                        console.log('id =' + data.result.id);
-                        // stocke les identifiants         
+                        /**  stocke les identifiants      **/
                         _this.storage.set('playtime_user_id', data.result.id);
                         _this.storage.set('playtime_user_username', data.result.username);
                         _this.storage.set('playtime_user_email', form.controls['email'].value);
@@ -658,7 +656,6 @@ var ConnexionPage = /** @class */ (function () {
                         _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_4__famille_famille__["a" /* FamillePage */]);
                     }
                     else {
-                        console.log("pas succes");
                         _this.toastProvider.presentToast(data.message);
                     }
                 }, function (err) {
@@ -1305,14 +1302,14 @@ var FamillePage = /** @class */ (function () {
     }
     FamillePage.prototype.ionViewDidLoad = function () {
         var _this = this;
-        /**** Recupere l'id user stocké dans le téléphone si absent => page connexion */
+        /**** Recupere l'id user stocké dans le téléphone, si absent => page connexion */
         this.storage.get('playtime_user_id').then(function (val) {
             if ((val == null)) {
                 _this.toastProvider.presentToast("Vous n'êtes pas connecté");
                 _this.navCtrl.setRoot(__WEBPACK_IMPORTED_MODULE_5__pages_connexion_connexion__["a" /* ConnexionPage */]);
             }
             else {
-                /// *****Connecté *******************/
+                /******Connecté *******************/
                 _this.user_id = val;
                 _this.isAuth = true;
                 console.log("id= " + _this.user_id);
@@ -1469,10 +1466,6 @@ var ChildProvider = /** @class */ (function () {
             if (child_nickname === undefined) {
                 child_nickname = "";
             }
-            console.log(user_id);
-            console.log(child_firstname);
-            console.log(child_nickname);
-            console.log(child_sexe);
             var postData = new FormData();
             postData.append('idUser', user_id);
             postData.append('firstname', child_firstname);
@@ -1480,61 +1473,43 @@ var ChildProvider = /** @class */ (function () {
             postData.append('gender', child_sexe);
             var uri_api = 'https://davy3165.000webhostapp.com/child/child_add.php';
             var tab_retour = _this.http.post(uri_api, postData);
-            console.log('Provider - détail enfant : ' + user_id + " " + child_firstname + " " + child_nickname + " " + child_sexe + " " + uri_api);
-            console.log(tab_retour);
             return tab_retour;
         };
         this.updateChild = function (child_id, child_firstname, child_nickname, child_sexe) {
             if (child_nickname === undefined) {
                 child_nickname = "";
             }
-            console.log('idChild= ' + child_id);
-            console.log('firstname= ' + child_firstname);
-            console.log('nickname= ' + child_nickname);
-            console.log('sexe= ' + child_sexe);
             var postData = new FormData();
             postData.append('idChild', child_id);
             postData.append('firstname', child_firstname);
             postData.append('nickname', child_nickname);
             postData.append('gender', child_sexe);
             var uri_api = 'https://davy3165.000webhostapp.com/child/child_update.php';
-            console.log(uri_api);
             var tab_retour = _this.http.post(uri_api, postData);
-            console.log("Modif enfant");
-            console.log(tab_retour);
             return tab_retour;
         };
         this.deleteChild = function (child_id) {
             var uri_child = 'https://davy3165.000webhostapp.com/child/child_delete.php?id=' + child_id;
             var tab_retour = _this.http.get(uri_child);
-            console.log('provider suppression enfant : ' + uri_child);
-            console.log(tab_retour);
             return tab_retour;
         };
         this.getListChildByUser = function (user_id) {
             var uri_child = 'https://davy3165.000webhostapp.com/child/child_list.php?id=' + user_id;
             var tab_retour = _this.http.get(uri_child);
-            console.log(' provider -liste famille : ' + uri_child);
-            console.log(tab_retour);
             return tab_retour;
         };
         this.getDetailChild = function (child_id) {
             var uri_child = 'https://davy3165.000webhostapp.com/child/child_detail.php?id=' + child_id;
             var tab_retour = _this.http.get(uri_child);
-            console.log(' provider - détail enfant : ' + uri_child);
-            console.log(tab_retour);
             return tab_retour;
         };
         this.recordPlaytime = function (child_id, playtime) {
             var uri_action = 'https://davy3165.000webhostapp.com/child/child_update_playtime.php?idChild=' + child_id + "&playtime=" + playtime;
             var tab_retour = _this.http.get(uri_action);
-            console.log('provider - enregistre playtime : ' + uri_action);
             return tab_retour;
         };
         /**Return le surnom si existe sinon le prénom */
         this.getName = function (detailsChild) {
-            console.log(detailsChild);
-            console.log(detailsChild[0].nickname);
             if (detailsChild[0].nickname !== null && detailsChild[0].nickname !== "") {
                 return detailsChild[0].nickname;
             }
@@ -1551,9 +1526,10 @@ var ChildProvider = /** @class */ (function () {
     }
     ChildProvider = __decorate([
         Object(__WEBPACK_IMPORTED_MODULE_1__angular_core__["A" /* Injectable */])(),
-        __metadata("design:paramtypes", [__WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */]])
+        __metadata("design:paramtypes", [typeof (_a = typeof __WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */] !== "undefined" && __WEBPACK_IMPORTED_MODULE_0__angular_common_http__["a" /* HttpClient */]) === "function" && _a || Object])
     ], ChildProvider);
     return ChildProvider;
+    var _a;
 }());
 
 //# sourceMappingURL=child.js.map

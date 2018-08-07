@@ -259,7 +259,6 @@ export class DashboardPage {
 
   /** ******** reinitialise le temsp et les compteurs action apres confirmation *****/
   onReset = () => {
-    console.clear();
     const confirm = this.alertCtrl.create({
       title: 'Voulez-vous vraiment mettre le temps et les actions à 0 ?',
       buttons: [

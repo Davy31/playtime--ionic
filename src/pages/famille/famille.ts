@@ -31,14 +31,14 @@ export class FamillePage {
   ionViewDidLoad() {
 
 
-    /**** Recupere l'id user stocké dans le téléphone si absent => page connexion */
+    /**** Recupere l'id user stocké dans le téléphone, si absent => page connexion */
     this.storage.get('playtime_user_id').then((val) =>{
 
       if ((val == null)){
         this.toastProvider.presentToast("Vous n'êtes pas connecté");
         this.navCtrl.setRoot( ConnexionPage );
       }else{
-        /// *****Connecté *******************/
+        /******Connecté *******************/
         this.user_id = val;
         this.isAuth=true;
         console.log("id= " + this.user_id);
